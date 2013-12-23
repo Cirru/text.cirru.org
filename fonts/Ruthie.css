@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Ruthie';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ruthie'), local('Ruthie-Regular'), url(./Ruthie.woff) format('woff');
+}
