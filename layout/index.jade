@@ -1,16 +1,130 @@
 
+mixin demo(link)
+  .demo
+    = "Demo "
+    a(href=link, target="_blank")= link
+
+mixin site(link)
+  .site
+    = "Site "
+    a(href=link, target="_blank")= link
+
+mixin preview(link)
+  image.preview(src=link)
+
 doctype 5
 html
   head
     title Cirru
     link(rel="stylesheet", type="text/css", href="style/style.css")
-    link(rel="stylesheet", type="text/css", href="fonts/Ruthie.css")
+    link(rel="icon", type="image/png"
+      href="http://logo.cirru.org/cirru-32x32.png")
   body
-    .logo
-      .font Cirru
-      .desc /ˈsɪɹə/ indentation-based grammar for languages
-    p This is the home for Cirru, welcome.
-    p
-      a(href="https://github.com/jiyinyiyong/cirru-parser/wiki/About-Cirru")
+  
+    .project.entry
+      .title Cirru Grammar
+      .name Cirru
+      mixin site("http://github.com/Cirru")
+      mixin preview("http://logo.cirru.org/cirru-400x400.png")
+      .desc
+        tt= "/ˈsɪɹə/ "
+        | indentation-based grammar for languages
+
+    .project.entry
+      .title Cirru Wiki
+      mixin site("https://github.com/Cirru/cirru.org/wiki")
+      a(href="https://github.com/jiyinyiyong/cirru-parser/wiki/About-Cirru"
+        target="_blank")
         | Find more about Cirru on Github.
+      .desc
+
+    .project
+      .title
+        = "Run Cirru in Node.js "
+        span.mark (Outdated)
+      .name cirru-interpreter
+      mixin site("https://github.com/Cirru/cirru-interpreter") 
+      mixin preview("pics/cirru-interpreter.png")
+      .desc
+
+    .project
+      .title Conver Cirru to Mustache
+      .name cirru-mustache
+      mixin site("https://github.com/Cirru/cirru-mustache")
+      .demo http://repo.jiyinyiyong.me/cirru-mustache/
+      mixin preview("pics/cirru-mustache.png")
+      .desc
+
+    .project
+      .title Cirru syntax highlight in Rainbow
+      .name cirru-rainbow
+      mixin site("https://github.com/Cirru/cirru-rainbow")
+      mixin demo("http://repo.jiyinyiyong.me/cirru-rainbow/")
+      mixin preview("pics/cirru-rainbow.png")
+      .desc
+
+    .project
+      .title Sublime Text Syntax hightlight for Cirru
+      .name sublime-cirru
+      mixin site("https://github.com/Cirru/sublime-cirru")
+      mixin demo("https://sublime.wbond.net/packages/Cirru")
+      mixin preview("pics/cirru-sublime.png")
+      .desc
+
+    .project
+      .title Parser of Cirru Grammar in CoffeeScript
+      .name cirru-parser
+      mixin site("https://github.com/Cirru/cirru-parser")
+      mixin demo("http://repo.jiyinyiyong.me/cirru-parser/")
+      mixin preview("pics/cirru-parser.png")
+      .desc
+
+    .project
+      .title Cirru Syntax Package for Brackets
+      .name brackets-cirru
+      mixin site("https://github.com/Cirru/brackets-cirru")
+      mixin demo("https://brackets-registry.aboutweb.com/")
+      mixin preview("pics/cirru-brackets.png")
+      .desc
+
+    .project
+      .title Cirru Parser converted to Go
+      .name cirru-grammar
+      mixin site("https://github.com/Cirru/cirru-grammar")
+      mixin preview("pics/cirru-grammar.png")
+      .desc
+
+    .project
+      .title Run Cirru in Go
+      .name cirru-gopher
+      mixin site("https://github.com/Cirru/cirru-gopher")
+      mixin preview("pics/cirru-gopher.png")
+      .desc
+
+    .project
+      .title Cirru mode for CodeMorror
+      .name cirru-mode
+      mixin site("https://github.com/Cirru/cirru-mode")
+      mixin demo("http://repo.jiyinyiyong.me/cirru-mode/")
+      mixin preview("pics/cirru-mode.png")
+      .desc
+
+    .project
+      .title JavaScrip AST in Cirru
+      .name scirpus
+      mixin site("https://github.com/Cirru/scirpus")
+      mixin demo("http://repo.jiyinyiyong.me/scirpus/compiled/")
+      mixin preview("pics/scirpus.png")
+      .desc
+
+    .project
+      .title
+        = "Cirru Editor "
+        .mark (Outdated)
+      .name cirru-editor
+      mixin site("https://github.com/Cirru/cirru-editor")
+      mixin demo("http://repo.jiyinyiyong.me/cirru-editor/")
+      mixin preview("pics/cirru-editor.jpg")
+      .desc
+
   include ga

@@ -1,39 +1,42 @@
 
-body {
-    
-    text-shadow: 1px 1px 3px hsl(0, 0%, 79%);
-    margin: 0;
+* {
+    box-sizing: border-box;
 }
 
-p {
+body {
+    text-shadow: 1px 1px 3px hsl(0, 0%, 79%);
+    margin: 0;
     font-family: Optima;
-    font-size: 24px;
-    display: block;
-    width: 800px;
-    margin: 0 auto;
-    line-height: 60px;
+    background: hsl(245, 100%, 97%);
 }
 
 p a {
     font-size: 17px;
 }
 
-.desc {
-    font-size: 20px;
-    font-family: Optima, Palatino, sans-serif;
-    text-align: right;
-    position: relative;
-    top: -20px;
+.project {
+    background: white;
+    padding: 20px 50px;
+    margin: 40px 40px;
+    width: 900px;
+    line-height: 48px;
+    box-shadow: 3px 3px 10px hsl(0, 0%, 77%);
+    overflow-x: hidden;
 }
 
-.logo {
-  font-family: Ruthie;
-  color: hsl(0, 100%, 100%);
-  margin: auto;
-  padding: 80px 270px 20px;
-  font-size: 180px;
-  background-image: -webkit-linear-gradient(77deg, hsl(269, 42%, 82%), hsl(240, 76%, 67%));
+.project.entry {}
+
+.project .title {
+    font-size: 30px;
+    margin-left: -20px;
 }
-.logo .font {
-    line-height: 200px;
-}
+
+.project .name {}
+
+.project .site {}
+
+.project .demo {}
+
+.project .desc {}
+
+.project .mark {}
