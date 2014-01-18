@@ -17,8 +17,7 @@ html
   head
     title Cirru Programming Language
     link(rel="stylesheet", type="text/css", href="style/style.css")
-    link(rel="icon", type="image/png"
-      href="http://logo.cirru.org/cirru-32x32.png")
+    link(rel="icon", type="image/png", href="http://logo.cirru.org/cirru-32x32.png?v2")
     meta(name="author", content="google.com/+jiyinyiyong?rel=author")
     meta(name="description"
       content="Cirru is a indentation-based grammar for programming languages")
@@ -67,6 +66,13 @@ html
       .desc
 
     .project
+      .title Cirru grammar support in Pygments
+      mixin site("https://bitbucket.org/birkenfeld/pygments-main/pull-request/275/add-syntax-for-cirru")
+      mixin preview("pics/pygments-cirru.png")
+      .desc
+        | A fork of Pygments
+
+    .project
       .title Cirru syntax highlight
       .name cirru-color
       mixin site("https://github.com/Cirru/cirru-color")
@@ -75,7 +81,7 @@ html
       .desc
 
     .project
-      .title Sublime Text Syntax hightlight for Cirru
+      .title Sublime Text Syntax highlight for Cirru
       .name sublime-cirru
       mixin site("https://github.com/Cirru/sublime-cirru")
       mixin demo("https://sublime.wbond.net/packages/Cirru")
