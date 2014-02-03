@@ -17,8 +17,8 @@ p a {
 .project {
     background: white;
     padding: 20px 50px;
-    margin: 40px 40px;
-    width: 900px;
+    margin: 40px auto;
+    width: 1060px;
     line-height: 48px;
     box-shadow: 3px 3px 10px hsl(0, 0%, 77%);
     overflow-x: hidden;
