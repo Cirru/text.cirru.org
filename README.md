@@ -2,7 +2,7 @@
 Cirru.org
 ------
 
-IPA: /ˈsɪɹə/ 
+IPA: /ˈsɪɹə/
 
 The name Cirru came from `cirrus cloud`.
 I read it like `cirrus`(no `s`) before there's a better one.
@@ -38,9 +38,3 @@ set a $ add
   number 1
   number 2
 ```
-
-### Fontface
-
-The font in the banner is in [Ruthie][Ruthie] fontface.
-
-[Ruthie]: http://www.google.com/fonts/specimen/Ruthie
