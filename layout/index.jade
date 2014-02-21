@@ -33,8 +33,6 @@ html
         | indentation-based grammar for languages
 
     .project.entry
-      .title Cirru Wiki
-      mixin site("https://github.com/Cirru/cirru.org/wiki")
       a(href="https://github.com/jiyinyiyong/cirru-parser/wiki/About-Cirru"
         target="_blank")
         | Find more about Cirru on Github.
@@ -55,15 +53,15 @@ html
         = "Cirru Editor"
       .name cirru-editor
       mixin site("https://github.com/Cirru/cirru-editor")
-      mixin demo("http://repo.tiye.me/cirru-editor/")
+      mixin demo("http://repo.cirru.org/editor/")
       mixin preview("pics/cirru-editor.jpg")
       .desc
 
     .project
       .title Parser written in CoffeeScript
-      .name cirru-parser.coffee
-      mixin site("https://github.com/Cirru/cirru-parser.coffee")
-      mixin demo("http://repo.tiye.me/cirru-parser.coffee")
+      .name cirru-parser
+      mixin site("https://github.com/Cirru/cirru-parser")
+      mixin demo("http://repo.cirru.org/parser")
       mixin preview("pics/cirru-parser.coffee.png")
       .desc
 
@@ -85,16 +83,16 @@ html
       .title
         = "Run Cirru in Node.js "
         span.mark (Outdated)
-      .name cirru-interpreter.coffee
-      mixin site("https://github.com/Cirru/cirru-interpreter.coffee") 
+      .name cirru-interpreter
+      mixin site("https://github.com/Cirru/cirru-interpreter") 
       mixin preview("pics/cirru-interpreter.coffee.png")
       .desc
 
     .project
       .title
         = "Convert JSON to Cirru"
-      .name cirru-writer.coffee
-      mixin site('https://github.com/Cirru/cirru-writer.coffee/')
+      .name cirru-writer
+      mixin site('https://github.com/Cirru/cirru-writer/')
       mixin preview("pics/cirru-writer.coffee.png")
       .desc
 
@@ -102,15 +100,22 @@ html
       .title Write Mustache in Cirru
       .name cirru-mustache
       mixin site("https://github.com/Cirru/cirru-mustache")
-      mixin demo("http://repo.tiye.me/cirru-mustache/")
+      mixin demo("http://repo.cirru.org/mustache/")
       mixin preview("pics/cirru-mustache.png")
+      .desc
+
+    .project
+      .title Write HTML in Cirru
+      .name cirru-html
+      mixin site("https://github.com/Cirru/cirru-html")
+      mixin demo("http://repo.cirru.org/html/")
       .desc
 
     .project
       .title Rainbow Plugin
       .name cirru-rainbow
       mixin site("https://github.com/Cirru/cirru-rainbow")
-      mixin demo("http://repo.tiye.me/cirru-rainbow/")
+      mixin demo("http://repo.cirru.org/rainbow/")
       mixin preview("pics/cirru-rainbow.png")
       .desc
 
@@ -132,7 +137,7 @@ html
       .title Custom-made Syntax Highlighting
       .name cirru-color
       mixin site("https://github.com/Cirru/cirru-color")
-      mixin demo("http://repo.tiye.me/cirru-color/")
+      mixin demo("http://repo.cirru.org/color/")
       mixin preview("pics/cirru-color.png")
       .desc
 
@@ -155,8 +160,8 @@ html
     .project
       .title CodeMorror support
       .name cirru-mode
-      mixin site("https://github.com/Cirru/cirru-mode")
-      mixin demo("http://repo.tiye.me/cirru-mode/")
+      mixin site("https://github.com/Cirru/codemirror-cirru")
+      mixin demo("http://repo.cirru.org/codemirror")
       mixin preview("pics/cirru-mode.png")
       .desc
 
@@ -172,7 +177,7 @@ html
       .title Write JavaScrip AST with Cirru
       .name scirpus
       mixin site("https://github.com/Cirru/scirpus")
-      mixin demo("http://repo.tiye.me/scirpus/compiled/")
+      mixin demo("http://repo.cirru.org/scirpus/compiled/")
       mixin preview("pics/scirpus.png")
       .desc
 

@@ -1,5 +1,5 @@
 
-require('calabash').do 'watch and compile',
-  'pkill -f doodle'
+require('calabash').run [
   'jade -o ./ -Pw layout/index.jade'
-  'doodle index.html'
+  'pkill -f doodle && doodle index.html'
+]
