@@ -5,8 +5,9 @@ fs = require 'fs'
 station = undefined
 
 reload = ->
-  station.reload 'repo/cirru/cirru.org/index.html'
-  console.log 'done, reload'
+  if station?
+    station.reload 'repo/cirru/cirru.org/index.html'
+    console.log 'done, reload'
 
 target.html = ->
   {renderer} = require 'cirru-html'
@@ -25,7 +26,7 @@ target.watch = ->
 
   station = require 'devtools-reloader-station'
   station.start()
-  
+
   fs.watch 'cirru/', target.html
   fs.watch 'js/', target.js
 

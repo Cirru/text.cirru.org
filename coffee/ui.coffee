@@ -6,7 +6,7 @@ renderer.code = (code, lang) ->
   "<pre><code data-language=\"#{lang}\">#{code}</code></pre>"
 marked.setOptions
   gfm: yes
-  breaks: yes
+  breaks: no
   renderer: renderer
 
 caches = {}

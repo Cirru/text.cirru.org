@@ -58,7 +58,7 @@ module.exports = [
 ,
   title: 'Editor Support'
   projects: [
-    title: 'Sublime Text Package' 
+    title: 'Sublime Text Package'
     repo: "https://github.com/Cirru/sublime-cirru"
     readme: 'https://api.github.com/repos/Cirru/sublime-cirru/readme'
   ,
@@ -78,6 +78,10 @@ module.exports = [
   ,
     title: 'Ace Editor support'
     repo: "https://github.com/Cirru/ace"
+  ,
+    title: 'Atom Editor support'
+    repo: 'https://github.com/Cirru/language-cirru'
+    readme: 'https://api.github.com/repos/Cirru/language-cirru/readme'
   ]
 ,
   title: 'Highlighting'

@@ -2,7 +2,7 @@
 doctype
 html
   head
-    title $ = Cirru Programming Language
+    title $ = Cirru Grammar
     link
       :rel stylesheet
       :type text/css
@@ -15,10 +15,10 @@ html
       :charset utf-8
     meta
       :name author
-      :content google.com/+jiyinyiyong?rel=author
+      :content http://tiye.me
     meta
       :name description
-      :content "Cirru is a indentation-based grammar for programming languages"
+      :content "Cirru is a indentation-based grammar for programming"
     script
       -- $ :src http://cdn.staticfile.org/vue/0.10.3/vue.min.js
       :src bower_components/vue/dist/vue.js
