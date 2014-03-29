@@ -36,4 +36,5 @@ html
     script
       :defer
       :src build/build.js
+    @insert ga.html
   @partial ui.cirru

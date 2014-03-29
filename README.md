@@ -9,19 +9,17 @@ I read it like `cirrus`(no `s`) before there's a better one.
 
 Home page: http://cirru.org
 
-### What is Cirru
+Twiter: https://twitter.com/cirrulang
 
-Cirru is a set of simplified grammar based on indentations.
-It looks like simplified Lisp but with less brackets.
+### What is Cirru?
 
-There're basicly several rules:
+Cirru is an indetation-based grammar:
 
-* parentheses `()` create blocks for the language
-* indentation with two blanks creates a block, just like parentheses
-* code after `$` is in a block, like Haskell
-* `""` and `\` are set for typing characters, **but it's not like string**
-* it is prefixed syntax, without markup for types
-* the tree is the AST, types are differed by string
+* `()` to create expressions inside each line
+* like Bash, `""` and `\` to create strings with blanks
+* like Lisp, code is syntax tree, and use prefix syntax
+* like Haskell, code after `$` as a single expression
+* like CoffeeScript, indetations with strictly 2 blanks, 
 
 ### Examples
 
@@ -38,3 +36,14 @@ set a $ add
   number 1
   number 2
 ```
+
+```cirru
+set a
+  add
+    number 1
+    number 2
+```
+
+Look up [cirru-parser][syntax] for more examples.
+
+[syntax]: https://github.com/Cirru/cirru-parser#syntax
