@@ -1,0 +1,88 @@
+
+body {
+    margin: 0px;
+    font-family: Optima;
+}
+
+* {}
+
+#banner {
+    text-align: center;
+    margin: 20px;
+}
+
+#banner img {
+    width: 300px;
+}
+
+#app {
+    flex-direction: row;
+}
+
+#sidebar {
+    padding: 20px 20px;
+    line-height: 2em;
+    -webkit-user-select: none;
+    float: left;
+    width: 300px;
+}
+
+#sidebar .category {
+}
+#sidebar .category.folded {}
+
+#sidebar .category.folded .projects {
+    height: 0px;
+    overflow: hidden;
+}
+
+#sidebar .category > .title {
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+}
+#sidebar .category.folded > .title:after {
+    content: ' +'
+}
+
+#sidebar .projects {
+    padding-left: 2em;
+}
+#sidebar .project {
+    cursor: pointer;
+    color: gray;
+    transition-duration: 100ms;
+    font-size: 14px;
+    line-height: 2em;
+}
+#sidebar .project:hover {
+    color: black;
+    padding-left: 10px;
+}
+
+#detail {
+    padding: 10px;
+    margin-left: 300px;
+    margin-bottom: 100px;
+}
+
+#about {
+    margin-bottom: 40px;
+    display: block;
+}
+
+#readme {
+    line-height: 2em;
+    font-size: 16px;
+}
+#readme img {
+    max-width: 800px;
+    box-shadow: 1px 1px 5px rgb(199, 199, 199);
+}
+#readme pre {
+    border: 1px rgb(240, 240, 240) solid;
+    background-color: rgb(252, 252, 252);
+}
+#readme code {
+    background: none;
+}
