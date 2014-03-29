@@ -4,11 +4,13 @@ body {
     font-family: Optima;
 }
 
-* {}
+* {
+    box-sizing: border-box;
+}
 
 #banner {
     text-align: center;
-    margin: 20px;
+    margin: 20px 10px 40px;
 }
 
 #banner img {
@@ -17,6 +19,8 @@ body {
 
 #app {
     flex-direction: row;
+    margin: 0 auto;
+    width: 1060px;
 }
 
 #sidebar {
@@ -67,7 +71,7 @@ body {
 }
 
 #about {
-    margin-bottom: 40px;
+    margin: 40px 0px;
     display: block;
 }
 

@@ -19,6 +19,7 @@ module.exports = [
   ]
 ,
   title: 'Evaluator'
+  folded: yes
   projects: [
     title: 'Evaluator in Go'
     repo: "https://github.com/Cirru/cirru-interpreter.go"
@@ -38,6 +39,7 @@ module.exports = [
   ]
 ,
   title: 'Converter'
+  folded: yes
   projects: [
     title: 'Convert JSON to Cirru'
     repo: 'https://github.com/Cirru/cirru-writer/'
@@ -57,6 +59,7 @@ module.exports = [
   ]
 ,
   title: 'Editor Support'
+  folded: yes
   projects: [
     title: 'Sublime Text Package'
     repo: "https://github.com/Cirru/sublime-cirru"
@@ -85,6 +88,7 @@ module.exports = [
   ]
 ,
   title: 'Highlighting'
+  folded: yes
   projects: [
     title: 'Rainbow Plugin'
     repo: "https://github.com/Cirru/cirru-rainbow"
