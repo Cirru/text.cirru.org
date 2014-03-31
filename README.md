@@ -4,7 +4,7 @@ Cirru.org
 
 IPA: /ˈsɪɹə/
 
-The name Cirru came from `cirrus cloud`.
+The name Cirru comes from `cirrus cloud`.
 I read it like `cirrus`(no `s`) before there's a better one.
 
 Home page: http://cirru.org

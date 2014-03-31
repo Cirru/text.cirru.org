@@ -30,7 +30,7 @@ ui = new Vue
   data:
     content: content
     repo: ''
-    readme: 'IPA: /ˈsɪɹə/ Indentation based grammer for programming'
+    readme: ''
     alter: undefined
 
   methods:
@@ -40,7 +40,7 @@ ui = new Vue
         @alter = ''
         @readme = 'Loading from GitHub...'
         get readmeUrl, (data) =>
-          @readme = atob data.content
+          @readme = decodeURIComponent escape atob data.content
       else
         @alter = 'This is a forked project'
         @readme = ''
@@ -49,3 +49,5 @@ ui = new Vue
         Rainbow.color()
       , 10
       marked readme
+
+document.querySelector('.project').click()
