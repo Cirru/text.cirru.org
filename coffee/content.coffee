@@ -36,6 +36,10 @@ module.exports = [
     title: 'Cirru Table: concept of debugging'
     repo: 'https://github.com/Cirru/cirru-table'
     readme: 'https://api.github.com/repos/Cirru/cirru-table/readme'
+  ,
+    title: 'Cirru Candy Box: show values in environment'
+    repo: 'https://github.com/Cirru/cirru-candy-box'
+    readme: 'https://api.github.com/repos/Cirru/cirru-candy-box/readme'
   ]
 ,
   title: 'Converter'
