@@ -49,6 +49,10 @@ module.exports = [
     repo: 'https://github.com/Cirru/cirru-writer/'
     readme: 'https://api.github.com/repos/Cirru/cirru-writer/readme'
   ,
+    title: 'Read Cirru as JSON and convert back with cirru-write'
+    repo: 'https://github.com/Cirru/cirru-json'
+    readme: 'https://api.github.com/repos/Cirru/cirru-json/readme'
+  ,
     title: 'Convert Cirru to Mustache'
     repo: "https://github.com/Cirru/cirru-mustache"
     readme: 'https://api.github.com/repos/Cirru/cirru-mustache/readme'
