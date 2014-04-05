@@ -4,6 +4,22 @@ content = require './content'
 renderer = new marked.Renderer
 renderer.code = (code, lang) ->
   "<pre><code data-language=\"#{lang}\">#{code}</code></pre>"
+
+renderer.link = (href, title, text) ->
+  if this.options.sanitize
+    try
+      prot = decodeURIComponent(unescape(href))
+        .replace(/[^\w:]/g, '')
+        .toLowerCase();
+    catch e
+      return ''
+    if prot.indexOf('javascript:') is 0
+      return ''
+  optTitle = \
+    if title? then " title=\"#{title}\""
+    else ''
+  "<a target=\"_blank\" href=\"#{href}\"#{optTitle}>#{text}</a>"
+
 marked.setOptions
   gfm: yes
   breaks: no

@@ -19,6 +19,7 @@ body
       #about
         a.repo
           :v-model repo
+          :target _blank
           :v-attr "href: repo"
       #readme
         :v-html "marked(readme)"
