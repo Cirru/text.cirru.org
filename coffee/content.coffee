@@ -112,4 +112,12 @@ module.exports = [
     repo: "https://github.com/Cirru/cirru-color"
     readme: 'https://api.github.com/repos/Cirru/cirru-color/readme'
   ]
+,
+  title: 'Display'
+  folded: yes
+  projects: [
+    title: 'Demo of folding Cirru code'
+    repo: "https://github.com/Cirru/cirru-folding-code"
+    readme: 'https://api.github.com/repos/Cirru/cirru-folding-code/readme'
+  ]
 ]
