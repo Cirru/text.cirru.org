@@ -74,9 +74,14 @@ module.exports = [
     readme: 'https://api.github.com/repos/Cirru/sublime-cirru/readme'
   ,
     type: 'project'
-    title: 'Cirru Editor'
+    title: 'Cirru Editor (module)'
     repo: "https://github.com/Cirru/cirru-editor"
     readme: 'https://api.github.com/repos/Cirru/cirru-editor/readme'
+  ,
+    type: 'project'
+    title: 'Cirru Light Editor'
+    repo: "https://github.com/Cirru/cirru-light-editor"
+    readme: 'https://api.github.com/repos/Cirru/cirru-light-editor/readme'
   ,
     title: 'Brackets Package'
     repo: "https://github.com/Cirru/brackets-cirru"

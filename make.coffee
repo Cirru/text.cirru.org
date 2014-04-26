@@ -32,7 +32,7 @@ target.watch = ->
 
   exec 'coffee -o js/ -wbc coffee', async:yes
 
-target.build = ->
+target.compile = ->
   target.html()
   exec 'coffee -o js/ -bc coffee', =>
     console.log 'done, js'
