@@ -35,6 +35,6 @@ html
       :href bower_components/rainbow/themes/github.css
     script
       :defer
-      :src build/build.js
+      :src build/main.js
     @insert ga.html
   @partial ui.cirru

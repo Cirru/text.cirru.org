@@ -61,6 +61,10 @@ module.exports = [
     repo: "https://github.com/Cirru/cirru-html"
     readme: 'https://api.github.com/repos/Cirru/cirru-html/readme'
   ,
+    title: 'Cirru HTML compiled to JavaScript'
+    repo: "https://github.com/Cirru/cirru-html-js"
+    readme: 'https://api.github.com/repos/Cirru/cirru-html-js/readme'
+  ,
     title: 'Write JavaScrip AST with Cirru'
     repo: "https://github.com/Cirru/scirpus"
     readme: 'https://api.github.com/repos/Cirru/scirpus/readme'

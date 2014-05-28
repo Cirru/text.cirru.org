@@ -1,39 +1,80 @@
+#!/usr/bin/env coffee
+project = 'repo/cirru/cirru.org'
 
 require 'shelljs/make'
-fs = require 'fs'
+path = require 'path'
+mission = require 'mission'
 
-station = undefined
+mission.time()
 
-reload = ->
-  if station?
-    station.reload 'repo/cirru/cirru.org/index.html'
-    console.log 'done, reload'
+target.folder = ->
+  mission.tree
+    '.gitignore': ''
+    'README.md': ''
+    js: {}
+    build: {}
+    cirru: {'index.cirru': ''}
+    coffee: {'main.coffee': ''}
+    css: {'style.css': ''}
 
-target.html = ->
-  {renderer} = require 'cirru-html'
-  file = 'cirru/index.cirru'
-  render = renderer (cat file), '@filename': file
-  render().to 'index.html'
-  console.log 'done, html'
-  reload()
+target.coffee = ->
+  mission.coffee
+    find: /\.coffee$/, from: 'coffee/', to: 'js/', extname: '.js'
+    options:
+      bare: yes
 
-target.js = ->
-  exec 'browserify -o build/build.js -d js/ui.js', =>
-    console.log 'done, browserify'
-    reload()
+cirru = ->
+  mission.cirru
+    file: 'index.cirru', from: 'cirru/', to: './', extname: '.html'
 
-target.watch = ->
+browserify = (callback) ->
+  mission.browserify
+    file: 'main.js', from: 'js/', to: 'build/', done: callback
 
-  station = require 'devtools-reloader-station'
-  station.start()
-
-  fs.watch 'cirru/', target.html
-  fs.watch 'js/', target.js
-
-  exec 'coffee -o js/ -wbc coffee', async:yes
+target.cirru = -> cirru()
+target.browserify = -> browserify()
 
 target.compile = ->
-  target.html()
-  exec 'coffee -o js/ -bc coffee', =>
-    console.log 'done, js'
-    target.js()
+  cirru()
+  target.coffee yes
+  browserify()
+
+target.watch = ->
+  station = mission.reload()
+
+  mission.watch
+    files: ['cirru/', 'coffee/']
+    trigger: (filepath, extname) ->
+      switch extname
+        when '.cirru'
+          cirru()
+          station.reload project
+        when '.coffee'
+          filepath = path.relative 'coffee/', filepath
+          mission.coffee
+            file: filepath, from: 'coffee/', to: 'js/', extname: '.js'
+            options:
+              bare: yes
+          browserify ->
+            station.reload project
+
+target.patch = ->
+  target.compile()
+  mission.bump
+    file: 'package.json'
+    options:
+      at: 'patch'
+
+target.rsync = ->
+  mission.rsync
+    file: './'
+    dest: "tiye:~/#{project}"
+    options:
+      exclude: [
+        'node_modules/'
+        'bower_components/'
+        'coffee'
+        'README.md'
+        'js'
+        '.git/'
+      ]
