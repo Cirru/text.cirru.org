@@ -24,7 +24,7 @@ target.coffee = ->
       bare: yes
 
 cirru = ->
-  mission.cirru
+  mission.cirruHtml
     file: 'index.cirru', from: 'cirru/', to: './', extname: '.html'
 
 browserify = (callback) ->

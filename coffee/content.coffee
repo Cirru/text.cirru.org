@@ -72,6 +72,10 @@ module.exports = [
     title: 'Write JavaScrip AST with Cirru'
     repo: "https://github.com/Cirru/scirpus"
     readme: 'https://api.github.com/repos/Cirru/scirpus/readme'
+  ,
+    title: 'Compile to childish JavaScrip from Cirru'
+    repo: "https://github.com/Cirru/cirru-js"
+    readme: 'https://api.github.com/repos/Cirru/cirru-js/readme'
   ]
 ,
   title: 'Editor Support'
