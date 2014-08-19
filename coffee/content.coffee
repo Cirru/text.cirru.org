@@ -46,8 +46,16 @@ module.exports = [
   folded: yes
   projects: [
     title: 'Convert JSON to Cirru'
-    repo: 'https://github.com/Cirru/cirru-writer/'
+    repo: 'https://github.com/Cirru/cirru-writer'
     readme: 'https://api.github.com/repos/Cirru/cirru-writer/readme'
+  ,
+    title: 'JSON loader written in Go'
+    repo: 'https://github.com/Cirru/json-loader'
+    readme: 'https://api.github.com/repos/Cirru/json-loader/readme'
+  ,
+    title: 'Cirru Writer written in Go'
+    repo: 'https://github.com/Cirru/writer/'
+    readme: 'https://api.github.com/repos/Cirru/writer/readme'
   ,
     title: 'Read Cirru as JSON and convert back with cirru-write'
     repo: 'https://github.com/Cirru/cirru-json'
@@ -98,7 +106,7 @@ module.exports = [
     title: 'Brackets Package'
     repo: "https://github.com/Cirru/brackets-cirru"
     readme: 'https://raw.github.com/Cirru/brackets-cirru/master/README.md'
-    readme: 'https://api.github.com/repos/Cirru/cirru-table/readme'
+    readme: 'https://api.github.com/repos/Cirru/brackets-cirru/readme'
   ,
     title: 'CodeMorror support'
     repo: "https://github.com/Cirru/codemirror-cirru"
