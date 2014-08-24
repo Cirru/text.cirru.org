@@ -138,11 +138,19 @@ module.exports = [
     readme: 'https://api.github.com/repos/Cirru/cirru-color/readme'
   ]
 ,
-  title: 'Display'
+  title: 'Concept'
   folded: yes
   projects: [
     title: 'Demo of folding Cirru code'
     repo: "https://github.com/Cirru/cirru-folding-code"
     readme: 'https://api.github.com/repos/Cirru/cirru-folding-code/readme'
+  ]
+,
+  title: 'Plugin'
+  folded: yes
+  projects: [
+    title: 'Gulp plugin for converting Cirru HTML'
+    repo: 'https://github.com/Cirru/gulp-cirru-html'
+    readme: 'https://api.github.com/repos/Cirru/gulp-cirru-html/readme'
   ]
 ]
