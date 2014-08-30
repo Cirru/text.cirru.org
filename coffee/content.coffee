@@ -77,11 +77,11 @@ module.exports = [
     repo: "https://github.com/Cirru/cirru-from-html"
     readme: 'https://api.github.com/repos/Cirru/cirru-from-html/readme'
   ,
-    title: 'Write JavaScrip AST with Cirru'
+    title: 'Write JavaScript AST with Cirru'
     repo: "https://github.com/Cirru/scirpus"
     readme: 'https://api.github.com/repos/Cirru/scirpus/readme'
   ,
-    title: 'Compile to childish JavaScrip from Cirru'
+    title: 'Compile to childish JavaScript from Cirru'
     repo: "https://github.com/Cirru/cirru-js"
     readme: 'https://api.github.com/repos/Cirru/cirru-js/readme'
   ]
