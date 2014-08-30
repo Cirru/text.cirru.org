@@ -14,16 +14,16 @@ module.exports = [
     readme: 'https://api.github.com/repos/Cirru/cirru-parser/readme'
   ,
     title: 'Cirru Parser in Go'
-    repo: "https://github.com/Cirru/cirru-parser.go"
-    readme: 'https://api.github.com/repos/Cirru/cirru-parser.go/readme'
+    repo: "https://github.com/Cirru/parser"
+    readme: 'https://api.github.com/repos/Cirru/parser/readme'
   ]
 ,
   title: 'Evaluator'
   folded: yes
   projects: [
     title: 'Evaluator in Go'
-    repo: "https://github.com/Cirru/cirru-interpreter.go"
-    readme: 'https://api.github.com/repos/Cirru/cirru-interpreter.go/readme'
+    repo: "https://github.com/Cirru/interpreter"
+    readme: 'https://api.github.com/repos/Cirru/interpreter/readme'
   ,
     title: 'Evaluator in CoffeeScript'
     repo: "https://github.com/Cirru/cirru-interpreter"
