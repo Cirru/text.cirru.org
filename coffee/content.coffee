@@ -144,6 +144,10 @@ module.exports = [
     title: 'Demo of folding Cirru code'
     repo: "https://github.com/Cirru/cirru-folding-code"
     readme: 'https://api.github.com/repos/Cirru/cirru-folding-code/readme'
+  ,
+    title: 'Vertical coding'
+    repo: "https://github.com/Cirru/vertical-coding"
+    readme: 'https://api.github.com/repos/Cirru/vertical-coding/readme'
   ]
 ,
   title: 'Plugin'
