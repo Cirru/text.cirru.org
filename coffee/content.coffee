@@ -148,6 +148,10 @@ module.exports = [
     title: 'Vertical coding'
     repo: "https://github.com/Cirru/vertical-coding"
     readme: 'https://api.github.com/repos/Cirru/vertical-coding/readme'
+  ,
+    title: 'Fractal editor'
+    repo: "https://github.com/Cirru/cirru-fractal-editor"
+    readme: 'https://api.github.com/repos/Cirru/cirru-fractal-editor/readme'
   ]
 ,
   title: 'Plugin'
