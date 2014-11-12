@@ -33,6 +33,7 @@ The essence of Cirru is the indetation-based grammar:
 * like Lisp, code is syntax tree, and use prefix syntax
 * like Haskell, code after `$` as a single expression
 * like CoffeeScript, indetations with strictly 2 blanks
+* also `,` as a function to unfold its expression
 
 ### Examples
 
