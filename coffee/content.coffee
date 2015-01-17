@@ -16,6 +16,10 @@ module.exports = [
     title: 'Cirru Parser in Go'
     repo: "https://github.com/Cirru/parser"
     readme: 'https://api.github.com/repos/Cirru/parser/readme'
+  ,
+    title: 'Parser in Haskell(not finished)'
+    repo: "https://github.com/Cirru/parser.hs"
+    readme: 'https://api.github.com/repos/Cirru/parser.hs/readme'
   ]
 ,
   title: 'Evaluator'
@@ -45,6 +49,10 @@ module.exports = [
   title: 'Converter'
   folded: yes
   projects: [
+    title: 'CirruScript: generates JavaScript from Cirru'
+    repo: "https://github.com/Cirru/cirru-script"
+    readme: 'https://api.github.com/repos/Cirru/cirru-script/readme'
+  ,
     title: 'Convert JSON to Cirru'
     repo: 'https://github.com/Cirru/cirru-writer'
     readme: 'https://api.github.com/repos/Cirru/cirru-writer/readme'
@@ -80,10 +88,6 @@ module.exports = [
     title: 'Write JavaScript AST with Cirru'
     repo: "https://github.com/Cirru/scirpus"
     readme: 'https://api.github.com/repos/Cirru/scirpus/readme'
-  ,
-    title: 'Compile to childish JavaScript from Cirru'
-    repo: "https://github.com/Cirru/cirru-js"
-    readme: 'https://api.github.com/repos/Cirru/cirru-js/readme'
   ]
 ,
   title: 'Editor Support'
