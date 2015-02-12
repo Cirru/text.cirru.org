@@ -164,5 +164,13 @@ module.exports = [
     title: 'Gulp plugin for converting Cirru HTML'
     repo: 'https://github.com/Cirru/gulp-cirru-html'
     readme: 'https://api.github.com/repos/Cirru/gulp-cirru-html/readme'
+  ,
+    title: 'Gulp plugin of CirruScript'
+    repo: 'https://github.com/Cirru/gulp-cirru-script'
+    readme: 'https://api.github.com/repos/Cirru/gulp-cirru-script/readme'
+  ,
+    title: 'CirruScript Webpack loader'
+    repo: 'https://github.com/Cirru/cirru-script-loader'
+    readme: 'https://api.github.com/repos/Cirru/cirru-script-loader/readme'
   ]
 ]
