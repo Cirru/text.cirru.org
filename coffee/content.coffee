@@ -172,5 +172,12 @@ module.exports = [
     title: 'CirruScript Webpack loader'
     repo: 'https://github.com/Cirru/cirru-script-loader'
     readme: 'https://api.github.com/repos/Cirru/cirru-script-loader/readme'
+  ,
+    title: 'CirruScript Liftoff support'
+    repo: 'https://github.com/Cirru/js-interpret'
+  ,
+    title: 'CirruScript Chrome Extension'
+    repo: 'https://github.com/Cirru/script-console'
+    readme: 'https://api.github.com/repos/Cirru/script-console/readme'
   ]
 ]
