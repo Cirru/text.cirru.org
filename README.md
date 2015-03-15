@@ -4,36 +4,37 @@ Cirru.org
 
 IPA: /ˈsɪɹə/
 
+> Writing code in syntax tree
+
 Home page: http://cirru.org
 
-Twiter: https://twitter.com/cirrulang
-
-The name Cirru comes from `cirrus cloud`.
-I read it like `cirrus`(no `s`) before there's a better one.
+Twitter: https://twitter.com/cirrulang
 
 ### Why Cirru?
 
-Code with lots of brackets are good to parse
-while code with indetations are good to read.
+In programming languages, symbols(like brackets) make lexing and paring simpler,
+indentations make code readable. And this may lead to really tricky syntaxes.
 
-Cirru tries to decrease the amount of special characters
-that appear in programming languages.
-
-Also, in order to make it simple, Cirru adopted Lisp's notions:
-
-* Code is data
-* Syntax to model AST
+I want people just write code by editing the syntax tree.
+So there should be a small language showing us how does it work.
 
 ### What is Cirru?
 
-The essence of Cirru is the indetation-based grammar:
+The name "Cirru" came from `cirrus cloud`. I read it like `cirrus`(but without `s`).
 
-* `()` to create expressions inside each line
-* like Bash, `""` and `\` to create strings with blanks
-* like Lisp, code is syntax tree, and use prefix syntax
-* like Haskell, code after `$` as a single expression
-* like CoffeeScript, indetations with strictly 2 blanks
-* also `,` as a function to unfold its expression
+The core of Cirru is the indetation-based syntax:
+
+* use prefix syntax, see Lisp
+* `()` to create expressions inside each line, see Lisp
+* indetation with 2 spaces
+* represent token with optional `""` and `\`, see Bash
+* `$` as a function to fold code, see Haskell
+* `,` as a function to unfold code
+
+Cirru prefers Lisp's notions to make itself minimalistic:
+
+* Code is data
+* Syntax represents AST
 
 ### Examples
 
@@ -60,17 +61,14 @@ set a
     number 2
 ```
 
-Look up [cirru-parser][syntax] for more examples.
+Find more examples at [cirru-parser][parser].
 
-[syntax]: https://github.com/Cirru/cirru-parser#syntax
+[parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
 
 ### Usage
 
-While that is simple, there are many subprojects around Cirru.
-Cirru is not yet a programming langauge, but it might be.
+While that is simple, there are many subprojects around Cirru, such as:
 
-Hopefully, Cirru will be used in scripting languages,
-and make programming simple of even elegant for many people.
-
-For now, you may browse my projects on the left,
-and see how I play with Cirru.
+* CirruScript: compiled-to-js language
+* interpreter: a demo of scripting language in Go
+* Cirru Editor: graphical syntax tree editor
