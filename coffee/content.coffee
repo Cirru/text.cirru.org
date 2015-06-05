@@ -112,7 +112,7 @@ module.exports = [
     readme: 'https://raw.github.com/Cirru/brackets-cirru/master/README.md'
     readme: 'https://api.github.com/repos/Cirru/brackets-cirru/readme'
   ,
-    title: 'CodeMorror support'
+    title: 'CodeMirror support'
     repo: "https://github.com/Cirru/codemirror-cirru"
     readme: 'https://api.github.com/repos/Cirru/codemirror-cirru/readme'
   ,
