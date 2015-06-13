@@ -22,11 +22,11 @@ So there should be a small language showing us how does it work.
 
 The name "Cirru" came from `cirrus cloud`. I read it like `cirrus`(but without `s`).
 
-The core of Cirru is the indetation-based syntax:
+The core of Cirru is the indentation-based syntax:
 
 * use prefix syntax, see Lisp
 * `()` to create expressions inside each line, see Lisp
-* indetation with 2 spaces
+* indentation with 2 spaces
 * represent token with optional `""` and `\`, see Bash
 * `$` as a function to fold code, see Haskell
 * `,` as a function to unfold code
