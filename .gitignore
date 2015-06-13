@@ -1,7 +1,7 @@
 
-google*.html
-index.html
-node_modules/
-bower_components/
-js/
-build/
+/build/
+/lib/
+/node_modules/
+/assets.json
+/index.html
+/google*

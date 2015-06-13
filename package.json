@@ -1,17 +1,38 @@
 {
   "name": "cirru.org",
-  "version": "0.0.0",
-  "description": "docs site of Cirru",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Home page for Cirru Project",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "jiyinyiyong",
+  "license": "MIT",
+  "keywords": [
+    "cirru"
+  ],
+  "devDependencies": {
+    "cirru-script": "^0.2.3",
+    "cirru-script-loader": "0.1.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-cirru-script": "^0.1.1",
+    "rsyncwrapper": "^0.4.2",
+    "run-sequence": "^1.0.2",
+    "stir-template": "^0.1.4",
+    "webpack": "^1.8.5",
+    "webpack-dev-server": "^1.8.0"
+  },
+  "dependencies": {
+    "Rainbow": "git://github.com/ccampbell/rainbow.git",
+    "cirru-rainbow": "git://github.com/cirru/cirru-rainbow.git",
+    "react": "^0.13.3",
+    "react-remarkable": "^1.1.1"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Cirru/cirru.org.git"
+    "url": "https://github.com/Cirru/cirru.org.git"
   },
-  "author": "",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Cirru/cirru.org/issues"
   },
