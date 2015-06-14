@@ -103,12 +103,12 @@
         :repo :https://github.com/Cirru/sublime-cirru
         :readme :https://api.github.com/repos/Cirru/sublime-cirru/readme
       object
-        type: 'project'
+        :type: :project
         :title ":Cirru Editor (module)"
         :repo :https://github.com/Cirru/cirru-editor
         :readme :https://api.github.com/repos/Cirru/cirru-editor/readme
       object
-        type: 'project'
+        :type :project
         :title ":Cirru Light Editor"
         :repo :https://github.com/Cirru/cirru-light-editor
         :readme :https://api.github.com/repos/Cirru/cirru-light-editor/readme
@@ -124,13 +124,13 @@
       object
         :title ":Ace Editor support"
         :repo :https://github.com/Cirru/ace
-      object:
+      object
         :title ":Atom Editor support"
         :repo :https://github.com/Cirru/language-cirru
         :readme :https://api.github.com/repos/Cirru/language-cirru/readme
 
   object
-    :title ":Highlighting"
+    :title :Highlighting
     :folded true
     :projects $ array
       object
@@ -140,16 +140,16 @@
       object
         :title ":Highlight.js fork with Cirru syntax"
         :repo :https://github.com/Cirru/highlight.js
-      object:
+      object
         :title ":Pygments fork with Cirru syntax"
         :repo :https://bitbucket.org/jiyinyiyong/pygments-main/
-      object:
+      object
         :title ":Custom-made Syntax Highlighting"
         :repo :https://github.com/Cirru/cirru-color
         :readme :https://api.github.com/repos/Cirru/cirru-color/readme
 
   object
-    :title ":Concept"
+    :title :Concept
     :folded true
     :projects $ array
       object
@@ -166,7 +166,7 @@
         :readme :https://api.github.com/repos/Cirru/cirru-fractal-editor/readme
 
   object
-    :title ":Plugin"
+    :title :Plugin
     :folded true
     :projects $ array
       object

@@ -5,8 +5,13 @@ var
 var
   div $ React.createFactory :div
 
+var T React.PropTypes
+
 = module.exports $ React.createClass $ object
   :displayName :about
+
+  :propTypes $ object
+    :repo T.string.isRequired
 
   :getInitialState $ \ ()
     return $ object
@@ -14,4 +19,5 @@ var
 
   :render $ \ ()
     return $ div (object (:className :about))
-      , :about
+      , this.props.repo
+

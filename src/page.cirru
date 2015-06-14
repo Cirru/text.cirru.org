@@ -14,14 +14,14 @@ var
 
   :getInitialState $ \ ()
     return $ object
-      :github :https://github.com/Cirru/cirru.org
+      :repo :https://github.com/Cirru/cirru.org
 
-  :onGithubSet $ \ (url)
+  :onRepoSelect $ \ (url)
     this.setState $ object
-      :github url
+      :repo url
 
   :render $ \ ()
-    return $ div null
-      Sidebar $ object (:github this.state.github)
-        :onGithubSet this.onGithubSet
-      About $ object (:github this.state.github)
+    return $ div (object (:className :page))
+      Sidebar $ object (:repo this.state.repo)
+        :onRepoSelect this.onRepoSelect
+      About $ object (:repo this.state.repo)

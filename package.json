@@ -26,6 +26,7 @@
   "dependencies": {
     "Rainbow": "git://github.com/ccampbell/rainbow.git",
     "cirru-rainbow": "git://github.com/cirru/cirru-rainbow.git",
+    "classnames": "^2.1.2",
     "react": "^0.13.3",
     "react-remarkable": "^1.1.1"
   },

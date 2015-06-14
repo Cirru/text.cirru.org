@@ -1,0 +1,24 @@
+
+.sidebar {
+    padding: 40px 20px;
+}
+
+.sidebar .group {
+    padding-top: 20px;
+}
+
+.sidebar .title {}
+
+.sidebar .projects {
+    padding-left: 20px;
+}
+
+.sidebar .project {
+    color: hsl(0, 0%, 51%);
+    cursor: pointer;
+}
+
+.sidebar .project:hover,
+.sidebar .project.is-selected {
+    color: black;
+}

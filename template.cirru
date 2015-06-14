@@ -18,6 +18,8 @@ var ga $ fs.readFileSync :html/ga.html :utf8
         meta $ object (:name :author) (:content :http://tiye.me)
         link $ object (:rel :icon)
           :href :http://logo.cirru.org/cirru-32x32.png
+        link $ object (:rel :stylesheet)
+          :href :./style/main.css
         script $ object (:src data.vendor) (:defer true)
         script $ object (:src data.main) (:defer true)
         cond (not data.env) ga :
