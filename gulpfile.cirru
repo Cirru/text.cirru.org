@@ -14,10 +14,10 @@ gulp.task :rsync $ \ (cb)
   wrapper.rsync
     object
       :ssh true
-      :src $ array :index.html :build
+      :src $ array :index.html :build :style :google*
       :recursive true
       :args $ array :--verbose
-      :dest :tiye:~/repo/workflow/
+      :dest :tiye:~/repo/cirru/cirru.org/
       :deleteAll true
     \ (error stdout stderr cmd)
       if (? error)

@@ -8,7 +8,7 @@ var
     :vendor $ array
       , :webpack-dev-server/client?http://0.0.0.0:8080
       , :webpack/hot/dev-server
-      , :react :react-remarkable
+      , :react :react-remarkable :highlight.js :classnames :cirru-color
     :main $ array :./src/main
 
   :output $ object

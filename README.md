@@ -6,39 +6,41 @@ IPA: /ˈsɪɹə/
 
 > Writing code in syntax tree
 
-Home page: http://cirru.org
-
-Twitter: https://twitter.com/cirrulang
+* Home page http://cirru.org
+* GitHub https://github.com/Cirru
+* Twitter https://twitter.com/cirrulang
+* Medium https://medium.com/cirru-project
+* SegmentFault http://segmentfault.com/t/cirru/blogs
+* Gitter https://gitter.im/Cirru
 
 ### Why Cirru?
 
-In programming languages, symbols(like brackets) make lexing and paring simpler,
-indentations make code readable. And this may lead to really tricky syntaxes.
+Cirru Project helps people code in syntax tree. It offers a tree editor and a text syntax.
 
-I want people just write code by editing the syntax tree.
-So there should be a small language showing us how does it work.
+Cirru prefers indentations.
+Symbols simplify parsing, indentations improves readability.
 
 ### What is Cirru?
 
-The name "Cirru" came from `cirrus cloud`. I read it like `cirrus`(but without `s`).
+"Cirru" came from `cirrus cloud`, and reads like `cirrus`(but without `s`).
 
-The core of Cirru is the indentation-based syntax:
+The core of Cirru's text form is a indentation-based syntax:
 
-* use prefix syntax, see Lisp
-* `()` to create expressions inside each line, see Lisp
+* prefix syntax, see Lisp
+* `()` to create expressions inside each line
 * indentation with 2 spaces
 * represent token with optional `""` and `\`, see Bash
 * `$` as a function to fold code, see Haskell
-* `,` as a function to unfold code
+* `,` as a function to unfold code, see CoffeeScript
 
-Cirru prefers Lisp's notions to make itself minimalistic:
+Cirru adopted Lisp's notions to keep minimalistic:
 
-* Code is data
 * Syntax represents AST
+* Code is data
 
 ### Examples
 
-These examples below are identical:
+These snippets are identical:
 
 ```cirru
 set a (add (number 1) (numer 2))
@@ -61,14 +63,6 @@ set a
     number 2
 ```
 
-Find more examples at [cirru-parser][parser].
+Find more at [cirru-parser][parser].
 
 [parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
-
-### Usage
-
-While that is simple, there are many subprojects around Cirru, such as:
-
-* CirruScript: compiled-to-js language
-* interpreter: a demo of scripting language in Go
-* Cirru Editor: graphical syntax tree editor
