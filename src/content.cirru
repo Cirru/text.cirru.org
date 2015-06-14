@@ -2,7 +2,6 @@
 = module.exports $ array
   object
     :title :Overview
-    :folded false
     :projects $ array
       object
         :title ":What is Cirru?"
@@ -12,25 +11,133 @@
         :title ":Cirru's Logo"
         :repo :https://github.com/Cirru/logo.cirru.org
         :readme :https://api.github.com/repos/Cirru/logo.cirru.org/readme
+
   object
     :title :Parser
-    :folded false
     :projects $ array
       object
-        :title ":Cirru Parser in CoffeeScript"
+        :title ":Parser in CoffeeScript"
         :repo :https://github.com/Cirru/cirru-parser
         :readme :https://api.github.com/repos/Cirru/cirru-parser/readme
       object
-        :title ":Cirru Parser in Go"
+        :title ":Parser in Go"
         :repo :https://github.com/Cirru/parser
         :readme :https://api.github.com/repos/Cirru/parser/readme
       object
         :title ":Parser in Haskell"
         :repo :https://github.com/Cirru/parser.hs
         :readme :https://api.github.com/repos/Cirru/parser.hs/readme
+      object
+        :title ":Parser in Racket"
+        :repo :https://github.com/Cirru/cirruparser-rkt
+        :readme :https://api.github.com/repos/Cirru/cirruparser-rkt/readme
+      object
+        :title ":Parser in Ruby"
+        :repo :https://github.com/Cirru/parser.rb
+        :readme :https://api.github.com/repos/Cirru/parser.rb/readme
+      object
+        :title ":Parser in Julia"
+        :repo :https://github.com/Cirru/CirruParser.jl
+        :readme :https://api.github.com/repos/Cirru/CirruParser.jl/readme
+
+  object
+    :title :CirruScript
+    :projects $ array
+      object
+        :title ":CirruScirpt Home"
+        :repo :https://github.com/Cirru/script.cirru.org
+        :readme :https://api.github.com/repos/Cirru/script.cirru.org/readme
+      object
+        :title ":CirruScript: generates JavaScript from Cirru"
+        :repo :https://github.com/Cirru/cirru-script
+        :readme :https://api.github.com/repos/Cirru/cirru-script/readme
+      object
+        :title ":Gulp plugin of CirruScript"
+        :repo :https://github.com/Cirru/gulp-cirru-script
+        :readme :https://api.github.com/repos/Cirru/gulp-cirru-script/readme
+      object
+        :title ":CirruScript Webpack loader"
+        :repo :https://github.com/Cirru/cirru-script-loader
+        :readme :https://api.github.com/repos/Cirru/cirru-script-loader/readme
+      object
+        :title ":CirruScript Liftoff support"
+        :repo :https://github.com/Cirru/js-interpret
+      object
+        :title ":CirruScript Chrome Extension"
+        :repo :https://github.com/Cirru/script-console
+        :readme :https://api.github.com/repos/Cirru/script-console/readme
+      object
+        :title ":Write JavaScript AST with Cirru"
+        :repo :https://github.com/Cirru/scirpus
+        :readme :https://api.github.com/repos/Cirru/scirpus/readme
+
+  object
+    :title ":Cirru HTML"
+    :projects $ array
+      object
+        :title ":HTML templating in Cirru"
+        :repo :https://github.com/Cirru/cirru-html
+        :readme :https://api.github.com/repos/Cirru/cirru-html/readme
+      object
+        :title ":Cirru HTML compiled to JavaScript"
+        :repo :https://github.com/Cirru/cirru-html-js
+        :readme :https://api.github.com/repos/Cirru/cirru-html-js/readme
+      object
+        :title ":Convert HTML to Cirru Grammar"
+        :repo :https://github.com/Cirru/cirru-from-html
+        :readme :https://api.github.com/repos/Cirru/cirru-from-html/readme
+      object
+        :title ":Gulp plugin for converting Cirru HTML"
+        :repo :https://github.com/Cirru/gulp-cirru-html
+        :readme :https://api.github.com/repos/Cirru/gulp-cirru-html/readme
+      object
+        :title ":Convert Cirru to Mustache"
+        :repo :https://github.com/Cirru/cirru-mustache
+        :readme :https://api.github.com/repos/Cirru/cirru-mustache/readme
+
+  object
+    :title ":Sepal (Cirru to AST or IR)"
+    :projects $ array
+      object
+        :title ":(Failed) Cirru to LLVM IR"
+        :repo :https://github.com/Cirru/sepal
+        :readme :https://api.github.com/repos/Cirru/sepal/readme
+      object
+        :title ":Sepal in Racket"
+        :repo :https://github.com/Cirru/cirrusepal-rkt
+        :readme :https://api.github.com/repos/Cirru/cirrusepal-rkt/readme
+      object
+        :title ":Sepal in Ruby"
+        :repo :https://github.com/Cirru/sepal.rb
+        :readme :https://api.github.com/repos/Cirru/sepal.rb/readme
+      object
+        :title ":Sepal in Julia"
+        :repo :https://github.com/Cirru/CirruSepal.jl
+        :readme :https://api.github.com/repos/Cirru/CirruSepal.jl/readme
+
+  object
+    :title :Formatter
+    :projects $ array
+      object
+        :title ":Convert JSON to Cirru"
+        :repo :https://github.com/Cirru/cirru-writer
+        :readme :https://api.github.com/repos/Cirru/cirru-writer/readme
+      object
+        :title ":Read Cirru as JSON and convert back with cirru-write"
+        :repo :https://github.com/Cirru/cirru-json
+        :readme :https://api.github.com/repos/Cirru/cirru-json/readme
+      object
+        :title ":JSON loader written in Go"
+        :repo :https://github.com/Cirru/json-loader
+        :readme :https://api.github.com/repos/Cirru/json-loader/readme
+      object
+        :title ":Cirru Writer written in Go"
+        :repo :https://github.com/Cirru/writer/
+        :readme :https://api.github.com/repos/Cirru/writer/readme
+
+
   object
     :title ":Evaluator"
-    :folded true
     :projects $ array
       object
         :title ":Evaluator in Go"
@@ -49,58 +156,16 @@
         :repo :https://github.com/Cirru/cirru-table
         :readme :https://api.github.com/repos/Cirru/cirru-table/readme
       object
+        :title ":(Failed) Table Redo: live coding"
+        :repo :https://github.com/Cirru/cirru-table-redo
+        :readme :https://api.github.com/repos/Cirru/cirru-table-redo/readme
+      object
         :title ":Cirru Candy Box: show values in environment"
         :repo :https://github.com/Cirru/cirru-candy-box
         :readme :https://api.github.com/repos/Cirru/cirru-candy-box/readme
 
   object
-    :title ":Converter"
-    :folded true
-    :projects $ array
-      object
-        :title ":CirruScript: generates JavaScript from Cirru"
-        :repo :https://github.com/Cirru/cirru-script
-        :readme :https://api.github.com/repos/Cirru/cirru-script/readme
-      object
-        :title ":Convert JSON to Cirru"
-        :repo :https://github.com/Cirru/cirru-writer
-        :readme :https://api.github.com/repos/Cirru/cirru-writer/readme
-      object
-        :title ":JSON loader written in Go"
-        :repo :https://github.com/Cirru/json-loader
-        :readme :https://api.github.com/repos/Cirru/json-loader/readme
-      object
-        :title ":Cirru Writer written in Go"
-        :repo :https://github.com/Cirru/writer/
-        :readme :https://api.github.com/repos/Cirru/writer/readme
-      object
-        :title ":Read Cirru as JSON and convert back with cirru-write"
-        :repo :https://github.com/Cirru/cirru-json
-        :readme :https://api.github.com/repos/Cirru/cirru-json/readme
-      object
-        :title ":Convert Cirru to Mustache"
-        :repo :https://github.com/Cirru/cirru-mustache
-        :readme :https://api.github.com/repos/Cirru/cirru-mustache/readme
-      object
-        :title ":HTML templating in Cirru"
-        :repo :https://github.com/Cirru/cirru-html
-        :readme :https://api.github.com/repos/Cirru/cirru-html/readme
-      object
-        :title ":Cirru HTML compiled to JavaScript"
-        :repo :https://github.com/Cirru/cirru-html-js
-        :readme :https://api.github.com/repos/Cirru/cirru-html-js/readme
-      object
-        :title ":Convert HTML to Cirru Grammar"
-        :repo :https://github.com/Cirru/cirru-from-html
-        :readme :https://api.github.com/repos/Cirru/cirru-from-html/readme
-      object
-        :title ":Write JavaScript AST with Cirru"
-        :repo :https://github.com/Cirru/scirpus
-        :readme :https://api.github.com/repos/Cirru/scirpus/readme
-
-  object
     :title ":Editor Support"
-    :folded true
     :projects $ array
       object
         :title ":Sublime Text Package"
@@ -134,7 +199,6 @@
 
   object
     :title :Highlighting
-    :folded true
     :projects $ array
       object
         :title ":Rainbow Plugin"
@@ -153,7 +217,6 @@
 
   object
     :title :Concept
-    :folded true
     :projects $ array
       object
         :title ":Demo of folding Cirru code"
@@ -167,27 +230,3 @@
         :title ":Fractal editor"
         :repo :https://github.com/Cirru/cirru-fractal-editor
         :readme :https://api.github.com/repos/Cirru/cirru-fractal-editor/readme
-
-  object
-    :title :Plugin
-    :folded true
-    :projects $ array
-      object
-        :title ":Gulp plugin for converting Cirru HTML"
-        :repo :https://github.com/Cirru/gulp-cirru-html
-        :readme :https://api.github.com/repos/Cirru/gulp-cirru-html/readme
-      object
-        :title ":Gulp plugin of CirruScript"
-        :repo :https://github.com/Cirru/gulp-cirru-script
-        :readme :https://api.github.com/repos/Cirru/gulp-cirru-script/readme
-      object
-        :title ":CirruScript Webpack loader"
-        :repo :https://github.com/Cirru/cirru-script-loader
-        :readme :https://api.github.com/repos/Cirru/cirru-script-loader/readme
-      object
-        :title ":CirruScript Liftoff support"
-        :repo :https://github.com/Cirru/js-interpret
-      object
-        :title ":CirruScript Chrome Extension"
-        :repo :https://github.com/Cirru/script-console
-        :readme :https://api.github.com/repos/Cirru/script-console/readme
