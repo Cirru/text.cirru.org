@@ -6,7 +6,6 @@ var
 
 var
   div $ React.createFactory :div
-  span $ React.createFactory :span
 
 var T React.PropTypes
 
@@ -24,7 +23,7 @@ var T React.PropTypes
     return $ div (object (:className :sidebar))
       content.map $ \\ (group index)
         return $ div (object (:className :group) (:key index))
-          span (object (:className :title)) group.title
+          div (object (:className :title)) group.title
           div (object (:className :projects))
             group.projects.map $ \\ (project index2)
               var className $ classnames :project

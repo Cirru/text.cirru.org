@@ -59,5 +59,5 @@ var T React.PropTypes
   :render $ \ ()
     return $ div (object (:className :about) (:onClick this.onClick))
       cond this.state.isLoading
-        + ":Loading from" this.props.repo :...
+        + ":Loading from " this.props.repo :...
         Markdown $ object (:source this.state.readme) (:options mdOptions)

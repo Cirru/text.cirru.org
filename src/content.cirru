@@ -8,6 +8,10 @@
         :title ":What is Cirru?"
         :repo :https://github.com/Cirru/cirru.org
         :readme :https://api.github.com/repos/Cirru/cirru.org/readme
+      object
+        :title ":Cirru's Logo"
+        :repo :https://github.com/Cirru/logo.cirru.org
+        :readme :https://api.github.com/repos/Cirru/logo.cirru.org/readme
   object
     :title :Parser
     :folded false
@@ -115,8 +119,7 @@
       object
         :title ":Brackets Package"
         :repo :https://github.com/Cirru/brackets-cirru
-        :readme :https://raw.github.com/Cirru/brackets-cirru/master/README.md
-        readme: :https://api.github.com/repos/Cirru/brackets-cirru/readme
+        :readme: :https://api.github.com/repos/Cirru/brackets-cirru/readme
       object
         :title ":CodeMirror support"
         :repo :https://github.com/Cirru/codemirror-cirru

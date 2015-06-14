@@ -1,6 +1,7 @@
 
 .sidebar {
-    padding: 40px 20px;
+    padding: 40px 0;
+    font-family: HelveticaNeue-Light, Helvetica, Sans Serif;
 }
 
 .sidebar .group {
@@ -10,6 +11,8 @@
 .sidebar .title {
     color: hsl(0,0%,50%);
     font-size: 18px;
+    line-height: 2em;
+    padding: 0 1em;
 }
 
 .sidebar .projects {
@@ -18,9 +21,15 @@
 }
 
 .sidebar .project {
-    color: hsl(0, 0%, 51%);
+    color: hsl(0, 0%, 57%);
     cursor: pointer;
     font-size: 16px;
+    margin-top: 1px;
+    padding: 0 1em;
+    line-height: 2em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .sidebar .project:hover,
