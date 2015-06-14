@@ -12,4 +12,7 @@
     width: 400px;
 }
 
-.page .about {}
+.page .about {
+    flex: 1;
+    overflow: auto;
+}

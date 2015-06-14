@@ -24,4 +24,4 @@ var
     return $ div (object (:className :page))
       Sidebar $ object (:repo this.state.repo)
         :onRepoSelect this.onRepoSelect
-      About $ object (:repo this.state.repo)
+      About $ object (:repo this.state.repo) (:key this.state.repo)
