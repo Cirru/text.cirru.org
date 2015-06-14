@@ -3,6 +3,7 @@ var
   React $ require :react
   get $ require :./get
   content $ require :./content
+  mdOptions $ require :./md-options
 
 var
   Markdown $ React.createFactory $ require :react-remarkable
@@ -45,10 +46,18 @@ var T React.PropTypes
           this.setState $ object (:isLoading false)
             :readme readme
       do
-        console.log ":no match"
+        this.setState $ object
+          :readme $ + firstMatched.title
+            , ": (This is a forked project)"
+
+  :onClick $ \ (event)
+    if (is event.target.tagName :A)
+      do
+        event.preventDefault
+        window.open event.target.href
 
   :render $ \ ()
-    return $ div (object (:className :about))
+    return $ div (object (:className :about) (:onClick this.onClick))
       cond this.state.isLoading
         + ":Loading from" this.props.repo :...
-        Markdown $ object (:source this.state.readme)
+        Markdown $ object (:source this.state.readme) (:options mdOptions)

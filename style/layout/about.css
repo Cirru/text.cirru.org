@@ -2,3 +2,19 @@
 .about {
     padding: 60px 20px 200px;
 }
+
+
+.about pre {
+    border: 1px solid hsl(0, 0%, 91%);
+    padding: 0.5em;
+}
+
+.about blockquote {
+    background-color: hsl(0, 0%, 96%);
+    margin: 0;
+    padding: 0.5em 1em;
+}
+
+.about blockquote p {
+    margin: 0;
+}

@@ -7,15 +7,20 @@
     padding-top: 20px;
 }
 
-.sidebar .title {}
+.sidebar .title {
+    color: hsl(0,0%,50%);
+    font-size: 18px;
+}
 
 .sidebar .projects {
     padding-left: 20px;
+    margin-top: 10px;
 }
 
 .sidebar .project {
     color: hsl(0, 0%, 51%);
     cursor: pointer;
+    font-size: 16px;
 }
 
 .sidebar .project:hover,

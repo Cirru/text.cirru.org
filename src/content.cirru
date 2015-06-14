@@ -21,7 +21,7 @@
         :repo :https://github.com/Cirru/parser
         :readme :https://api.github.com/repos/Cirru/parser/readme
       object
-        :title ":Parser in Haskell(not finished)"
+        :title ":Parser in Haskell"
         :repo :https://github.com/Cirru/parser.hs
         :readme :https://api.github.com/repos/Cirru/parser.hs/readme
   object
