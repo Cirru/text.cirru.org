@@ -11,7 +11,7 @@ IPA: /ˈsɪɹə/
 * Twitter https://twitter.com/cirrulang
 * Medium https://medium.com/cirru-project
 * SegmentFault http://segmentfault.com/t/cirru/blogs
-* Gitter https://gitter.im/Cirru
+* Gitter https://gitter.im/Cirru/cirru.org
 
 ### Why Cirru?
 
