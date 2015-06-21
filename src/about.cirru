@@ -10,6 +10,7 @@ var
 
 var
   div $ React.createFactory :div
+  a $ React.createFactory :a
 
 var getProjects $ \ (groups collection)
   if (> groups.length 0)
@@ -61,3 +62,6 @@ var T React.PropTypes
       cond this.state.isLoading
         + ":Loading from " this.props.repo :...
         Markdown $ object (:source this.state.readme) (:options mdOptions)
+      div null
+        , ":Repo on GitHub: "
+        a (object (:href this.props.repo)) this.props.repo

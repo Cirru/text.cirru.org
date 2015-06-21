@@ -24,6 +24,10 @@
         :repo :https://github.com/Cirru/parser
         :readme :https://api.github.com/repos/Cirru/parser/readme
       object
+        :title ":Parser in Elixir"
+        :repo :https://github.com/Cirru/parser.ex
+        :readme :https://api.github.com/repos/Cirru/parser.ex/readme
+      object
         :title ":Parser in Haskell"
         :repo :https://github.com/Cirru/parser.hs
         :readme :https://api.github.com/repos/Cirru/parser.hs/readme
@@ -102,6 +106,10 @@
         :title ":(Failed) Cirru to LLVM IR"
         :repo :https://github.com/Cirru/sepal
         :readme :https://api.github.com/repos/Cirru/sepal/readme
+      object
+        :title ":Sepal in Elixir"
+        :repo :https://github.com/Cirru/sepal.ex
+        :readme :https://api.github.com/repos/Cirru/sepal.ex/readme
       object
         :title ":Sepal in Racket"
         :repo :https://github.com/Cirru/cirrusepal-rkt
