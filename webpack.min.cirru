@@ -7,7 +7,7 @@ var
 = module.exports $ object
   :entry $ object
     :main $ array :./src/main
-    :vendor $ array :react :react-remarkable :highlight.js :classnames :cirru-color
+    :vendor $ array :deku :deku-remarkable :highlight.js :classnames :cirru-color
 
   :output $ object
     :path :build/

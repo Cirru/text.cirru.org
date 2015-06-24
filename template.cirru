@@ -24,3 +24,4 @@ var ga $ fs.readFileSync :html/ga.html :utf8
         script $ object (:src data.main) (:defer true)
         cond (not data.env) ga :
       body null
+        div $ {} (:id :app)

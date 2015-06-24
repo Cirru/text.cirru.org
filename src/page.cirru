@@ -1,27 +1,28 @@
 
 var
-  React $ require :react
+  deku $ require :deku
 
 var
-  Sidebar $ React.createFactory $ require :./sidebar
-  About $ React.createFactory $ require :./about
+  Sidebar $ deku.element.bind null $ require :./sidebar
+  About $ deku.element.bind null $ require :./about
 
 var
-  div $ React.createFactory :div
+  div $ deku.element.bind null :div
 
-= module.exports $ React.createClass $ object
-  :displayName :page
+= module.exports $ {}
 
-  :getInitialState $ \ ()
+  :initialState $ \ ()
     return $ object
       :repo :https://github.com/Cirru/cirru.org
 
-  :onRepoSelect $ \ (url)
-    this.setState $ object
-      :repo url
+  :render $ \ (component setState)
+    var state component.state
+    return $ div (object (:class :page))
+      Sidebar $ object (:repo state.repo) (:key :sidebar)
+        :onRepoSelect $ \ (repo)
+          setState $ {} (:repo repo)
+      About $ object (:repo state.repo) (:key state.repo)
 
-  :render $ \ ()
-    return $ div (object (:className :page))
-      Sidebar $ object (:repo this.state.repo)
-        :onRepoSelect this.onRepoSelect
-      About $ object (:repo this.state.repo) (:key this.state.repo)
+var onRepoSelect $ \ (url component setState)
+  setState $ object
+    :repo url

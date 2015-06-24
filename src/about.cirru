@@ -1,16 +1,16 @@
 
 var
-  React $ require :react
+  deku $ require :deku
   get $ require :./get
   content $ require :./content
   mdOptions $ require :./md-options
 
 var
-  Markdown $ React.createFactory $ require :react-remarkable
+  Markdown $ deku.element.bind null $ require :deku-remarkable
 
 var
-  div $ React.createFactory :div
-  a $ React.createFactory :a
+  div $ deku.element.bind null :div
+  a $ deku.element.bind null :a
 
 var getProjects $ \ (groups collection)
   if (> groups.length 0)
@@ -22,46 +22,47 @@ var getProjects $ \ (groups collection)
 
 var projects $ getProjects content (array)
 
-var T React.PropTypes
-
-= module.exports $ React.createClass $ object
-  :displayName :about
+= module.exports $ object
 
   :propTypes $ object
-    :repo T.string.isRequired
+    :repo $ {}
+      :type :string
 
-  :getInitialState $ \ ()
+  :initialState $ \ ()
     return $ object
       :isLoading false
       :readme null
 
-  :componentDidMount $ \ ()
-    var matched $ projects.filter $ \\ (project)
-      return $ is project.repo this.props.repo
+  :afterMount $ \ (component el setState)
+    var matched $ projects.filter $ \ (project)
+      return $ is project.repo component.props.repo
     var firstMatched $ . matched 0
     if firstMatched.readme
       do
-        this.setState $ object (:isLoading true)
-        get firstMatched.readme $ \\ (data)
+        setState $ object (:isLoading true)
+        get firstMatched.readme $ \ (data)
           var readme $ decodeURIComponent $ escape $ atob data.content
-          this.setState $ object (:isLoading false)
+          setState $ object (:isLoading false)
             :readme readme
       do
-        this.setState $ object
+        setState $ object
           :readme $ + firstMatched.title
             , ": (This is a forked project)"
 
-  :onClick $ \ (event)
-    if (is event.target.tagName :A)
-      do
-        event.preventDefault
-        window.open event.target.href
-
-  :render $ \ ()
-    return $ div (object (:className :about) (:onClick this.onClick))
-      cond this.state.isLoading
-        + ":Loading from " this.props.repo :...
-        Markdown $ object (:source this.state.readme) (:options mdOptions)
+  :render $ \ (component setState)
+    var
+      props component.props
+      state component.state
+    return $ div (object (:class :about) (:onClick onClick))
+      cond state.isLoading
+        + ":Loading from " props.repo :...
+        Markdown $ {} (:source state.readme) (:options mdOptions)
       div null
         , ":Repo on GitHub: "
-        a (object (:href this.props.repo)) this.props.repo
+        a (object (:href props.repo)) props.repo
+
+var onClick $ \ (event component setState)
+  if (is event.target.tagName :A)
+    do
+      event.preventDefault
+      window.open event.target.href

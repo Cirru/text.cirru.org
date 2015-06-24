@@ -1,11 +1,13 @@
 
 var
-  React $ require :react
+  deku $ require :deku
 
 require :cirru-color/css/cirru.css
 require :highlight.js/styles/github.css
 
 var
-  Page $ React.createFactory $ require :./page
+  Page $ deku.element.bind null $ require :./page
 
-React.render (Page) document.body
+var app $ deku.tree (Page)
+
+deku.render app (document.querySelector :#app)

@@ -1,36 +1,31 @@
 
 var
-  React $ require :react
+  deku $ require :deku
   content $ require :./content
   classnames $ require :classnames
 
 var
-  div $ React.createFactory :div
+  div $ deku.element.bind null :div
 
-var T React.PropTypes
+= module.exports $ {}
 
-= module.exports $ React.createClass $ object
-  :displayName :sidebar
+  :propTypes $ {}
+    :repo $ {} (:type :string)
+    :onRepoSelect $ {} (:type :function)
 
-  :propTypes $ object
-    :repo T.string.isRequired
-    :onRepoSelect T.func.isRequired
-
-  :onRepoSelect $ \ (repo)
-    this.props.onRepoSelect repo
-
-  :render $ \ ()
-    return $ div (object (:className :sidebar))
-      content.map $ \\ (group index)
-        return $ div (object (:className :group) (:key index))
-          div (object (:className :title)) group.title
-          div (object (:className :projects))
-            group.projects.map $ \\ (project index2)
+  :render $ \ (component setState)
+    var props component.props
+    return $ div ({} (:class :sidebar))
+      content.map $ \ (group index)
+        return $ div ({} (:class :group) (:key index))
+          div (object (:class :title)) group.title
+          div (object (:class :projects))
+            group.projects.map $ \ (project index2)
               var className $ classnames :project
-                cond (is this.props.repo project.repo) :is-selected undefined
-              var onRepoSelect $ \\ ()
-                this.onRepoSelect project.repo
+                cond (is props.repo project.repo) :is-selected undefined
+              var onRepoSelect $ \ ()
+                props.onRepoSelect project.repo
               return $ div
-                object (:className className) (:key index2)
+                object (:class className) (:key index2)
                   :onClick onRepoSelect
                 , project.title
