@@ -43,6 +43,10 @@
         :title ":Parser in Julia"
         :repo :https://github.com/Cirru/CirruParser.jl
         :readme :https://api.github.com/repos/Cirru/CirruParser.jl/readme
+      object
+        :title ":Parser in MoonScript"
+        :repo :https://github.com/Cirru/parser.moon
+        :readme :https://api.github.com/repos/Cirru/parser.moon/readme
 
   object
     :title :CirruScript
@@ -122,6 +126,10 @@
         :title ":Sepal in Julia"
         :repo :https://github.com/Cirru/CirruSepal.jl
         :readme :https://api.github.com/repos/Cirru/CirruSepal.jl/readme
+      object
+        :title ":Sepal in MoonScript"
+        :repo :https://github.com/Cirru/sepal.moon
+        :readme :https://api.github.com/repos/Cirru/sepal.moon/readme
 
   object
     :title :Formatter
