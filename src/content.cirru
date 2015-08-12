@@ -24,6 +24,10 @@
         :repo :https://github.com/Cirru/parser
         :readme :https://api.github.com/repos/Cirru/parser/readme
       object
+        :title ":Parser in Clojure"
+        :repo :https://github.com/Cirru/parser.clj
+        :readme :https://api.github.com/repos/Cirru/parser.clj/readme
+      object
         :title ":Parser in Elixir"
         :repo :https://github.com/Cirru/parser.ex
         :readme :https://api.github.com/repos/Cirru/parser.ex/readme
@@ -47,6 +51,10 @@
         :title ":Parser in MoonScript"
         :repo :https://github.com/Cirru/parser.moon
         :readme :https://api.github.com/repos/Cirru/parser.moon/readme
+      object
+        :title ":Parser in Python"
+        :repo :https://github.com/Cirru/parser.py
+        :readme :https://api.github.com/repos/Cirru/parser.py/readme
 
   object
     :title :CirruScript
@@ -111,6 +119,10 @@
         :repo :https://github.com/Cirru/sepal
         :readme :https://api.github.com/repos/Cirru/sepal/readme
       object
+        :title ":Sepal in Clojure"
+        :repo :https://github.com/Cirru/sepal.clj
+        :readme :https://api.github.com/repos/Cirru/sepal.clj/readme
+      object
         :title ":Sepal in Elixir"
         :repo :https://github.com/Cirru/sepal.ex
         :readme :https://api.github.com/repos/Cirru/sepal.ex/readme
@@ -130,6 +142,10 @@
         :title ":Sepal in MoonScript"
         :repo :https://github.com/Cirru/sepal.moon
         :readme :https://api.github.com/repos/Cirru/sepal.moon/readme
+      object
+        :title ":Sepal in Python"
+        :repo :https://github.com/Cirru/sepal.py
+        :readme :https://api.github.com/repos/Cirru/sepal.py/readme
 
   object
     :title :Formatter
