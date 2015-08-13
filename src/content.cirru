@@ -228,6 +228,10 @@
         :title ":Atom Editor support"
         :repo :https://github.com/Cirru/language-cirru
         :readme :https://api.github.com/repos/Cirru/language-cirru/readme
+      object
+        :title ":Vim support"
+        :repo :https://github.com/Cirru/vim-cirru
+        :readme :https://api.github.com/repos/Cirru/vim-cirru/readme
 
   object
     :title :Highlighting
