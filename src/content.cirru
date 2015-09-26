@@ -28,6 +28,10 @@
         :repo :https://github.com/Cirru/parser.clj
         :readme :https://api.github.com/repos/Cirru/parser.clj/readme
       object
+        :title ":Parser Combinator in Clojure"
+        :repo :https://github.com/Cirru/parser-combinator.clj
+        :readme :https://api.github.com/repos/Cirru/parser-combinator.clj/readme
+      object
         :title ":Parser in Elixir"
         :repo :https://github.com/Cirru/parser.ex
         :readme :https://api.github.com/repos/Cirru/parser.ex/readme
