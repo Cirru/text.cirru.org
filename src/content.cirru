@@ -90,6 +90,10 @@
         :title ":Write JavaScript AST with Cirru"
         :repo :https://github.com/Cirru/scirpus
         :readme :https://api.github.com/repos/Cirru/scirpus/readme
+      object
+        :title ":Cirru WASM AST"
+        :repo :https://github.com/Cirru/cirru-wasm-ast
+        :readme :https://api.github.com/repos/Cirru/cirru-wasm-ast/readme
 
   object
     :title ":Cirru HTML"
@@ -150,6 +154,10 @@
         :title ":Sepal in Python"
         :repo :https://github.com/Cirru/sepal.py
         :readme :https://api.github.com/repos/Cirru/sepal.py/readme
+      object
+        :title ":Clir: compiles to C"
+        :repo :https://github.com/Cirru/clir
+        :readme :https://api.github.com/repos/Cirru/clir/readme
 
   object
     :title :Formatter
