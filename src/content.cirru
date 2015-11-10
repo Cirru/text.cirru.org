@@ -90,10 +90,22 @@
         :title ":Write JavaScript AST with Cirru"
         :repo :https://github.com/Cirru/scirpus
         :readme :https://api.github.com/repos/Cirru/scirpus/readme
+
+  object
+    :title ":Cirru for WebAssembly"
+    :projects $ array
       object
         :title ":Cirru WASM AST"
         :repo :https://github.com/Cirru/cirru-wasm-ast
         :readme :https://api.github.com/repos/Cirru/cirru-wasm-ast/readme
+      object
+        :title ":Cirru WASM AST CLI"
+        :repo :https://github.com/Cirru/cirru-wasm-cli
+        :readme :https://api.github.com/repos/Cirru/cirru-wasm-cli/readme
+      object
+        :title ":Cirru WASM S-Expression JSON"
+        :repo :https://github.com/Cirru/sexpr-wasm-json
+        :readme :https://api.github.com/repos/Cirru/sexpr-wasm-json/readme
 
   object
     :title ":Cirru HTML"
@@ -130,6 +142,10 @@
         :title ":Sepal in Clojure"
         :repo :https://github.com/Cirru/sepal.clj
         :readme :https://api.github.com/repos/Cirru/sepal.clj/readme
+      object
+        :title ":Lein plugin for Sepal in Clojure"
+        :repo :https://github.com/Cirru/lein-cirru-sepal
+        :readme :https://api.github.com/repos/Cirru/lein-cirru-sepal/readme
       object
         :title ":Sepal in Elixir"
         :repo :https://github.com/Cirru/sepal.ex
@@ -178,7 +194,14 @@
         :title ":Cirru Writer written in Go"
         :repo :https://github.com/Cirru/writer/
         :readme :https://api.github.com/repos/Cirru/writer/readme
-
+      object
+        :title ":Cirru Minifier in Clojure"
+        :repo :https://github.com/Cirru/minifier.clj
+        :readme :https://api.github.com/repos/Cirru/minifier.clj/readme
+      object
+        :title ":Cirru Diff/Patch in a tree"
+        :repo :https://github.com/Cirru/diff-patch
+        :readme :https://api.github.com/repos/Cirru/diff-patch/readme
 
   object
     :title ":Evaluator"

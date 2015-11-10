@@ -40,7 +40,7 @@ Cirru adopted Lisp's notions to keep minimalistic:
 
 ### Examples
 
-These snippets are identical:
+These snippets are identical although folding in various ways:
 
 ```cirru
 set a (add (number 1) (numer 2))
@@ -63,6 +63,31 @@ set a
     number 2
 ```
 
-Find more at [cirru-parser][parser].
+Also here's identical demos for `,` on unfolding:
+
+```cirru
+print
+  + 1 2
+  , 11
+```
+
+```cirru
+print (+ 1 2) 11
+```
+
+And multi-level indentations is OK for `let` syntax:
+
+```cirru
+let
+    a 1
+    b 2
+  + a b
+```
+
+```cirru
+let ((a 1) (b 2)) (+ a b)
+```
+
+Find more by exploring [cirru-parser][parser].
 
 [parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
