@@ -13,3 +13,4 @@ var
       do
         var res $ hljs.highlightAuto code
         return res.value
+    return

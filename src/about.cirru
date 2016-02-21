@@ -19,6 +19,7 @@ var getProjects $ \ (groups collection)
       return $ getProjects (groups.slice 1) (collection.concat group.projects)
     do
       return collection
+  return
 
 var projects $ getProjects content (array)
 
@@ -48,6 +49,7 @@ var projects $ getProjects content (array)
         setState $ object
           :readme $ + firstMatched.title
             , ": (This is a forked project)"
+    return
 
   :render $ \ (component setState)
     var
@@ -66,3 +68,4 @@ var onClick $ \ (event component setState)
     do
       event.preventDefault
       window.open event.target.href
+  return

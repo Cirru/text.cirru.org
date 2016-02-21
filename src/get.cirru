@@ -16,5 +16,6 @@ var get $ \ (url callback)
         var data $ JSON.parse req.responseText
         = (. caches url) data
         callback data
+  return
 
 = module.exports get
