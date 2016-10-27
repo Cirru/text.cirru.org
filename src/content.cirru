@@ -5,8 +5,8 @@
     :projects $ array
       object
         :title ":What is Cirru?"
-        :repo :https://github.com/Cirru/cirru.org
-        :readme :https://api.github.com/repos/Cirru/cirru.org/readme
+        :repo :https://github.com/Cirru/text.cirru.org
+        :readme :https://api.github.com/repos/Cirru/text.cirru.org/readme
       object
         :title ":Cirru's Logo"
         :repo :https://github.com/Cirru/logo.cirru.org

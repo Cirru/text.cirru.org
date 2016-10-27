@@ -17,13 +17,13 @@ gulp.task :rsync $ \ (cb)
       :src $ array :index.html :build :style :google*
       :recursive true
       :args $ array :--verbose
-      :dest :tiye:~/repo/cirru/cirru.org/
+      :dest :cirru.org:~/repo/Cirru/text.cirru.org/
       :deleteAll true
     \ (error stdout stderr cmd)
+      console.log cmd
       if (? error)
         do $ throw error
       console.error stderr
-      console.log cmd
       cb
 
 gulp.task :script $ \ ()

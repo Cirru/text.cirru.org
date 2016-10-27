@@ -13,7 +13,7 @@ var
 
   :initialState $ \ ()
     return $ object
-      :repo :https://github.com/Cirru/cirru.org
+      :repo :https://github.com/Cirru/text.cirru.org
 
   :render $ \ (component setState)
     var state component.state
