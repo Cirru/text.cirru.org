@@ -1,0 +1,6 @@
+
+{:host "tiye.me"
+ :uploads [{:from "dist/*"
+            :to "cdn/text.cirru.org/"}
+           {:from "dist/{index.html,manifest.json}"
+            :to "repo/Cirru/text.cirru.org/"}]}

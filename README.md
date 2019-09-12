@@ -91,3 +91,11 @@ let ((a 1) (b 2)) (+ a b)
 Find more by exploring [cirru-parser][parser].
 
 [parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
+
+### Workflow
+
+Workflow https://github.com/mvc-works/calcit-workflow
+
+### License
+
+MIT
