@@ -4,7 +4,7 @@
   "description": "ClojureScript workflow using Calcit Editor",
   "main": "index.js",
   "scripts": {
-    "watch": "shadow-cljs watch client",
+    "watch": "shadow-cljs watch client dl",
     "serve": "http-server dist -s",
     "build-cdn": "shadow-cljs clj-run build.main/build-cdn",
     "build": "shadow-cljs clj-run build.main/build",
@@ -19,6 +19,7 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
+    "axios": "^0.19.0",
     "http-server": "^0.11.1",
     "shadow-cljs": "^2.8.52"
   },

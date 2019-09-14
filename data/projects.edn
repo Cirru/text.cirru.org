@@ -93,9 +93,9 @@
   :title "Editor Support"
   :projects [
    {:title "Sublime Text Package", :repo "https://github.com/Cirru/sublime-cirru", :readme "https://api.github.com/repos/Cirru/sublime-cirru/readme"}
-   {:type: "project", :title "Cirru Editor (module)", :repo "https://github.com/Cirru/cirru-editor", :readme "https://api.github.com/repos/Cirru/cirru-editor/readme"}
+   {:type "project", :title "Cirru Editor (module)", :repo "https://github.com/Cirru/cirru-editor", :readme "https://api.github.com/repos/Cirru/cirru-editor/readme"}
    {:type "project", :title "Cirru Light Editor", :repo "https://github.com/Cirru/cirru-light-editor", :readme "https://api.github.com/repos/Cirru/cirru-light-editor/readme"}
-   {:title "Brackets Package", :repo "https://github.com/Cirru/brackets-cirru", :readme: "https://api.github.com/repos/Cirru/brackets-cirru/readme"}
+   {:title "Brackets Package", :repo "https://github.com/Cirru/brackets-cirru", :readme "https://api.github.com/repos/Cirru/brackets-cirru/readme"}
    {:title "CodeMirror support", :repo "https://github.com/Cirru/codemirror-cirru", :readme "https://api.github.com/repos/Cirru/codemirror-cirru/readme"}
    {:title "Ace Editor support", :repo "https://github.com/Cirru/ace"}
    {:title "Atom Editor support", :repo "https://github.com/Cirru/language-cirru", :readme "https://api.github.com/repos/Cirru/language-cirru/readme"}
