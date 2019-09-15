@@ -18,6 +18,6 @@
   {:dev-ui "http://localhost:8100/main-fonts.css",
    :release-ui "http://cdn.tiye.me/favored-fonts/main-fonts.css",
    :cdn-url "http://cdn.tiye.me/text.cirru.org/",
-   :title "Cirru Project",
+   :title "Cirru is a indentation-based grammar for programming",
    :icon "http://cdn.tiye.me/logo/cirru.png",
    :storage-key "text.cirru.org"})

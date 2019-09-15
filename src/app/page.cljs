@@ -20,7 +20,8 @@
     base-info
     {:styles [(<< "http://~(get-ip!):8100/main.css") "/entry/main.css"],
      :scripts ["/client.js"],
-     :inline-styles []})))
+     :inline-styles [(slurp "node_modules/cirru-color/css/cirru.css")
+                     (slurp "node_modules/highlight.js/styles/github.css")]})))
 
 (defn prod-page []
   (let [reel (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))
@@ -35,7 +36,10 @@
       {:styles [(:release-ui config/site)],
        :scripts (map #(-> % :output-name prefix-cdn) assets),
        :ssr "respo-ssr",
-       :inline-styles [(slurp "./entry/main.css")]}))))
+       :inline-styles [(slurp "node_modules/cirru-color/css/cirru.css")
+                       (slurp "node_modules/highlight.js/styles/github.css")
+                       (slurp "./entry/main.css")],
+       :append-html (slurp "./entry/ga.html")}))))
 
 (defn main! []
   (println "Running mode:" (if config/dev? "dev" "release"))

@@ -10,12 +10,16 @@
               :readme "https://api.github.com/repos/Cirru/logo.cirru.org/readme"}]}
  {:title "Parser",
   :projects [{:name "Cirru/cirru-parser",
-              :title "Parser in CoffeeScript",
+              :title "Parser in JavaScript",
               :repo "https://github.com/Cirru/cirru-parser",
               :readme "https://api.github.com/repos/Cirru/cirru-parser/readme"}
-             {:name "Cirru/parser",
+             {:name "Cirru/parser.nim",
+              :title "Parser in Nim",
+              :repo "https://github.com/Cirru/parser.nim",
+              :readme "https://api.github.com/repos/Cirru/parser.nim/readme"}
+            {:name "Cirru/parser.go",
               :title "Parser in Go",
-              :repo "https://github.com/Cirru/parser",
+              :repo "https://github.com/Cirru/parser.go",
               :readme "https://api.github.com/repos/Cirru/parser/readme"}
              {:name "Cirru/parser.clj",
               :title "Parser in Clojure",
@@ -59,7 +63,7 @@
               :repo "https://github.com/Cirru/script.cirru.org",
               :readme "https://api.github.com/repos/Cirru/script.cirru.org/readme"}
              {:name "Cirru/cirru-script",
-              :title "CirruScript: generates JavaScript from Cirru",
+              :title "CirruScript: emit JavaScript from Cirru",
               :repo "https://github.com/Cirru/cirru-script",
               :readme "https://api.github.com/repos/Cirru/cirru-script/readme"}
              {:name "Cirru/gulp-cirru-script",
@@ -70,7 +74,8 @@
               :title "CirruScript Webpack loader",
               :repo "https://github.com/Cirru/cirru-script-loader",
               :readme "https://api.github.com/repos/Cirru/cirru-script-loader/readme"}
-             {:title "CirruScript Liftoff support",
+             {:name "Cirru/js-interpret"
+              :title "CirruScript Liftoff support",
               :repo "https://github.com/Cirru/js-interpret"}
              {:name "Cirru/script-console",
               :title "CirruScript Chrome Extension",
@@ -161,7 +166,7 @@
               :repo "https://github.com/Cirru/cirru-writer",
               :readme "https://api.github.com/repos/Cirru/cirru-writer/readme"}
              {:name "Cirru/cirru-json",
-              :title "Read Cirru as JSON and convert back with cirru-write",
+              :title "Read Cirru as JSON and write into file",
               :repo "https://github.com/Cirru/cirru-json",
               :readme "https://api.github.com/repos/Cirru/cirru-json/readme"}
              {:name "Cirru/json-loader",
@@ -181,10 +186,14 @@
               :repo "https://github.com/Cirru/diff-patch",
               :readme "https://api.github.com/repos/Cirru/diff-patch/readme"}]}
  {:title "Evaluator",
-  :projects [{:name "Cirru/interpreter",
+  :projects [{:name "Cirru/interpreter.nim",
+              :title "Evaluator in Nim",
+              :repo "https://github.com/Cirru/interpreter.nim",
+              :readme "https://api.github.com/repos/Cirru/interpreter.nim/readme"}
+             {:name "Cirru/interpreter.go",
               :title "Evaluator in Go",
-              :repo "https://github.com/Cirru/interpreter",
-              :readme "https://api.github.com/repos/Cirru/interpreter/readme"}
+              :repo "https://github.com/Cirru/interpreter.go",
+              :readme "https://api.github.com/repos/Cirru/interpreter.go/readme"}
              {:name "Cirru/cirru-interpreter",
               :title "Evaluator in CoffeeScript",
               :repo "https://github.com/Cirru/cirru-interpreter",
@@ -202,7 +211,7 @@
               :repo "https://github.com/Cirru/cirru-table-redo",
               :readme "https://api.github.com/repos/Cirru/cirru-table-redo/readme"}
              {:name "Cirru/cirru-candy-box",
-              :title "Cirru Candy Box: show values in environment",
+              :title "Cirru Candy Box: show values in scope",
               :repo "https://github.com/Cirru/cirru-candy-box",
               :readme "https://api.github.com/repos/Cirru/cirru-candy-box/readme"}]}
  {:title "Editor Support",

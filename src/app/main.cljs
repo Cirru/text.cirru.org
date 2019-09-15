@@ -9,7 +9,13 @@
             [reel.schema :as reel-schema]
             [cljs.reader :refer [read-string]]
             [app.config :as config]
-            [cumulo-util.core :refer [repeat!]]))
+            [cumulo-util.core :refer [repeat!]]
+            ["highlight.js" :as hljs]
+            ["highlight.js/lib/languages/clojure" :as lang-clojure]
+            ["highlight.js/lib/languages/bash" :as lang-bash]
+            ["highlight.js/lib/languages/python" :as lang-python]
+            ["highlight.js/lib/languages/elixir" :as lang-elixir]
+            ["highlight.js/lib/languages/haskell" :as lang-haskell]))
 
 (defonce *reel
   (atom (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))))
@@ -31,6 +37,11 @@
 (defn main! []
   (println "Running mode:" (if config/dev? "dev" "release"))
   (if ssr? (render-app! realize-ssr!))
+  (hljs/registerLanguage "clojure" lang-clojure)
+  (hljs/registerLanguage "python" lang-python)
+  (hljs/registerLanguage "bash" lang-bash)
+  (hljs/registerLanguage "elixir" lang-elixir)
+  (hljs/registerLanguage "haskell" lang-haskell)
   (render-app! render!)
   (add-watch *reel :changes (fn [] (render-app! render!)))
   (listen-devtools! "a" dispatch!)
