@@ -73,7 +73,7 @@
    {:title "Convert JSON to Cirru", :repo "https://github.com/Cirru/cirru-writer", :readme "https://api.github.com/repos/Cirru/cirru-writer/readme"}
    {:title "Read Cirru as JSON and convert back with cirru-write", :repo "https://github.com/Cirru/cirru-json", :readme "https://api.github.com/repos/Cirru/cirru-json/readme"}
    {:title "JSON loader written in Go", :repo "https://github.com/Cirru/json-loader", :readme "https://api.github.com/repos/Cirru/json-loader/readme"}
-   {:title "Cirru Writer written in Go", :repo "https://github.com/Cirru/writer/", :readme "https://api.github.com/repos/Cirru/writer/readme"}
+   {:title "Cirru Writer written in Go", :repo "https://github.com/Cirru/writer", :readme "https://api.github.com/repos/Cirru/writer/readme"}
    {:title "Cirru Minifier in Clojure", :repo "https://github.com/Cirru/minifier.clj", :readme "https://api.github.com/repos/Cirru/minifier.clj/readme"}
    {:title "Cirru Diff/Patch in a tree", :repo "https://github.com/Cirru/diff-patch", :readme "https://api.github.com/repos/Cirru/diff-patch/readme"}
   ]
@@ -107,7 +107,7 @@
   :projects [
    {:title "Rainbow Plugin", :repo "https://github.com/Cirru/cirru-rainbow", :readme "https://api.github.com/repos/Cirru/cirru-rainbow/readme"}
    {:title "Highlight.js fork with Cirru syntax", :repo "https://github.com/Cirru/highlight.js"}
-   {:title "Pygments fork with Cirru syntax", :repo "https://bitbucket.org/jiyinyiyong/pygments-main/"}
+   {:title "Pygments fork with Cirru syntax", :repo "https://bitbucket.org/jiyinyiyong/pygments-main"}
    {:title "Custom-made Syntax Highlighting", :repo "https://github.com/Cirru/cirru-color", :readme "https://api.github.com/repos/Cirru/cirru-color/readme"}
   ]
  }
