@@ -1,0 +1,38 @@
+
+{:source-paths ["src" "data" "cli"]
+ :cache-blockers #{cumulo-util.build}
+ :dependencies [[mvc-works/hsl          "0.1.2"]
+                [mvc-works/shell-page   "0.1.10"]
+                [respo                  "0.10.12"]
+                [respo/ui               "0.3.13"]
+                [respo/alerts           "0.3.13"]
+                [respo/value            "0.2.5"]
+                [respo/markdown         "0.2.4"]
+                [respo/feather          "0.1.1"]
+                [respo/reel             "0.3.5"]
+                [cumulo/util            "0.1.10"]
+                [medley                 "1.2.0"]
+                [mvc-works/chan-utils   "0.1.0"]
+                [appliedscience/js-interop  "0.1.20"]
+                [org.clojure/core.incubator "0.1.4"]]
+ :repositories {"central" {:url "https://maven.aliyun.com/nexus/content/groups/public/"}
+                "clojars" {:url "https://mirrors.ustc.edu.cn/clojars/"}}
+ :open-file-command ["subl" ["%s:%s:%s" :file :line :column]]
+ :dev-http {7000 "target/"}
+ :builds {:client {:target :browser
+                   :output-dir "target/"
+                   :asset-path "./"
+                   :modules {:client {:init-fn app.main/main!}}
+                   :devtools {:after-load app.main/reload!}
+                   :compiler-options {:infer-externs :auto}
+                   :release {:output-dir "dist/"
+                             :module-hash-names 8
+                             :build-options {:manifest-name "assets.edn"}}}
+          :page {:target :node-script
+                 :output-to "target/page.js"
+                 :main app.page/main!
+                 :devtools {:after-load app.page/main!}}
+          :dl {:target :node-script
+               :output-to "target/dl.js"
+               :main app.dl/main!
+               :devtools {:after-load app.dl/main!}}}}

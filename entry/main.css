@@ -1,0 +1,74 @@
+
+body {
+  margin: 0;
+  overscroll-behavior-y: none;
+}
+
+body * {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: hsla(0,0%,100%);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: hsla(200,40%,40%,0.4);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-resizer {
+  background-color:transparent;
+}
+
+
+.entry-link {
+  color: hsl(0,0%,70%);
+}
+
+.entry-link.is-selected,
+.entry-link:hover {
+  color: hsl(0,0%,30%);
+}
+
+.about {
+    background-color: white;
+}
+
+.about pre {
+    border: 1px solid hsl(0, 0%, 95%);
+    background-color: hsl(0, 0%, 100%);
+    padding: 0.5em;
+    overflow: auto;
+}
+
+.about blockquote {
+    background-color: hsl(0, 0%, 96%);
+    margin: 0;
+    padding: 0.5em 1em;
+}
+
+.about blockquote p {
+    margin: 0;
+}
+
+.about img {
+  max-width: 100%;
+}
+
+
+.about p code,
+.about ul code {
+  background-color: hsl(0,0%,90%);
+  padding: 0.2em 0.4em;
+}
