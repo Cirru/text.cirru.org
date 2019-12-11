@@ -32,7 +32,7 @@
                                (or (string/includes? link "/ace")
                                    (string/includes? link "/pygments-main")))))
                            (map (fn [link] (string/replace link "https://github.com/" ""))))]
-    (println "There are " (count repos) "projects")
+    (println "There are" (count repos) "projects")
     (go-loop
      [xs (drop 40 project-names) c 1]
      (let [project-name (first xs)

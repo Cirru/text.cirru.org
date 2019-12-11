@@ -87,15 +87,15 @@
               :readme "https://api.github.com/repos/Cirru/scirpus/readme"}]}
  {:title "Cirru for WebAssembly",
   :projects [{:name "Cirru/cirru-wasm-ast",
-              :title "Cirru WASM AST",
+              :title "Cirru WASM AST(Staled)",
               :repo "https://github.com/Cirru/cirru-wasm-ast",
               :readme "https://api.github.com/repos/Cirru/cirru-wasm-ast/readme"}
              {:name "Cirru/cirru-wasm-cli",
-              :title "Cirru WASM AST CLI",
+              :title "Cirru WASM AST CLI(Staled)",
               :repo "https://github.com/Cirru/cirru-wasm-cli",
               :readme "https://api.github.com/repos/Cirru/cirru-wasm-cli/readme"}
              {:name "Cirru/sexpr-wasm-json",
-              :title "Cirru WASM S-Expression JSON",
+              :title "Cirru WASM S-Expression JSON(Staled)",
               :repo "https://github.com/Cirru/sexpr-wasm-json",
               :readme "https://api.github.com/repos/Cirru/sexpr-wasm-json/readme"}]}
  {:title "Cirru HTML",
@@ -165,6 +165,14 @@
               :title "Convert JSON to Cirru",
               :repo "https://github.com/Cirru/cirru-writer",
               :readme "https://api.github.com/repos/Cirru/cirru-writer/readme"}
+             {:name "Cirru/cirru-edn",
+              :title "EDN data in Cirru format",
+              :repo "https://github.com/Cirru/cirru-edn",
+              :readme "https://api.github.com/repos/Cirru/cirru-edn/readme"}
+             {:name "Cirru/writer.clj",
+              :title "Cirru writer in ClojureScript",
+              :repo "https://github.com/Cirru/writer.clj",
+              :readme "https://api.github.com/repos/Cirru/writer.clj/readme"}
              {:name "Cirru/cirru-json",
               :title "Read Cirru as JSON and write into file",
               :repo "https://github.com/Cirru/cirru-json",
