@@ -19,7 +19,7 @@
           (fs/writeFileSync (str "data/files/" project-name ".md") (j/get response :data))
           (println "Wrote to" project-name)
           (got true)))
-       (.catch (fn [error] (js/console.error "Failed at fetching:" link))))))
+       (.catch (fn [error] (js/console.error "Failed at fetching:" link error))))))
 
 (defn main! []
   (let [projects (read-string (inline "projects.edn"))
@@ -32,9 +32,9 @@
                                (or (string/includes? link "/ace")
                                    (string/includes? link "/pygments-main")))))
                            (map (fn [link] (string/replace link "https://github.com/" ""))))]
-    (println "There are" (count repos) "projects")
+    (println "There are " (count repos) "projects")
     (go-loop
-     [xs (drop 40 project-names) c 1]
+     [xs (drop 0 project-names) c 1]
      (let [project-name (first xs)
            link (<< "https://raw.githubusercontent.com/~{project-name}/master/README.md")]
        (<! (chan-download-doc project-name link))
