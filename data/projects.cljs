@@ -70,4 +70,5 @@
   "Cirru/cirru-shell" (inline "files/Cirru/cirru-shell.md")
   "Cirru/codemirror-cirru" (inline "files/Cirru/codemirror-cirru.md")
   "Cirru/CirruSepal.jl" (inline "files/Cirru/CirruSepal.jl.md")
+  "Cirru/jiuzhang-lang" (inline "files/Cirru/jiuzhang-lang.md")
 })

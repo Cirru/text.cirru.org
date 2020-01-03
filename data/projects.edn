@@ -221,7 +221,11 @@
              {:name "Cirru/cirru-candy-box",
               :title "Cirru Candy Box: show values in scope",
               :repo "https://github.com/Cirru/cirru-candy-box",
-              :readme "https://api.github.com/repos/Cirru/cirru-candy-box/readme"}]}
+              :readme "https://api.github.com/repos/Cirru/cirru-candy-box/readme"}
+             {:name "Cirru/jiuzhang-lang",
+              :title "Toy project of mimicing Ancient Chinese programming.",
+              :repo "https://github.com/Cirru/jiuzhang-lang",
+              :readme "https://api.github.com/repos/Cirru/jiuzhang-lang/readme"}]}
  {:title "Editor Support",
   :projects [{:name "Cirru/sublime-cirru",
               :title "Sublime Text Package",
