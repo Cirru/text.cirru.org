@@ -10,9 +10,13 @@
               :readme "https://api.github.com/repos/Cirru/logo.cirru.org/readme"}]}
  {:title "Parser",
   :projects [{:name "Cirru/cirru-parser",
-              :title "Parser in JavaScript",
+              :title "Parser in CoffeeScript",
               :repo "https://github.com/Cirru/cirru-parser",
               :readme "https://api.github.com/repos/Cirru/cirru-parser/readme"}
+             {:name "Cirru/parser.ts",
+              :title "Parser in TypeScript",
+              :repo "https://github.com/Cirru/parser.ts",
+              :readme "https://api.github.com/repos/Cirru/parser.ts/readme"}
              {:name "Cirru/parser.nim",
               :title "Parser in Nim",
               :repo "https://github.com/Cirru/parser.nim",

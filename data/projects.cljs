@@ -6,6 +6,7 @@
   "Cirru/parser.ex" (inline "files/Cirru/parser.ex.md")
   "Cirru/gulp-cirru-script" (inline "files/Cirru/gulp-cirru-script.md")
   "Cirru/parser.clj" (inline "files/Cirru/parser.clj.md")
+  "Cirru/parser.ts" (inline "files/Cirru/parser.ts.md")
   "Cirru/writer" (inline "files/Cirru/writer.md")
   "Cirru/writer.clj" (inline "files/Cirru/writer.clj.md")
   "Cirru/cirru-light-editor" (inline "files/Cirru/cirru-light-editor.md")
