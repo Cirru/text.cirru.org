@@ -35,7 +35,7 @@
   "Cirru/js-interpret" (inline "files/Cirru/js-interpret.md")
   "Cirru/text.cirru.org" (inline "files/Cirru/text.cirru.org.md")
   "Cirru/sublime-cirru" (inline "files/Cirru/sublime-cirru.md")
-  "Cirru/cirru-parser" (inline "files/Cirru/cirru-parser.md")
+  "Cirru/parser.coffee" (inline "files/Cirru/parser.coffee.md")
   "Cirru/sexpr-wasm-json" (inline "files/Cirru/sexpr-wasm-json.md")
   "Cirru/cirru-color" (inline "files/Cirru/cirru-color.md")
   "Cirru/minifier.clj" (inline "files/Cirru/minifier.clj.md")
