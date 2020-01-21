@@ -9,10 +9,10 @@
               :repo "https://github.com/Cirru/logo.cirru.org",
               :readme "https://api.github.com/repos/Cirru/logo.cirru.org/readme"}]}
  {:title "Parser",
-  :projects [{:name "Cirru/cirru-parser",
+  :projects [{:name "Cirru/parser.coffee",
               :title "Parser in CoffeeScript",
-              :repo "https://github.com/Cirru/cirru-parser",
-              :readme "https://api.github.com/repos/Cirru/cirru-parser/readme"}
+              :repo "https://github.com/Cirru/parser.coffee",
+              :readme "https://api.github.com/repos/Cirru/parser.coffee/readme"}
              {:name "Cirru/parser.ts",
               :title "Parser in TypeScript",
               :repo "https://github.com/Cirru/parser.ts",
