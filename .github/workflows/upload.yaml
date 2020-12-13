@@ -36,7 +36,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-clojars
 
-      - run: yarn && yarn build-cdn
+      - run: yarn
+      - run: yarn shadow-cljs compile dl
+      - run: mkdir -p data/files/Cirru/
+      - run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} node target/dl.js
+
+      - run: yarn build-cdn
         name: Build web assets
 
       - name: Deploy to server
