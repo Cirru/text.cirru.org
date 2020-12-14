@@ -13,10 +13,16 @@
 (defn chan-download-doc [project-name link]
   (chan-once
    got
-   (-> (axios/get link)
+   (-> (axios/get
+        link
+        (clj->js {:headers {"Authorization" (str "Bearer " js/process.env.GITHUB_TOKEN)}}))
        (.then
         (fn [response]
-          (fs/writeFileSync (str "data/files/" project-name ".md") (j/get response :data))
+          (fs/writeFileSync
+           (str "data/files/" project-name ".md")
+           (-> (j/get (j/get response :data) :content)
+               (js/Buffer.from "base64")
+               (.toString "utf8")))
           (println "Wrote to" project-name)
           (got true)))
        (.catch (fn [error] (js/console.error "Failed at fetching:" link error))))))
@@ -36,7 +42,7 @@
     (go-loop
      [xs (drop 0 project-names) c 1]
      (let [project-name (first xs)
-           link (<< "https://raw.githubusercontent.com/~{project-name}/master/README.md")]
+           link (<< "https://api.github.com/repos/~{project-name}/readme")]
        (<! (chan-download-doc project-name link))
        (println "Finished" c "projects... More:" (pr-str (take 3 xs)))
        (if (empty? (rest xs)) (println "All finished.") (recur (rest xs) (inc c)))))))
