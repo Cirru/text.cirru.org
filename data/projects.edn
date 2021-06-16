@@ -17,6 +17,10 @@
               :title "Parser in TypeScript",
               :repo "https://github.com/Cirru/parser.ts",
               :readme "https://api.github.com/repos/Cirru/parser.ts/readme"}
+             {:name "Cirru/parser.rs",
+              :title "Parser in Rust",
+              :repo "https://github.com/Cirru/parser.rs",
+              :readme "https://api.github.com/repos/Cirru/parser.rs/readme"}
              {:name "Cirru/parser.nim",
               :title "Parser in Nim",
               :repo "https://github.com/Cirru/parser.nim",
@@ -41,6 +45,10 @@
               :title "Parser in Haskell",
               :repo "https://github.com/Cirru/parser.hs",
               :readme "https://api.github.com/repos/Cirru/parser.hs/readme"}
+             {:name "Cirru/parser.purs",
+              :title "Parser in Haskell",
+              :repo "https://github.com/Cirru/parser.purs",
+              :readme "https://api.github.com/repos/Cirru/parser.purs/readme"}
              {:name "Cirru/cirruparser-rkt",
               :title "Parser in Racket",
               :repo "https://github.com/Cirru/cirruparser-rkt",
@@ -173,10 +181,30 @@
               :title "EDN data in Cirru format",
               :repo "https://github.com/Cirru/cirru-edn",
               :readme "https://api.github.com/repos/Cirru/cirru-edn/readme"}
+             {:name "Cirru/cirru-edn.purs",
+              :title "EDN data in Cirru format, written in PureScript",
+              :repo "https://github.com/Cirru/cirru-edn.purs",
+              :readme "https://api.github.com/repos/Cirru/cirru-edn.purs/readme"}
+             {:name "Cirru/cirru-edn.nim",
+              :title "EDN data in Cirru format, written in Nim",
+              :repo "https://github.com/Cirru/cirru-edn.nim",
+              :readme "https://api.github.com/repos/Cirru/cirru-edn.nim/readme"}
+             {:name "Cirru/cirru-edn.rs",
+              :title "EDN data in Cirru format, written in Rust",
+              :repo "https://github.com/Cirru/cirru-edn.rs",
+              :readme "https://api.github.com/repos/Cirru/cirru-edn.rs/readme"}
              {:name "Cirru/writer.clj",
               :title "Cirru writer in ClojureScript",
               :repo "https://github.com/Cirru/writer.clj",
               :readme "https://api.github.com/repos/Cirru/writer.clj/readme"}
+             {:name "Cirru/writer.ts",
+              :title "Cirru writer in TypeScript",
+              :repo "https://github.com/Cirru/writer.ts",
+              :readme "https://api.github.com/repos/Cirru/writer.ts/readme"}
+             {:name "Cirru/writer.nim",
+              :title "Cirru writer in Nim",
+              :repo "https://github.com/Cirru/writer.nim",
+              :readme "https://api.github.com/repos/Cirru/writer.nim/readme"}
              {:name "Cirru/cirru-json",
               :title "Read Cirru as JSON and write into file",
               :repo "https://github.com/Cirru/cirru-json",
@@ -198,10 +226,14 @@
               :repo "https://github.com/Cirru/diff-patch",
               :readme "https://api.github.com/repos/Cirru/diff-patch/readme"}]}
  {:title "Evaluator",
-  :projects [{:name "Cirru/interpreter.nim",
+  :projects [{:name "calcit-lang/calcit_runner.rs",
+              :title "Evaluator in Rust",
+              :repo "https://github.com/calcit-lang/calcit_runner.rs",
+              :readme "https://api.github.com/repos/calcit-lang/calcit_runner.rs/readme"}
+             {:name "calcit-lang/calcit-runner.nim",
               :title "Evaluator in Nim",
-              :repo "https://github.com/Cirru/interpreter.nim",
-              :readme "https://api.github.com/repos/Cirru/interpreter.nim/readme"}
+              :repo "https://github.com/calcit-lang/calcit-runner.nim",
+              :readme "https://api.github.com/repos/calcit-lang/calcit-runner.nim/readme"}
              {:name "Cirru/interpreter.go",
               :title "Evaluator in Go",
               :repo "https://github.com/Cirru/interpreter.go",
@@ -275,7 +307,11 @@
              {:name "Cirru/cirru-color",
               :title "Custom-made Syntax Highlighting",
               :repo "https://github.com/Cirru/cirru-color",
-              :readme "https://api.github.com/repos/Cirru/cirru-color/readme"}]}
+              :readme "https://api.github.com/repos/Cirru/cirru-color/readme"}
+             {:name "Cirru/calcit-theme.calcit",
+              :title "Calcit-theme for calcit-js",
+              :repo "https://github.com/Cirru/calcit-theme.calcit",
+              :readme "https://api.github.com/repos/Cirru/calcit-theme.calcit/readme"}]}
  {:title "Concept",
   :projects [{:name "Cirru/cirru-folding-code",
               :title "Demo of folding Cirru code",
