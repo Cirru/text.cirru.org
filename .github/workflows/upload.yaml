@@ -39,9 +39,10 @@ jobs:
       - run: yarn
       - run: yarn shadow-cljs compile dl
       - run: mkdir -p data/files/Cirru/
+      - run: mkdir -p data/files/calcit-lang/
       - run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} node target/dl.js
 
-      - run: yarn build-cdn
+      - run: yarn build
         name: Build web assets
 
       - name: Deploy to server
