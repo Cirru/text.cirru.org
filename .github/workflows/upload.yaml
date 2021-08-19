@@ -48,9 +48,13 @@ jobs:
 
     - name: "compiles to js"
       run: >
-        cr --emit-js --once
-        && yarn && yarn vite build --base=./
+        yarn
+        && mkdir -p data/files/Cirru/
+        && mkdir -p data/files/calcit-lang/
         && yarn c-dl
+        && GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} node dl-out/bundle.js
+        && cr --emit-js --once
+        && yarn vite build --base=./
 
     - name: Deploy to server
       id: deploy

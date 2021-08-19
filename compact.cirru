@@ -301,7 +301,7 @@
                   println "\"Finished" c "\"projects... More:" $ pr-str (take xs 3)
                   if
                     empty? $ rest xs
-                    println "\"All finished."
+                    do (println "\"All finished.") true
                     recur (rest xs) (inc c)
         |inline $ quote
           defmacro inline (path)
