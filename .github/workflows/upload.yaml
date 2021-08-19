@@ -50,6 +50,7 @@ jobs:
       run: >
         cr --emit-js --once
         && yarn && yarn vite build --base=./
+        && yarn c-dl
 
     - name: Deploy to server
       id: deploy

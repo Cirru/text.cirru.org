@@ -262,53 +262,50 @@
             hud! "\"error" build-errors
     |app.dl $ {}
       :ns $ quote
-        ns app.dl
-          :require ([] "\"axios" :as axios)
-            [] shadow.resource :refer $ [] inline
-            [] cljs.reader :refer $ [] read-string
-            [] clojure.string :as string
-            [] applied-science.js-interop :as j
-            [] "\"fs" :as fs
-            [] clojure.core.async :refer $ [] go go-loop <! >!
-            [] chan-utils.core :refer $ [] chan-once
-          :require-macros $ [] clojure.core.strint :refer ([] <<)
+        ns app.dl $ :require ([] "\"axios" :as axios) ([] "\"fs" :as fs)
       :defs $ {}
-        |chan-download-doc $ quote
-          defn chan-download-doc (project-name link)
-            chan-once got $ ->
-              axios/get link $ clj->js
-                {} $ :headers
-                  {} $ "\"Authorization" (str "\"Bearer " js/process.env.GITHUB_TOKEN)
+        |p-download-doc $ quote
+          defn p-download-doc (project-name link)
+            ->
+              axios/get link $ js-object
+                :headers $ js-object
+                  "\"Authorization" $ str "\"Bearer " js/process.env.GITHUB_TOKEN
               .then $ fn (response)
                 fs/writeFileSync (str "\"data/files/" project-name "\".md")
                   ->
-                    j/get (j/get response :data) :content
+                    aget (aget response "\"data") "\"content"
                     js/Buffer.from "\"base64"
-                    .toString "\"utf8"
+                    .!toString "\"utf8"
                 println "\"Wrote to" project-name
-                got true
               .catch $ fn (error) (js/console.error "\"Failed at fetching:" link error)
         |main! $ quote
           defn main! () $ let
-              projects $ read-string (inline "\"projects.edn")
-              flat-projects $ mapcat :projects projects
-              repos $ map :repo flat-projects
-              project-names $ ->> repos
+              projects $ parse-cirru-edn (inline "\"projects.cirru")
+              flat-projects $ mapcat projects
+                fn (x) (:projects x)
+              repos $ map flat-projects
+                fn (x) (:repo x)
+              project-names $ -> repos
                 filter $ fn (link)
-                  not $ or (string/includes? link "\"/ace") (string/includes? link "\"/pygments-main")
-                map $ fn (link) (string/replace link "\"https://github.com/" "\"")
+                  not $ or (.includes? link "\"/ace") (.includes? link "\"/pygments-main")
+                map $ fn (link) (.replace link "\"https://github.com/" "\"")
             println "\"There are " (count repos) "\"projects"
-            go-loop
-              [] xs (drop 0 project-names) c 1
-              let
-                  project-name $ first xs
-                  link $ << "\"https://api.github.com/repos/~{project-name}/readme"
-                <! $ chan-download-doc project-name link
-                println "\"Finished" c "\"projects... More:" $ pr-str (take 3 xs)
-                if
-                  empty? $ rest xs
-                  println "\"All finished."
-                  recur (rest xs) (inc c)
+            apply-args
+                drop project-names 0
+                , 1
+              fn (xs c) (hint-fn async)
+                let
+                    project-name $ first xs
+                    link $ str "\"https://api.github.com/repos/" project-name "\"/readme"
+                  js-await $ p-download-doc project-name link
+                  println "\"Finished" c "\"projects... More:" $ pr-str (take xs 3)
+                  if
+                    empty? $ rest xs
+                    println "\"All finished."
+                    recur (rest xs) (inc c)
+        |inline $ quote
+          defmacro inline (path)
+            read-file $ str "\"data/" path
     |app.config $ {}
       :ns $ quote (ns app.config)
       :defs $ {}
