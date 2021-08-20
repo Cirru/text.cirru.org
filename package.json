@@ -4,13 +4,8 @@
   "description": "ClojureScript workflow using Calcit Editor",
   "main": "index.js",
   "scripts": {
-    "watch": "shadow-cljs watch client dl",
-    "serve": "http-server dist -s",
-    "build-cdn": "shadow-cljs clj-run build.main/build-cdn",
-    "build": "shadow-cljs clj-run build.main/build",
-    "up": "yarn build-cdn && tiye-up",
-    "page": "shadow-cljs clj-run build.main/page",
-    "ln": "cd target && rm -f entry && ln -s ../entry"
+    "w-dl": "cr --emit-js --init-fn=app.dl/main! --reload-fn=app.dl/main! --emit-path=dl-out/",
+    "c-dl": "cr --emit-js --init-fn=app.dl/main! --reload-fn=app.dl/main! --emit-path=dl-out/ -1 && node ./build.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +15,12 @@
   "license": "MIT",
   "devDependencies": {
     "axios": "^0.21.1",
-    "http-server": "^0.12.3",
-    "shadow-cljs": "^2.11.8"
+    "bottom-tip": "^0.1.2",
+    "estrella": "^1.4.1",
+    "vite": "^2.4.4"
   },
   "dependencies": {
+    "@calcit/procs": "^0.4.16",
     "cirru-color": "^0.2.0",
     "feather-icons": "^4.28.0",
     "highlight.js": "^10.4.1",
