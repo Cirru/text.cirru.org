@@ -17,7 +17,7 @@
           [] "\"remarkable" :refer $ [] Remarkable
           [] "\"remarkable/linkify" :refer $ [] linkify
           [] "\"cirru-color" :as cirru-color
-          [] "\"highlight.js" :as hljs
+          [] "\"highlight.js" :default hljs
           [] applied-science.js-interop :as j
       :defs $ {}
         |comp-container $ quote
@@ -79,7 +79,7 @@
                       or
                         get projects-dict $ :page state
                         , "\"No README. Probably a forked project."
-                    :on-click $ fn (e d! m!)
+                    :on-click $ fn (e d!)
                       let
                           event $ :event e
                         when
@@ -92,7 +92,7 @@
             new Remarkable $ js-object (:breaks true)
               :highlight $ fn (code lang)
                 if (= lang "\"cirru") (cirru-color/generate code)
-                  aget (hljs/highlightAuto code) "\"value"
+                  aget (.!highlightAuto hljs code) "\"value"
             .!use linkify
         |projects-dict $ quote
           def projects-dict $ {}
@@ -208,7 +208,7 @@
           [] reel.core :refer $ [] reel-updater refresh-reel
           [] reel.schema :as reel-schema
           [] app.config :as config
-          [] "\"highlight.js" :as hljs
+          [] "\"highlight.js" :default hljs
           [] "\"highlight.js/lib/languages/clojure" :default lang-clojure
           [] "\"highlight.js/lib/languages/bash" :default lang-bash
           [] "\"highlight.js/lib/languages/python" :default lang-python
@@ -232,11 +232,11 @@
             println "\"Running mode:" $ if config/dev?
               do (load-console-formatter!) "\"dev"
               , "\"release"
-            hljs/registerLanguage "\"clojure" lang-clojure
-            hljs/registerLanguage "\"python" lang-python
-            hljs/registerLanguage "\"bash" lang-bash
-            hljs/registerLanguage "\"elixir" lang-elixir
-            hljs/registerLanguage "\"haskell" lang-haskell
+            .!registerLanguage hljs "\"clojure" lang-clojure
+            .!registerLanguage hljs "\"python" lang-python
+            .!registerLanguage hljs "\"bash" lang-bash
+            .!registerLanguage hljs "\"elixir" lang-elixir
+            .!registerLanguage hljs "\"haskell" lang-haskell
             render-app!
             add-watch *reel :changes $ fn (r p) (render-app!)
             listen-devtools! |k dispatch!
