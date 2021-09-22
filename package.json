@@ -17,11 +17,11 @@
   "devDependencies": {
     "axios": "^0.21.4",
     "bottom-tip": "^0.1.2",
-    "esbuild": "^0.12.26",
-    "vite": "^2.5.6"
+    "esbuild": "^0.12.28",
+    "vite": "^2.5.10"
   },
   "dependencies": {
-    "@calcit/procs": "^0.4.31",
+    "@calcit/procs": "^0.4.35",
     "cirru-color": "^0.2.1-a1",
     "feather-icons": "^4.28.0",
     "highlight.js": "^11.2.0",
