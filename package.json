@@ -15,16 +15,16 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.21.4",
-    "bottom-tip": "^0.1.2",
-    "esbuild": "^0.12.28",
-    "vite": "^2.5.10"
+    "axios": "^0.25.0",
+    "bottom-tip": "^0.1.3",
+    "esbuild": "^0.14.21",
+    "vite": "^2.8.1"
   },
   "dependencies": {
-    "@calcit/procs": "^0.4.35",
+    "@calcit/procs": "^0.5.17-a1",
     "cirru-color": "^0.2.1-a1",
     "feather-icons": "^4.28.0",
-    "highlight.js": "^11.2.0",
+    "highlight.js": "^11.4.0",
     "remarkable": "^2.0.1",
     "shortid": "^2.2.16"
   }
