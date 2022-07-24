@@ -1,24 +1,10 @@
 
 {} (:package |app)
-  :configs $ {} (:init-fn |app.main/main!) (:reload-fn |app.main/reload!)
+  :configs $ {} (:init-fn |app.main/main!) (:reload-fn |app.main/reload!) (:version |0.0.1)
     :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
-    :version |0.0.1
+  :entries $ {}
   :files $ {}
     |app.comp.container $ {}
-      :ns $ quote
-        ns app.comp.container $ :require
-          [] respo-ui.core :refer $ [] hsl
-          [] respo-ui.core :as ui
-          [] respo.core :refer $ [] defcomp >> list-> <> div button textarea span input a
-          [] respo.comp.space :refer $ [] =<
-          [] reel.comp.reel :refer $ [] comp-reel
-          [] respo-md.comp.md :refer $ [] comp-md
-          [] app.config :refer $ [] dev?
-          [] "\"remarkable" :refer $ [] Remarkable
-          [] "\"remarkable/linkify" :refer $ [] linkify
-          [] "\"cirru-color" :as cirru-color
-          [] "\"highlight.js" :default hljs
-          [] applied-science.js-interop :as j
       :defs $ {}
         |comp-container $ quote
           defcomp comp-container (reel)
@@ -87,6 +73,9 @@
                           .!preventDefault event
                           js/window.open $ -> event .-target .-href
                 when dev? $ comp-reel (>> states :reel) reel ({})
+        |inline $ quote
+          defmacro inline (path)
+            read-file $ str "\"data/" path
         |md $ quote
           def md $ ->
             new Remarkable $ js-object (:breaks true)
@@ -175,109 +164,38 @@
             |Cirru/jiuzhang-lang $ inline |files/Cirru/jiuzhang-lang.md
         |projects-list $ quote
           def projects-list $ parse-cirru-edn (inline "\"projects.cirru")
+      :ns $ quote
+        ns app.comp.container $ :require
+          [] respo-ui.core :refer $ [] hsl
+          [] respo-ui.core :as ui
+          [] respo.core :refer $ [] defcomp >> list-> <> div button textarea span input a
+          [] respo.comp.space :refer $ [] =<
+          [] reel.comp.reel :refer $ [] comp-reel
+          [] respo-md.comp.md :refer $ [] comp-md
+          [] app.config :refer $ [] dev?
+          [] "\"remarkable" :refer $ [] Remarkable
+          [] "\"remarkable/linkify" :refer $ [] linkify
+          [] "\"cirru-color" :as cirru-color
+          [] "\"highlight.js" :default hljs
+          [] applied-science.js-interop :as j
+    |app.config $ {}
+      :defs $ {}
+        |cdn? $ quote
+          def cdn? $ cond
+              exists? js/window
+              , false
+            (exists? js/process) (= "\"true" js/process.env.cdn)
+            :else false
+        |dev? $ quote
+          def dev? $ = "\"dev" (get-env "\"mode")
+        |site $ quote
+          def site $ {} (:dev-ui "\"http://localhost:8100/main-fonts.css") (:release-ui "\"http://cdn.tiye.me/favored-fonts/main-fonts.css") (:cdn-url "\"http://cdn.tiye.me/text.cirru.org/") (:title "\"Cirru is a indentation-based grammar for programming") (:icon "\"http://cdn.tiye.me/logo/cirru.png") (:storage-key "\"text.cirru.org")
+      :ns $ quote (ns app.config)
+    |app.dl $ {}
+      :defs $ {}
         |inline $ quote
           defmacro inline (path)
             read-file $ str "\"data/" path
-    |app.schema $ {}
-      :ns $ quote (ns app.schema)
-      :defs $ {}
-        |store $ quote
-          def store $ {}
-            :states $ {}
-            :content |
-    |app.updater $ {}
-      :ns $ quote
-        ns app.updater $ :require
-          [] respo.cursor :refer $ [] update-states
-      :defs $ {}
-        |updater $ quote
-          defn updater (store op op-data op-id op-time)
-            case-default op
-              do (println "\"Unknown op:" op) store
-              :states $ update-states store op-data
-              :content $ assoc store :content op-data
-              :hydrate-storage op-data
-    |app.main $ {}
-      :ns $ quote
-        ns app.main $ :require
-          [] respo.core :refer $ [] render! clear-cache! realize-ssr!
-          [] app.comp.container :refer $ [] comp-container
-          [] app.updater :refer $ [] updater
-          [] app.schema :as schema
-          [] reel.util :refer $ [] listen-devtools!
-          [] reel.core :refer $ [] reel-updater refresh-reel
-          [] reel.schema :as reel-schema
-          [] app.config :as config
-          [] "\"highlight.js" :default hljs
-          [] "\"highlight.js/lib/languages/clojure" :default lang-clojure
-          [] "\"highlight.js/lib/languages/bash" :default lang-bash
-          [] "\"highlight.js/lib/languages/python" :default lang-python
-          [] "\"highlight.js/lib/languages/elixir" :default lang-elixir
-          [] "\"highlight.js/lib/languages/haskell" :default lang-haskell
-          "\"./calcit.build-errors" :default build-errors
-          "\"bottom-tip" :default hud!
-      :defs $ {}
-        |render-app! $ quote
-          defn render-app! () $ render! mount-target (comp-container @*reel) dispatch!
-        |persist-storage! $ quote
-          defn persist-storage! (? e)
-            .setItem js/localStorage (:storage-key config/site)
-              format-cirru-edn $ :store @*reel
-        |mount-target $ quote
-          def mount-target $ .querySelector js/document |.app
-        |*reel $ quote
-          defatom *reel $ -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
-        |main! $ quote
-          defn main! ()
-            println "\"Running mode:" $ if config/dev?
-              do (load-console-formatter!) "\"dev"
-              , "\"release"
-            .!registerLanguage hljs "\"clojure" lang-clojure
-            .!registerLanguage hljs "\"python" lang-python
-            .!registerLanguage hljs "\"bash" lang-bash
-            .!registerLanguage hljs "\"elixir" lang-elixir
-            .!registerLanguage hljs "\"haskell" lang-haskell
-            render-app!
-            add-watch *reel :changes $ fn (r p) (render-app!)
-            listen-devtools! |k dispatch!
-            ; .addEventListener js/window |beforeunload persist-storage!
-            ; repeat! 60 persist-storage!
-            ; let
-                raw $ .getItem js/localStorage (:storage-key config/site)
-              when (some? raw)
-                dispatch! :hydrate-storage $ format-cirru-edn raw
-            println "|App started."
-        |snippets $ quote
-          defn snippets () $ println config/cdn?
-        |dispatch! $ quote
-          defn dispatch! (op op-data)
-            when config/dev? $ println "\"Dispatch:" op
-            reset! *reel $ reel-updater updater @*reel op op-data
-        |reload! $ quote
-          defn reload! () $ if (nil? build-errors)
-            do (remove-watch *reel :changes) (clear-cache!)
-              add-watch *reel :changes $ fn (reel prev) (render-app!)
-              reset! *reel $ refresh-reel @*reel schema/store updater
-              hud! "\"ok~" "\"Ok"
-            hud! "\"error" build-errors
-    |app.dl $ {}
-      :ns $ quote
-        ns app.dl $ :require ([] "\"axios" :as axios) ([] "\"fs" :as fs)
-      :defs $ {}
-        |p-download-doc $ quote
-          defn p-download-doc (project-name link)
-            ->
-              axios/get link $ js-object
-                :headers $ js-object
-                  "\"Authorization" $ str "\"Bearer " js/process.env.GITHUB_TOKEN
-              .then $ fn (response)
-                fs/writeFileSync (str "\"data/files/" project-name "\".md")
-                  ->
-                    aget (aget response "\"data") "\"content"
-                    js/Buffer.from "\"base64"
-                    .!toString "\"utf8"
-                println "\"Wrote to" project-name
-              .catch $ fn (error) (js/console.error "\"Failed at fetching:" link error)
         |main! $ quote
           defn main! () $ let
               projects $ parse-cirru-edn (inline "\"projects.cirru")
@@ -303,19 +221,101 @@
                     empty? $ rest xs
                     do (println "\"All finished.") true
                     recur (rest xs) (inc c)
-        |inline $ quote
-          defmacro inline (path)
-            read-file $ str "\"data/" path
-    |app.config $ {}
-      :ns $ quote (ns app.config)
+        |p-download-doc $ quote
+          defn p-download-doc (project-name link)
+            ->
+              .!get axios link $ js-object
+                :headers $ js-object
+                  "\"Authorization" $ str "\"Bearer " js/process.env.GITHUB_TOKEN
+              .!then $ fn (response)
+                fs/writeFileSync (str "\"data/files/" project-name "\".md")
+                  ->
+                    aget (aget response "\"data") "\"content"
+                    js/Buffer.from "\"base64"
+                    .!toString "\"utf8"
+                println "\"Wrote to" project-name
+              .!catch $ fn (error) (js/console.error "\"Failed at fetching:" link error)
+      :ns $ quote
+        ns app.dl $ :require ("\"axios" :default axios) ("\"fs" :as fs)
+    |app.main $ {}
       :defs $ {}
-        |cdn? $ quote
-          def cdn? $ cond
-              exists? js/window
-              , false
-            (exists? js/process) (= "\"true" js/process.env.cdn)
-            :else false
-        |dev? $ quote
-          def dev? $ = "\"dev" (get-env "\"mode")
-        |site $ quote
-          def site $ {} (:dev-ui "\"http://localhost:8100/main-fonts.css") (:release-ui "\"http://cdn.tiye.me/favored-fonts/main-fonts.css") (:cdn-url "\"http://cdn.tiye.me/text.cirru.org/") (:title "\"Cirru is a indentation-based grammar for programming") (:icon "\"http://cdn.tiye.me/logo/cirru.png") (:storage-key "\"text.cirru.org")
+        |*reel $ quote
+          defatom *reel $ -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
+        |dispatch! $ quote
+          defn dispatch! (op op-data)
+            when config/dev? $ println "\"Dispatch:" op
+            reset! *reel $ reel-updater updater @*reel op op-data
+        |main! $ quote
+          defn main! ()
+            println "\"Running mode:" $ if config/dev?
+              do (load-console-formatter!) "\"dev"
+              , "\"release"
+            .!registerLanguage hljs "\"clojure" lang-clojure
+            .!registerLanguage hljs "\"python" lang-python
+            .!registerLanguage hljs "\"bash" lang-bash
+            .!registerLanguage hljs "\"elixir" lang-elixir
+            .!registerLanguage hljs "\"haskell" lang-haskell
+            render-app!
+            add-watch *reel :changes $ fn (r p) (render-app!)
+            listen-devtools! |k dispatch!
+            ; .addEventListener js/window |beforeunload persist-storage!
+            ; repeat! 60 persist-storage!
+            ; let
+                raw $ .getItem js/localStorage (:storage-key config/site)
+              when (some? raw)
+                dispatch! :hydrate-storage $ format-cirru-edn raw
+            println "|App started."
+        |mount-target $ quote
+          def mount-target $ .querySelector js/document |.app
+        |persist-storage! $ quote
+          defn persist-storage! (? e)
+            .setItem js/localStorage (:storage-key config/site)
+              format-cirru-edn $ :store @*reel
+        |reload! $ quote
+          defn reload! () $ if (nil? build-errors)
+            do (remove-watch *reel :changes) (clear-cache!)
+              add-watch *reel :changes $ fn (reel prev) (render-app!)
+              reset! *reel $ refresh-reel @*reel schema/store updater
+              hud! "\"ok~" "\"Ok"
+            hud! "\"error" build-errors
+        |render-app! $ quote
+          defn render-app! () $ render! mount-target (comp-container @*reel) dispatch!
+        |snippets $ quote
+          defn snippets () $ println config/cdn?
+      :ns $ quote
+        ns app.main $ :require
+          [] respo.core :refer $ [] render! clear-cache! realize-ssr!
+          [] app.comp.container :refer $ [] comp-container
+          [] app.updater :refer $ [] updater
+          [] app.schema :as schema
+          [] reel.util :refer $ [] listen-devtools!
+          [] reel.core :refer $ [] reel-updater refresh-reel
+          [] reel.schema :as reel-schema
+          [] app.config :as config
+          [] "\"highlight.js" :default hljs
+          [] "\"highlight.js/lib/languages/clojure" :default lang-clojure
+          [] "\"highlight.js/lib/languages/bash" :default lang-bash
+          [] "\"highlight.js/lib/languages/python" :default lang-python
+          [] "\"highlight.js/lib/languages/elixir" :default lang-elixir
+          [] "\"highlight.js/lib/languages/haskell" :default lang-haskell
+          "\"./calcit.build-errors" :default build-errors
+          "\"bottom-tip" :default hud!
+    |app.schema $ {}
+      :defs $ {}
+        |store $ quote
+          def store $ {}
+            :states $ {}
+            :content |
+      :ns $ quote (ns app.schema)
+    |app.updater $ {}
+      :defs $ {}
+        |updater $ quote
+          defn updater (store op op-data op-id op-time)
+            case-default op
+              do (println "\"Unknown op:" op) store
+              :states $ update-states store op-data
+              :content $ assoc store :content op-data
+              :hydrate-storage op-data
+      :ns $ quote
+        ns app.updater $ :require
+          [] respo.cursor :refer $ [] update-states
