@@ -14,15 +14,15 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.27.2",
-    "bottom-tip": "^0.1.3",
-    "vite": "^3.2.7"
+    "axios": "^1.4.0",
+    "bottom-tip": "^0.1.5",
+    "vite": "^4.3.9"
   },
   "dependencies": {
-    "@calcit/procs": "^0.6.0",
+    "@calcit/procs": "^0.7.0-a7",
     "cirru-color": "^0.2.3",
     "feather-icons": "^4.29.0",
-    "highlight.js": "^11.6.0",
+    "highlight.js": "^11.8.0",
     "remarkable": "^2.0.1",
     "shortid": "^2.2.16"
   }
