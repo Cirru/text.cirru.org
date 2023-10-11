@@ -10,24 +10,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 20
         cache: "yarn"
 
     - uses: supplypike/setup-bin@v3
       with:
-        uri: "https://github.com/calcit-lang/calcit/releases/download/0.7.0-a7/cr"
+        uri: "https://github.com/calcit-lang/calcit/releases/download/0.8.4/cr"
         name: "cr"
-        version: "0.7.0-a7"
+        version: "0.8.4"
 
     - uses: supplypike/setup-bin@v3
       with:
-        uri: "https://github.com/calcit-lang/calcit/releases/download/0.7.0-a7/caps"
+        uri: "https://github.com/calcit-lang/calcit/releases/download/0.8.4/caps"
         name: "caps"
-        version: "0.7.0-a7"
+        version: "0.8.4"
 
     - name: "compiles to js"
       run: >
