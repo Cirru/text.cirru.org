@@ -14,7 +14,7 @@
   "author": "jiyinyiyong",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "bottom-tip": "^0.1.5",
     "vite": "^5.2.14"
   },
