@@ -16,7 +16,7 @@
   "devDependencies": {
     "axios": "^1.7.4",
     "bottom-tip": "^0.1.5",
-    "vite": "^5.4.12"
+    "vite": "^5.4.19"
   },
   "dependencies": {
     "@calcit/procs": "^0.8.46",
