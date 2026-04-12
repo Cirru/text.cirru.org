@@ -90,6 +90,7 @@
       {} (:title "|Ace Editor support") (:repo |https://github.com/Cirru/ace)
       {} (:name |Cirru/language-cirru) (:title "|Atom Editor support") (:repo |https://github.com/Cirru/language-cirru) (:readme |https://api.github.com/repos/Cirru/language-cirru/readme)
       {} (:name |Cirru/vim-cirru) (:title "|Vim support") (:repo |https://github.com/Cirru/vim-cirru) (:readme |https://api.github.com/repos/Cirru/vim-cirru/readme)
+      {} (:name |Cirru/zed-cirru) (:title "|Zed support") (:repo |https://github.com/Cirru/zed-cirru) (:readme |https://api.github.com/repos/Cirru/zed-cirru/readme)
   {} (:title |Highlighting)
     :projects $ []
       {} (:name |Cirru/cirru-rainbow) (:title "|Rainbow Plugin") (:repo |https://github.com/Cirru/cirru-rainbow) (:readme |https://api.github.com/repos/Cirru/cirru-rainbow/readme)

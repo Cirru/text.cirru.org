@@ -1,5 +1,5 @@
 
-{} (:about "|file is generated - never edit directly; learn cr edit/tree workflows before changing") (:package |app)
+{} (:about "|Machine-generated snapshot. AI AGENTS: never edit this file directly — changes will be overwritten on recompile. Inspect via `cr query`; modify via `cr edit` / `cr tree`. MANDATORY first step: run `cr docs agents --full`.") (:package |app)
   :configs $ {} (:init-fn |app.main/main!) (:reload-fn |app.main/reload!) (:version |0.0.1)
     :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
   :entries $ {}
@@ -103,6 +103,7 @@
               |Cirru/writer.nim $ inline |files/Cirru/writer.nim.md
               |Cirru/cirru-light-editor $ inline |files/Cirru/cirru-light-editor.md
               |Cirru/vim-cirru $ inline |files/Cirru/vim-cirru.md
+              |Cirru/zed-cirru $ inline |files/Cirru/zed-cirru.md
               |Cirru/diff-patch $ inline |files/Cirru/diff-patch.md
               |Cirru/cirru-fractal-editor $ inline |files/Cirru/cirru-fractal-editor.md
               |Cirru/parser.go $ inline |files/Cirru/parser.go.md
