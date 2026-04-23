@@ -1,12 +1,12 @@
 
-{} (:package |app)
+{} (:about "|Machine-generated snapshot. AI AGENTS: never edit this file directly — changes will be overwritten on recompile. Inspect via `cr query`; modify via `cr edit` / `cr tree`. MANDATORY first step: run `cr docs agents --full`.") (:package |app)
   :configs $ {} (:init-fn |app.main/main!) (:reload-fn |app.main/reload!) (:version |0.0.1)
     :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
   :entries $ {}
   :files $ {}
     |app.comp.container $ %{} :FileEntry
       :defs $ {}
-        |comp-container $ %{} :CodeEntry (:doc |)
+        |comp-container $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defcomp comp-container (reel)
               let
@@ -14,7 +14,7 @@
                   states $ :states store
                   cursor $ or (:cursor states) ([])
                   state $ or (:data states)
-                    {} $ :page "\"Cirru/text.cirru.org"
+                    {} $ :page |Cirru/text.cirru.org
                 div
                   {} $ :style (merge ui/global ui/fullscreen ui/row)
                   list->
@@ -36,57 +36,60 @@
                             -> (:projects section)
                               map $ fn (project)
                                 []
-                                  or (:name project) "\"forked-repo"
+                                  or (:name project) |forked-repo
                                   div
                                     {}
                                       :on-click $ fn (e d!)
                                         d! cursor $ {}
                                           :page $ :name project
                                       :style $ {} (:cursor :pointer)
-                                      :class-name $ str "\"entry-link"
+                                      :class-name $ str |entry-link
                                         if
                                           = (:name project) (:page state)
-                                          , "\" is-selected"
+                                          , "| is-selected"
                                     <> $ :title project
                   div
                     {} $ :style
-                      merge ui/expand $ {} (:padding "\"16px 48px") (:overflow :auto) (:padding-bottom 200)
+                      merge ui/expand $ {} (:padding "|16px 48px") (:overflow :auto) (:padding-bottom 200)
                     div
                       {} $ :style ui/row-parted
-                      span nil
-                      span ({}) (<> "\"Rendered with: ")
+                      span $ {}
+                      span ({}) (<> "|Rendered with: ")
                         a $ {}
                           :inner-text $ :page state
-                          :target "\"_blank"
-                          :href $ str "\"https://github.com/" (:page state)
+                          :target |_blank
+                          :href $ str |https://github.com/ (:page state)
                     div $ {}
                       :style $ {} (:max-width 800)
-                      :class-name "\"about"
+                      :class-name |about
                       :innerHTML $ .!render md
                         or
                           get projects-dict $ :page state
-                          , "\"No README. Probably a forked project."
+                          , "|No README. Probably a forked project."
                       :on-click $ fn (e d!)
                         let
                             event $ :event e
                           when
-                            = "\"A" $ -> event .-target .-tagName
+                            = |A $ -> event .-target .-tagName
                             .!preventDefault event
                             js/window.open $ -> event .-target .-href
                   when dev? $ comp-reel (>> states :reel) reel ({})
-        |inline $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |inline $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defmacro inline (path)
-              read-file $ str "\"data/" path
-        |md $ %{} :CodeEntry (:doc |)
+              read-file $ str |data/ path
+          :examples $ []
+        |md $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             def md $ ->
               new Remarkable $ js-object (:breaks true)
                 :highlight $ fn (code lang)
-                  if (= lang "\"cirru") (cirru-color/generate code)
-                    aget (.!highlightAuto hljs code) "\"value"
+                  if (= lang |cirru) (cirru-color/generate code)
+                    aget (.!highlightAuto hljs code) |value
               .!use linkify
-        |projects-dict $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |projects-dict $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             def projects-dict $ {}
               |Cirru/parser.ex $ inline |files/Cirru/parser.ex.md
@@ -100,6 +103,7 @@
               |Cirru/writer.nim $ inline |files/Cirru/writer.nim.md
               |Cirru/cirru-light-editor $ inline |files/Cirru/cirru-light-editor.md
               |Cirru/vim-cirru $ inline |files/Cirru/vim-cirru.md
+              |Cirru/zed-cirru $ inline |files/Cirru/zed-cirru.md
               |Cirru/diff-patch $ inline |files/Cirru/diff-patch.md
               |Cirru/cirru-fractal-editor $ inline |files/Cirru/cirru-fractal-editor.md
               |Cirru/parser.go $ inline |files/Cirru/parser.go.md
@@ -166,10 +170,12 @@
               |Cirru/codemirror-cirru $ inline |files/Cirru/codemirror-cirru.md
               |Cirru/CirruSepal.jl $ inline |files/Cirru/CirruSepal.jl.md
               |Cirru/jiuzhang-lang $ inline |files/Cirru/jiuzhang-lang.md
-        |projects-list $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |projects-list $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
-            def projects-list $ parse-cirru-edn (inline "\"projects.cirru")
-      :ns $ %{} :CodeEntry (:doc |)
+            def projects-list $ parse-cirru-edn (inline |projects.cirru)
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote
           ns app.comp.container $ :require
             [] respo-ui.core :refer $ [] hsl
@@ -179,99 +185,108 @@
             [] reel.comp.reel :refer $ [] comp-reel
             [] respo-md.comp.md :refer $ [] comp-md
             [] app.config :refer $ [] dev?
-            [] "\"remarkable" :refer $ [] Remarkable
-            [] "\"remarkable/linkify" :refer $ [] linkify
-            [] "\"cirru-color" :as cirru-color
-            [] "\"highlight.js" :default hljs
+            [] |remarkable :refer $ [] Remarkable
+            [] |remarkable/linkify :refer $ [] linkify
+            [] |cirru-color :as cirru-color
+            [] |highlight.js :default hljs
             [] applied-science.js-interop :as j
     |app.config $ %{} :FileEntry
       :defs $ {}
-        |cdn? $ %{} :CodeEntry (:doc |)
+        |cdn? $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             def cdn? $ cond
                 exists? js/window
                 , false
-              (exists? js/process) (= "\"true" js/process.env.cdn)
+              (exists? js/process) (= |true js/process.env.cdn)
               :else false
-        |dev? $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |dev? $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
-            def dev? $ = "\"dev" (get-env "\"mode")
-        |site $ %{} :CodeEntry (:doc |)
+            def dev? $ = |dev (get-env |mode)
+          :examples $ []
+        |site $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
-            def site $ {} (:dev-ui "\"http://localhost:8100/main-fonts.css") (:release-ui "\"http://cdn.tiye.me/favored-fonts/main-fonts.css") (:cdn-url "\"http://cdn.tiye.me/text.cirru.org/") (:title "\"Cirru is a indentation-based grammar for programming") (:icon "\"http://cdn.tiye.me/logo/cirru.png") (:storage-key "\"text.cirru.org")
-      :ns $ %{} :CodeEntry (:doc |)
+            def site $ {} (:dev-ui |http://localhost:8100/main-fonts.css) (:release-ui |http://cdn.tiye.me/favored-fonts/main-fonts.css) (:cdn-url |http://cdn.tiye.me/text.cirru.org/) (:title "|Cirru is a indentation-based grammar for programming") (:icon |http://cdn.tiye.me/logo/cirru.png) (:storage-key |text.cirru.org)
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote (ns app.config)
     |app.dl $ %{} :FileEntry
       :defs $ {}
-        |inline $ %{} :CodeEntry (:doc |)
+        |inline $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defmacro inline (path)
-              read-file $ str "\"data/" path
-        |main! $ %{} :CodeEntry (:doc |)
+              read-file $ str |data/ path
+          :examples $ []
+        |main! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn main! () $ let
-                projects $ parse-cirru-edn (inline "\"projects.cirru")
+                projects $ parse-cirru-edn (inline |projects.cirru)
                 flat-projects $ mapcat projects
                   fn (x) (:projects x)
                 repos $ map flat-projects
                   fn (x) (:repo x)
                 project-names $ -> repos
                   filter $ fn (link)
-                    not $ or (.includes? link "\"/ace") (.includes? link "\"/pygments-main")
-                  map $ fn (link) (.replace link "\"https://github.com/" "\"")
-              println "\"There are " (count repos) "\"projects"
+                    not $ or (.includes? link |/ace) (.includes? link |/pygments-main)
+                  map $ fn (link) (.replace link |https://github.com/ |)
+              println "|There are " (count repos) |projects
               apply-args
                   drop project-names 0
                   , 1
-                fn (xs c) (hint-fn async)
+                fn (xs c)
+                  hint-fn $ {} (:async true)
                   let
                       project-name $ first xs
-                      link $ str "\"https://api.github.com/repos/" project-name "\"/readme"
+                      link $ str |https://api.github.com/repos/ project-name |/readme
                     js-await $ p-download-doc project-name link
-                    println "\"Finished" c "\"projects... More:" $ to-lispy-string (take xs 3)
+                    println |Finished c "|projects... More:" $ to-lispy-string (take xs 3)
                     if
                       empty? $ rest xs
-                      do (println "\"All finished.") true
+                      do (println "|All finished.") true
                       recur (rest xs) (inc c)
-        |p-download-doc $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |p-download-doc $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn p-download-doc (project-name link)
               ->
                 .!get axios link $ js-object
                   :headers $ js-object
-                    "\"Authorization" $ str "\"Bearer " js/process.env.GITHUB_TOKEN
+                    |Authorization $ str "|Bearer " js/process.env.GITHUB_TOKEN
                 .!then $ fn (response)
-                  fs/writeFileSync (str "\"data/files/" project-name "\".md")
+                  fs/writeFileSync (str |data/files/ project-name |.md)
                     ->
-                      aget (aget response "\"data") "\"content"
-                      js/Buffer.from "\"base64"
-                      .!toString "\"utf8"
-                  println "\"Wrote to" project-name
-                .!catch $ fn (error) (js/console.error "\"Failed at fetching:" link error)
-      :ns $ %{} :CodeEntry (:doc |)
+                      aget (aget response |data) |content
+                      js/Buffer.from |base64
+                      .!toString |utf8
+                  println "|Wrote to" project-name
+                .!catch $ fn (error) (js/console.error "|Failed at fetching:" link error)
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote
-          ns app.dl $ :require ("\"axios" :default axios) ("\"fs" :as fs)
+          ns app.dl $ :require (|axios :default axios) (|fs :as fs)
     |app.main $ %{} :FileEntry
       :defs $ {}
-        |*reel $ %{} :CodeEntry (:doc |)
+        |*reel $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defatom *reel $ -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
-        |dispatch! $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |dispatch! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn dispatch! (op)
-              when config/dev? $ println "\"Dispatch:" op
+              when config/dev? $ println |Dispatch: op
               reset! *reel $ reel-updater updater @*reel op
-        |main! $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |main! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn main! ()
-              println "\"Running mode:" $ if config/dev?
-                do (load-console-formatter!) "\"dev"
-                , "\"release"
-              .!registerLanguage hljs "\"clojure" lang-clojure
-              .!registerLanguage hljs "\"python" lang-python
-              .!registerLanguage hljs "\"bash" lang-bash
-              .!registerLanguage hljs "\"elixir" lang-elixir
-              .!registerLanguage hljs "\"haskell" lang-haskell
+              println "|Running mode:" $ if config/dev?
+                do (load-console-formatter!) |dev
+                , |release
+              .!registerLanguage hljs |clojure lang-clojure
+              .!registerLanguage hljs |python lang-python
+              .!registerLanguage hljs |bash lang-bash
+              .!registerLanguage hljs |elixir lang-elixir
+              .!registerLanguage hljs |haskell lang-haskell
               render-app!
               add-watch *reel :changes $ fn (r p) (render-app!)
               listen-devtools! |k dispatch!
@@ -282,29 +297,35 @@
                 when (some? raw)
                   dispatch! :hydrate-storage $ format-cirru-edn raw
               println "|App started."
-        |mount-target $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |mount-target $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             def mount-target $ js/document.querySelector |.app
-        |persist-storage! $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |persist-storage! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn persist-storage! (? e)
               js/localStorage.setItem (:storage-key config/site)
                 format-cirru-edn $ :store @*reel
-        |reload! $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |reload! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn reload! () $ if (nil? build-errors)
               do (remove-watch *reel :changes) (clear-cache!)
                 add-watch *reel :changes $ fn (reel prev) (render-app!)
                 reset! *reel $ refresh-reel @*reel schema/store updater
-                hud! "\"ok~" "\"Ok"
-              hud! "\"error" build-errors
-        |render-app! $ %{} :CodeEntry (:doc |)
+                hud! |ok~ |Ok
+              hud! |error build-errors
+          :examples $ []
+        |render-app! $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn render-app! () $ render! mount-target (comp-container @*reel) dispatch!
-        |snippets $ %{} :CodeEntry (:doc |)
+          :examples $ []
+        |snippets $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn snippets () $ println config/cdn?
-      :ns $ %{} :CodeEntry (:doc |)
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote
           ns app.main $ :require
             [] respo.core :refer $ [] render! clear-cache! realize-ssr!
@@ -315,26 +336,27 @@
             [] reel.core :refer $ [] reel-updater refresh-reel
             [] reel.schema :as reel-schema
             [] app.config :as config
-            [] "\"highlight.js" :default hljs
-            [] "\"highlight.js/lib/languages/clojure" :default lang-clojure
-            [] "\"highlight.js/lib/languages/bash" :default lang-bash
-            [] "\"highlight.js/lib/languages/python" :default lang-python
-            [] "\"highlight.js/lib/languages/elixir" :default lang-elixir
-            [] "\"highlight.js/lib/languages/haskell" :default lang-haskell
-            "\"./calcit.build-errors" :default build-errors
-            "\"bottom-tip" :default hud!
+            [] |highlight.js :default hljs
+            [] |highlight.js/lib/languages/clojure :default lang-clojure
+            [] |highlight.js/lib/languages/bash :default lang-bash
+            [] |highlight.js/lib/languages/python :default lang-python
+            [] |highlight.js/lib/languages/elixir :default lang-elixir
+            [] |highlight.js/lib/languages/haskell :default lang-haskell
+            |./calcit.build-errors :default build-errors
+            |bottom-tip :default hud!
     |app.schema $ %{} :FileEntry
       :defs $ {}
-        |store $ %{} :CodeEntry (:doc |)
+        |store $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             def store $ {}
               :states $ {}
               :content |
-      :ns $ %{} :CodeEntry (:doc |)
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote (ns app.schema)
     |app.updater $ %{} :FileEntry
       :defs $ {}
-        |updater $ %{} :CodeEntry (:doc |)
+        |updater $ %{} :CodeEntry (:doc |) (:schema nil)
           :code $ quote
             defn updater (store op op-id op-time)
               tag-match op
@@ -342,8 +364,9 @@
                   update-states store cursor s
                 (:content c) (assoc store :content c)
                 (:hydrate-storage d) d
-                _ $ do (eprintln "\"Unknown op:" op) store
-      :ns $ %{} :CodeEntry (:doc |)
+                _ $ do (eprintln "|Unknown op:" op) store
+          :examples $ []
+      :ns $ %{} :NsEntry (:doc |)
         :code $ quote
           ns app.updater $ :require
             [] respo.cursor :refer $ [] update-states

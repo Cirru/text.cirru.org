@@ -12,24 +12,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v6
       with:
-        node-version: 20
-        cache: "yarn"
+        node-version: 24
 
-    - uses: calcit-lang/setup-cr@0.0.3
+    - name: Enable Corepack
+      run: |
+        corepack enable
+        corepack prepare yarn@4.12.0 --activate
+        yarn --version
+
+    - uses: calcit-lang/setup-cr@0.0.8
       with:
-        version: "0.8.46"
+        version: "0.12.14"
 
     - name: "compiles to js"
       run: >
-        yarn && caps --ci
+        caps --ci && yarn install --immutable
         && mkdir -p data/files/Cirru/
         && mkdir -p data/files/calcit-lang/
         && yarn c-dl
         && GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} node dl.mjs
-        && cr --emit-js --once
-        && yarn vite build --base=./
+        && cr js
+        && yarn build
 
     - name: Deploy to server
       id: deploy
