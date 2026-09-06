@@ -6,13 +6,18 @@ on:
       - main
   pull_request: {}
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.0
+      with:
+        persist-credentials: false
 
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
       with:
         node-version: 24
 
@@ -22,23 +27,39 @@ jobs:
         corepack prepare yarn@4.12.0 --activate
         yarn --version
 
-    - uses: calcit-lang/setup-cr@0.0.8
-      with:
-        version: "0.12.14"
+    - uses: calcit-lang/setup-calcit@704b3f5cd6f9ce3bd1e0c926dbdd1d181adb8180 # v1.4.0
 
-    - name: "compiles to js"
-      run: >
-        caps --ci && yarn install --immutable
-        && mkdir -p data/files/Cirru/
-        && mkdir -p data/files/calcit-lang/
-        && yarn c-dl
-        && GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} node dl.mjs
-        && cr js
-        && yarn build
+    - name: Validate downloader
+      run: |
+        yarn install --immutable
+        caps --strict --ci
+        caps verify --toolchain
+        calcit calcit.cirru --entry downloader --check-only
+        calcit calcit.cirru --entry downloader analyze dynamic-methods --max 0
+        calcit calcit.cirru --entry downloader --emit-path dl-out/ js
+
+    - name: Download project documentation
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p data/files/Cirru data/files/calcit-lang
+        node dl.mjs
+
+    - name: Validate and build site
+      run: |
+        calcit edit format
+        git diff --exit-code -- calcit.cirru
+        calcit calcit.cirru --check-only
+        calcit calcit.cirru analyze dynamic-methods --max 0
+        calcit calcit.cirru analyze deprecated --summary-only
+        calcit calcit.cirru analyze quality --baseline config/calcit-quality.cirru
+        calcit calcit.cirru js
+        yarn vite build --base=./
 
     - name: Deploy to server
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       id: deploy
-      uses: Pendect/action-rsyncer@v2.0.0
+      uses: Pendect/action-rsyncer@8e05ffa5c93e5d9c9b167796b26044d2c616b2b9 # v2.0.0
       env:
         DEPLOY_KEY: ${{secrets.rsync_private_key}}
       with:
@@ -49,4 +70,5 @@ jobs:
         dest: 'rsync-user@tiye.me:/web-assets/repo/${{ github.repository }}'
 
     - name: Display status from deploy
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: echo "${{ steps.deploy.outputs.status }}"

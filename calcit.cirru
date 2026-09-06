@@ -16,11 +16,22 @@
           :code $ quote
             defcomp comp-container (reel)
               let
-                  store $ :store reel
-                  states $ :states store
-                  cursor $ or (:cursor states) ([])
-                  state $ or (:data states)
-                    {} $ :page |Cirru/text.cirru.org
+                  store $
+                    get (unsafe-coerce reel Dynamic) :store
+                    , .unwrap-or ({})
+                  states $
+                    get store :states
+                    , .unwrap-or ({})
+                  cursor $
+                    get states :cursor
+                    , .unwrap-or ([])
+                  state $
+                    get states :data
+                    , .unwrap-or
+                      {} $ :page |Cirru/text.cirru.org
+                  page $
+                    get state :page
+                    , .unwrap-or |Cirru/text.cirru.org
                 div
                   {} $ :style (merge ui/global ui/fullscreen ui/row)
                   list->
@@ -28,32 +39,39 @@
                       {} (:overflow :auto) (:padding-bottom 200)
                     -> projects-list $ map-indexed
                       fn (idx section)
-                        [] idx $ div
-                          {} $ :style
-                            {} $ :padding 16
-                          <> (:title section)
-                            {}
+                        let
+                            section-title $
+                              get section :title
+                              , .unwrap-or |
+                            projects $
+                              get section :projects
+                              , .unwrap-or ([])
+                          [] idx $ div
+                            {} $ :style
+                              {} $ :padding 16
+                            <> section-title $ {}
                               :color $ hsl 0 0 70
                               :font-size 20
                               :font-family ui/font-fancy
-                          list->
-                            {} $ :style
-                              {} $ :padding-left 16
-                            -> (:projects section)
-                              map $ fn (project)
-                                []
-                                  or (:name project) |forked-repo
-                                  div
+                            list->
+                              {} $ :style
+                                {} $ :padding-left 16
+                              map projects $ fn (project)
+                                let
+                                    project-name $
+                                      get project :name
+                                      , .unwrap-or |forked-repo
+                                    project-title $
+                                      get project :title
+                                      , .unwrap-or |
+                                  [] project-name $ div
                                     {}
                                       :on-click $ fn (e d!)
-                                        d! cursor $ {}
-                                          :page $ :name project
+                                        d! cursor $ {} (:page project-name)
                                       :style $ {} (:cursor :pointer)
                                       :class-name $ str |entry-link
-                                        if
-                                          = (:name project) (:page state)
-                                          , "| is-selected"
-                                    <> $ :title project
+                                        if (= project-name page) "| is-selected" |
+                                    <> project-title
                   div
                     {} $ :style
                       merge ui/expand $ {} (:padding "|16px 48px") (:overflow :auto) (:padding-bottom 200)
@@ -61,24 +79,24 @@
                       {} $ :style ui/row-parted
                       span $ {}
                       span ({}) (<> "|Rendered with: ")
-                        a $ {}
-                          :inner-text $ :page state
-                          :target |_blank
-                          :href $ str |https://github.com/ (:page state)
+                        a $ {} (:inner-text page) (:target |_blank)
+                          :href $ str |https://github.com/ page
                     div $ {}
                       :style $ {} (:max-width 800)
                       :class-name |about
-                      :innerHTML $ .!render md
-                        or
-                          get projects-dict $ :page state
-                          , "|No README. Probably a forked project."
+                      :innerHTML $ .!render (unsafe-coerce md JsObject)
+                        (get projects-dict page) .unwrap-or "|No README. Probably a forked project."
                       :on-click $ fn (e d!)
                         let
-                            event $ :event e
+                            event $ unsafe-coerce
+                                get e :event
+                                , .unwrap-or nil
+                              , JsObject
+                            target $ unsafe-coerce (.?-target event) JsObject
                           when
-                            = |A $ -> event .-target .-tagName
-                            .!preventDefault event
-                            js/window.open $ -> event .-target .-href
+                            = |A $ unsafe-coerce (.?-tagName target) String
+                            .?!preventDefault event
+                            .?!open js/window $ unsafe-coerce (.?-href target) String
                   when dev? $ comp-reel (>> states :reel) reel ({})
           :examples $ []
           :schema $ :: 'Dynamic
@@ -98,7 +116,9 @@
               new Remarkable $ js-object (:breaks true)
                 :highlight $ fn (code lang)
                   if (= lang |cirru) (cirru-color/generate code)
-                    aget (.!highlightAuto hljs code) |value
+                    let
+                        result $ unsafe-coerce (.!highlightAuto hljs code) JsObject
+                      unsafe-coerce (.-value result) String
               .!use linkify
           :examples $ []
           :schema $ :: 'Dynamic
@@ -218,7 +238,8 @@
           :schema $ :: 'Dynamic
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote
-            def dev? $ = |dev (get-env |mode)
+            def dev? $ = |dev
+              (get-env |mode) .unwrap-or |release
           :examples $ []
           :schema $ :: 'Dynamic
         'site $ %{} 'CodeEntry (:doc |)
@@ -252,8 +273,9 @@
                     (get x :repo) .unwrap-or |
                 project-names $ -> repos
                   filter $ fn (link)
-                    not $ or (.includes? link |/ace) (.includes? link |/pygments-main)
-                  map $ fn (link) (.replace link |https://github.com/ |)
+                    not $ or (includes? link |/ace) (includes? link |/pygments-main)
+                  map $ fn (link)
+                    (unsafe-coerce link String) .replace |https://github.com/ |
               println "|There are " (count repos) |projects
               apply-args
                   drop project-names 0
@@ -401,7 +423,7 @@
         'updater $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn updater (store op op-id op-time)
-              tag-match op
+              match op
                 (:states cursor s) (update-states store cursor s)
                 (:content c) (assoc store :content c)
                 (:hydrate-storage d) d
