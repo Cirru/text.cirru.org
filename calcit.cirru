@@ -343,6 +343,29 @@
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
           :schema $ :: 'Trait
+        'download-projects $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ fn (xs c)
+            hint-fn $ {}
+              :args $ [] (:: 'List 'String) 'Number
+              :return 'Bool
+              :async true
+              :features $ #{} :js-ffi
+            let
+                project-name $
+                  first xs
+                  , .unwrap-or |
+                link $ str |https://api.github.com/repos/ project-name |/readme
+              js-await $ p-download-doc project-name link
+              println |Finished c "|projects... More:" $ to-lispy-string $ take xs 3
+              if
+                empty? $ rest xs
+                do (println "|All finished.") true
+                recur (rest xs) (inc c)
+          :examples $ []
+          :ffi $ {} (:backend :js) (:target :node)
+          :schema $ :: 'Fn $ {} (:return 'Bool)
+            :args $ [] (:: 'List 'String) 'Number
+            :features $ #{} :js-ffi
         'extract-projects $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn extract-projects (data)
             if (list? data) (mapcat data group-projects) ([])
@@ -393,6 +416,11 @@
             :features $ #{} :js-ffi
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
+            hint-fn $ {}
+              :args $ []
+              :return 'Unit
+              :async true
+              :features $ #{} :js-ffi
             do
               let
                   projects $ parse-cirru-edn $ inline |projects.cirru
@@ -403,26 +431,7 @@
                       not $ or (includes? link |/ace) (includes? link |/pygments-main)
                     map $ fn (link) (&str:replace link |https://github.com/ |)
                 println "|There are " (count repos) |projects
-                apply-args
-                    drop project-names 0
-                    , 1
-                  fn (xs c)
-                    hint-fn $ {}
-                      :args $ [] (:: 'List 'String) 'Number
-                      :return 'Bool
-                      :async true
-                      :features $ #{} :js-ffi
-                    let
-                        project-name $
-                          first xs
-                          , .unwrap-or |
-                        link $ str |https://api.github.com/repos/ project-name |/readme
-                      js-await $ p-download-doc project-name link
-                      println |Finished c "|projects... More:" $ to-lispy-string $ take xs 3
-                      if
-                        empty? $ rest xs
-                        do (println "|All finished.") true
-                        recur (rest xs) (inc c)
+                js-await $ download-projects (drop project-names 0) 1
               , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
