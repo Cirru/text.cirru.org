@@ -1,4 +1,4 @@
 
 import { main_$x_ } from "./dl-out/app.dl.mjs"
 
-main_$x_()
+await main_$x_()

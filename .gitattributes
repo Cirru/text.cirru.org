@@ -1,3 +1,4 @@
 
 calcit.cirru -diff linguist-generated
 yarn.lock -diff linguist-generated
+config/calcit-quality.cirru -diff linguist-generated

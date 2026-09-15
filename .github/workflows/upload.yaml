@@ -32,9 +32,10 @@ jobs:
     - name: Validate downloader
       run: |
         yarn install --immutable
-        caps --strict --ci
+        caps --calcit-version 0.14.17 --strict --ci
         caps verify --toolchain
         calcit calcit.cirru --entry downloader --check-only
+        calcit calcit.cirru --entry downloader analyze check-public --ns app.dl --summary-only
         calcit calcit.cirru --entry downloader analyze dynamic-methods --max 0
         calcit calcit.cirru --entry downloader --emit-path dl-out/ js
 
@@ -50,6 +51,7 @@ jobs:
         calcit edit format
         git diff --exit-code -- calcit.cirru
         calcit calcit.cirru --check-only
+        calcit calcit.cirru analyze check-public --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
         calcit calcit.cirru analyze dynamic-methods --max 0
         calcit calcit.cirru analyze deprecated --summary-only
         calcit calcit.cirru analyze quality --baseline config/calcit-quality.cirru
