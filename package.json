@@ -1,6 +1,6 @@
 {
   "name": "text-cirru-org",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cirru project index",
   "main": "index.js",
   "packageManager": "yarn@4.12.0",
@@ -26,7 +26,7 @@
     "vite": "8.2.2"
   },
   "dependencies": {
-    "@calcit/procs": "0.14.17",
+    "@calcit/procs": "0.18.1",
     "cirru-color": "^0.2.4",
     "feather-icons": "^4.29.1",
     "highlight.js": "^11.9.0",
