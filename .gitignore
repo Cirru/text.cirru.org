@@ -13,3 +13,5 @@ data/files/
 
 dl-out
 .yarn/*.gz
+.pnp.cjs
+.pnp.loader.mjs
