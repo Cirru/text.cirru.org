@@ -2,17 +2,17 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 10
   cacheKey: 10c0
 
-"@calcit/procs@npm:0.18.1":
-  version: 0.18.1
-  resolution: "@calcit/procs@npm:0.18.1"
+"@calcit/procs@npm:0.27.0":
+  version: 0.27.0
+  resolution: "@calcit/procs@npm:0.27.0"
   dependencies:
     "@calcit/ternary-tree": "npm:0.0.26"
     "@cirru/parser.ts": "npm:^0.0.9"
     "@cirru/writer.ts": "npm:^0.1.9"
-  checksum: 10c0/dc4af8fe80a01e0ddc464596ddec8dd07a02ef14fcd7ac3a9aec6695756516dd3f857e9fa0e3ae0b04ee55355e4f181d7795c8b7d2308da553d0b39e17f2b1c8
+  checksum: 10c0/85edf1724beaf5e3b895f456b9d81ae93100316802b19bc20ab7cbcc61e295892e787c2f9cca0c9c231ba1cc3c3d320ae158d3f8c9fd39eda24500c56ebe99b1
   languageName: node
   linkType: hard
 
@@ -1302,7 +1302,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "text-cirru-org@workspace:."
   dependencies:
-    "@calcit/procs": "npm:0.18.1"
+    "@calcit/procs": "npm:0.27.0"
     axios: "npm:^1.18.0"
     bottom-tip: "npm:^0.1.5"
     cirru-color: "npm:^0.2.4"

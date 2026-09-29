@@ -5,11 +5,11 @@
   :entries $ {}
     :default $ {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {} $ :js-ffi :error
-      :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/
+      :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
       :type-slots $ {}
     :downloader $ {} (:description "|Generate project download metadata") (:init-fn 'app.dl/main!) (:mode :js) (:reload-fn 'app.dl/main!) (:target :node)
       :feature-policy $ {} $ :js-ffi :error
-      :modules $ []
+      :modules $ [] |js-ffi/
       :type-slots $ {}
   :files $ {}
     'app.comp.container $ %{} 'FileEntry
@@ -486,7 +486,7 @@
             reset! *reel $ reel-updater updater @*reel op
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Enum
+            :args $ [] 'app.schema/Op
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -499,7 +499,6 @@
             register-language! |haskell lang-haskell
             render-app!
             add-watch *reel :changes $ fn (r p) (render-app!)
-            listen-devtools! |k dispatch!
             ; js/window.addEventListener |beforeunload persist-storage!
             ; flipped js/setInterval 60 persist-storage!
             ; let
@@ -558,31 +557,43 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
-            [] respo.core :refer $ [] render! clear-cache! realize-ssr!
-            [] app.comp.container :refer $ [] comp-container
-            [] app.updater :refer $ [] updater
-            [] app.schema :as schema
-            [] reel.util :refer $ [] listen-devtools!
-            [] reel.core :refer $ [] reel-updater refresh-reel
-            [] reel.schema :as reel-schema
-            [] app.config :as config
-            [] |highlight.js :default hljs
-            [] |highlight.js/lib/languages/clojure :default lang-clojure
-            [] |highlight.js/lib/languages/bash :default lang-bash
-            [] |highlight.js/lib/languages/python :default lang-python
-            [] |highlight.js/lib/languages/elixir :default lang-elixir
-            [] |highlight.js/lib/languages/haskell :default lang-haskell
+            respo.core :refer $ [] render! clear-cache!
+            app.comp.container :refer $ [] comp-container
+            app.updater :refer $ [] updater
+            app.schema :as schema
+            reel.core :refer $ [] reel-updater refresh-reel
+            reel.schema :as reel-schema
+            app.config :as config
+            |highlight.js :default hljs
+            |highlight.js/lib/languages/clojure :default lang-clojure
+            |highlight.js/lib/languages/bash :default lang-bash
+            |highlight.js/lib/languages/python :default lang-python
+            |highlight.js/lib/languages/elixir :default lang-elixir
+            |highlight.js/lib/languages/haskell :default lang-haskell
             |./calcit.build-errors :default build-errors
             |bottom-tip :default hud!
     'app.schema $ %{} 'FileEntry
-      :defs $ {} $ 'store
-        %{} 'CodeEntry (:doc |)
+      :defs $ {}
+        'Op $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defenum Op
+            :states (:: 'List 'Dynamic) 'Dynamic
+            :content 'String
+            :hydrate-storage 'app.schema/Store
+          :examples $ []
+          :schema $ :: 'EnumDef
+        'Store $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct Store
+            :states $ :: 'Map 'Dynamic 'Dynamic
+            :content 'String
+          :examples $ []
+          :schema $ :: 'StructDef
+        'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
-            {}
+            %{} Store
               :states $ {}
               :content |
           :examples $ []
-          :schema $ :: 'Map 'Tag 'Dynamic
+          :schema $ :: 'app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -590,14 +601,27 @@
         %{} 'CodeEntry (:doc |)
           :code $ quote $ defn updater (store op op-id op-time)
             match op
-              (:states cursor s) (update-states store cursor s)
-              (:content c) (assoc store :content c)
-              (:hydrate-storage d) d
-              _ $ do (eprintln "|Unknown op:" op) store
+              (:states cursor s)
+                assert-type (update-states store cursor s) 'app.schema/Store
+              (:content data) (assoc store :content data)
+              (:hydrate-storage data) data
+              _ $ do (println "|Unknown op:" op) store
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] (:: 'Map 'Tag 'Dynamic) 'Enum 'String 'Number
-            :return $ :: 'Map 'Tag 'Dynamic
+          :schema $ :: 'Fn $ {} (:return 'app.schema/Store)
+            :args $ [] 'app.schema/Store 'app.schema/Op 'String 'Number
+          :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
+            :code $ quote $ let
+                initial $ %{} Store
+                  :states $ {}
+                  :content |
+                content-store $ updater initial (Op :content |hello) |content-op 1
+                hydrated $ %{} Store
+                  :states $ {}
+                  :content |restored
+              assert= (assoc initial :content |hello) content-store
+              assert= hydrated $ updater content-store (Op :hydrate-storage hydrated) |hydrate-op 2
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
-          :require $ [] respo.cursor :refer $ [] update-states
+          :require
+            [] respo.cursor :refer $ [] update-states
+            app.schema :refer $ [] Op Store
