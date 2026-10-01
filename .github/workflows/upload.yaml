@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: upload-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: frontend-${{ github.repository }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
+  cancel-in-progress: false
 
 jobs:
   test:
@@ -38,6 +38,12 @@ jobs:
 
     - name: Validate downloader
       run: |
+        set -euo pipefail
+        test "$(calcit --version)" = "0.27.0"
+        test -f calcit.cirru
+        test -f deps.cirru
+        test ! -e compact.cirru
+        test ! -e package.cirru
         # Published Respo packages request compatible but different alpha
         # versions, so resolve their highest versions deterministically.
         caps --ci
@@ -45,8 +51,6 @@ jobs:
         caps verify --toolchain
         calcit calcit.cirru --entry downloader --check-only
         calcit calcit.cirru --entry downloader analyze check-public --ns app.dl --summary-only
-        calcit calcit.cirru --entry downloader analyze dynamic-methods --summary-only --format json
-        calcit calcit.cirru --entry downloader analyze deprecated --summary-only --format json
         calcit calcit.cirru --entry downloader --emit-path dl-out/ js
 
     - name: Download project documentation
@@ -58,23 +62,22 @@ jobs:
 
     - name: Validate and build site
       run: |
+        set -euo pipefail
         calcit edit format
         git diff --exit-code -- calcit.cirru
         calcit calcit.cirru --check-only
         calcit calcit.cirru analyze check-public --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
         calcit calcit.cirru test --require-match
-        calcit calcit.cirru analyze dynamic-methods --summary-only --format json
-        calcit calcit.cirru analyze deprecated --summary-only --format json
         calcit calcit.cirru analyze quality --baseline config/calcit-quality.cirru
-        calcit calcit.cirru js
 
     - name: Select CDN asset path
       id: asset-path
       env:
         CDN_ORIGIN: https://cos-sh.tiye.me
+        PR_NUMBER: ${{ github.event.pull_request.number }}
       run: |
         if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-          asset_prefix="${GITHUB_REPOSITORY}/pr/"
+          asset_prefix="${GITHUB_REPOSITORY}/pr/${PR_NUMBER}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}/"
         elif [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
           asset_prefix="${GITHUB_REPOSITORY}/"
         else

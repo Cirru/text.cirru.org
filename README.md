@@ -94,6 +94,23 @@ Find more by exploring [cirru-parser][parser].
 
 ### Workflow
 
+Use Calcit/procs 0.27.0, Node 24 and Yarn 4.18.0 with canonical
+`calcit.cirru` / `deps.cirru` only. Install with `caps --ci` and
+`yarn install --immutable`, then use `yarn dev` or `yarn build`. Each compiles
+the site initially; run `calcit calcit.cirru js -w` in a separate terminal for
+live Calcit edits. No extra process manager is needed. Downloader commands
+`c-dl` / `w-dl` remain separate and unchanged.
+
+CI keeps downloader/site strict entry and public-definition checks, the existing
+site tests, original quality baseline and actual documentation download/build.
+Repeated diagnostic reports are removed, without adding a verifier script or
+test suite. Vite and COS action v1.1.1 use the same frontend prefix:
+`Cirru/text.cirru.org/` in production and `pr/<number>/<run-id>/<attempt>/` for
+previews. Runs are grouped per PR and separately for production, without
+cancelling active uploads. The action handles upload/public verification itself.
+Original upload permissions, downloader/data/source, and server `dist/*` and
+destination are unchanged; PR upload success is not production deployment.
+
 Workflow https://github.com/mvc-works/calcit-workflow
 
 ### License

@@ -11,8 +11,8 @@
     "w-dl": "calcit calcit.cirru --entry downloader --emit-path dl-out/ js -w",
     "c-dl": "calcit calcit.cirru --entry downloader --emit-path dl-out/ js",
     "compile": "calcit calcit.cirru js",
-    "build": "vite build",
-    "dev": "vite"
+    "build": "yarn compile && vite build",
+    "dev": "yarn compile && vite"
   },
   "repository": {
     "type": "git",
