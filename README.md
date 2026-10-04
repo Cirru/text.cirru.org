@@ -104,12 +104,17 @@ live Calcit edits. No extra process manager is needed. Downloader commands
 CI keeps downloader/site strict entry and public-definition checks, the existing
 site tests, original quality baseline and actual documentation download/build.
 Repeated diagnostic reports are removed, without adding a verifier script or
-test suite. Vite and COS action v1.1.1 use the same frontend prefix:
+test suite. Vite and COS action v1.2.0 use the same frontend prefix:
 `Cirru/text.cirru.org/` in production and `pr/<number>/<run-id>/<attempt>/` for
 previews. Runs are grouped per PR and separately for production, without
-cancelling active uploads. The action handles upload/public verification itself.
+cancelling active uploads; `queue: max` also retains pending runs. The action is
+pinned to the reviewed release commit and handles public verification through
+the existing `public-base-url`, without another validation script.
 Original upload permissions, downloader/data/source, and server `dist/*` and
 destination are unchanged; PR upload success is not production deployment.
+This workflow update retains Calcit/procs 0.27.0 and the existing non-strict
+Caps resolution policy; it does not certify a completed 0.28 source migration
+or a conflict-free strict dependency graph.
 
 Workflow https://github.com/mvc-works/calcit-workflow
 
