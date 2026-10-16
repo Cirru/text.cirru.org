@@ -36,22 +36,19 @@ jobs:
       with:
         tools: calcit,caps
         caps-version: "0.1.1"
+        deps-file: deps.cirru
 
     - name: Validate downloader
       run: |
         set -euo pipefail
-        test "$(calcit --version)" = "0.27.0"
         test -f calcit.cirru
         test -f deps.cirru
         test ! -e compact.cirru
         test ! -e package.cirru
-        # Published Respo packages request compatible but different alpha
-        # versions, so resolve their highest versions deterministically.
-        caps --ci
+        caps --strict --ci
         yarn install --immutable
         caps verify --toolchain
-        calcit calcit.cirru --entry downloader --check-only
-        calcit calcit.cirru --entry downloader analyze check-public --ns app.dl --summary-only
+        calcit --entry downloader --check-only --ns app.dl --summary-only
         calcit calcit.cirru --entry downloader --emit-path dl-out/ js
 
     - name: Download project documentation
@@ -66,10 +63,9 @@ jobs:
         set -euo pipefail
         calcit edit format
         git diff --exit-code -- calcit.cirru
-        calcit calcit.cirru --check-only
-        calcit calcit.cirru analyze check-public --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
+        calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
+        calcit fix --workflow strict --verify
         calcit calcit.cirru test --require-match
-        calcit calcit.cirru analyze quality --baseline config/calcit-quality.cirru
 
     - name: Select CDN asset path
       id: asset-path
