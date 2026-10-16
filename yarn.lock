@@ -12,15 +12,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@calcit/procs@npm:0.30.0":
-  version: 0.30.0
-  resolution: "@calcit/procs@npm:0.30.0"
+"@calcit/procs@npm:0.30.1-alpha.4":
+  version: 0.30.1-alpha.4
+  resolution: "@calcit/procs@npm:0.30.1-alpha.4"
   dependencies:
     "@calcit/finger-vec": "npm:0.1.1"
     "@calcit/ternary-tree": "npm:0.0.26"
     "@cirru/parser.ts": "npm:0.0.10"
     "@cirru/writer.ts": "npm:^0.1.9"
-  checksum: 10c0/4ffe1e9fb7fcc46aae5c95d30e9e20c84582bd527602726ef600322ce3aca9bdcf251f8a3816073dfd4dd7d353d01358df7cd6ba45feba8756dc4dcf17cdb987
+  checksum: 10c0/5613c2f4ba262f37167e4a7862449b1e8466fe5d92ecb0e2728f420f4494d37d1da5299685b61514822b535c1ad732e41caa1f35ae09e410c26b2c0c5d6d8166
   languageName: node
   linkType: hard
 
@@ -1016,12 +1016,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:5.1.6":
-  version: 5.1.6
-  resolution: "nanoid@npm:5.1.6"
+"nanoid@npm:5.1.16":
+  version: 5.1.16
+  resolution: "nanoid@npm:5.1.16"
   bin:
     nanoid: bin/nanoid.js
-  checksum: 10c0/27b5b055ad8332cf4f0f9f6e2a494aa7e5ded89df4cab8c8490d4eabefe72c4423971d2745d22002868b1d50576a5e42b7b05214733b19f576382323282dd26e
+  checksum: 10c0/04b4f96237f5639716da0e98f453361b313bebaf458bb67dea2d384724fc8b3340a28f032a4373052150bcf3b801d122e291d81ae4fc522969f55c134f4401a3
   languageName: node
   linkType: hard
 
@@ -1310,7 +1310,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "text-cirru-org@workspace:."
   dependencies:
-    "@calcit/procs": "npm:0.30.0"
+    "@calcit/procs": "npm:0.30.1-alpha.4"
     axios: "npm:^1.20.0"
     bottom-tip: "npm:^0.1.5"
     cirru-color: "npm:^0.2.4"
