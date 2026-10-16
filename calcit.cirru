@@ -5,7 +5,7 @@
   :entries $ {}
     :default $ {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {} $ :js-ffi :error
-      :modules $ [] |respo.calcit/ |lilac/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
+      :modules $ [] |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
       :type-slots $ {}
     :downloader $ {} (:description "|Generate project download metadata") (:init-fn 'app.dl/main!) (:mode :js) (:reload-fn 'app.dl/main!) (:target :node)
       :feature-policy $ {} $ :js-ffi :error
@@ -49,7 +49,7 @@
               :args $ [] 'app.comp.container/MarkdownHost 'String
               :return 'String
             .use! $ :: 'Fn $ {}
-              :args $ [] 'app.comp.container/MarkdownHost 'JsObject
+              :args $ [] 'app.comp.container/MarkdownHost 'Fn
               :return 'app.comp.container/MarkdownHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
@@ -58,18 +58,16 @@
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
-                store $
-                  get reel :store
-                  , .unwrap-or $ {}
-                states $
-                  get store :states
-                  , .unwrap-or $ {}
-                cursor $
-                  get states :cursor
-                  , .unwrap-or $ []
-                state $
-                  get states :data
-                  , .unwrap-or $ {} (:page |Cirru/text.cirru.org)
+                store $ :store reel
+                states $ :states store
+                cursor $ decode-map-as
+                    get states :cursor
+                    , .unwrap-or $ []
+                  :: 'List 'Dynamic
+                state $ decode-map-as
+                    get states :data
+                    , .unwrap-or $ {} $ :page |Cirru/text.cirru.org
+                  :: 'Map 'Tag 'Dynamic
                 page $ let
                     candidate $ option:unwrap-or (get state :page) |Cirru/text.cirru.org
                   if (string? candidate) candidate |Cirru/text.cirru.org
@@ -79,12 +77,14 @@
                   {} $ :style $ {} (:overflow :auto) (:padding-bottom 200)
                   -> projects-list $ map-indexed $ fn (idx section)
                     let
-                        section-title $
-                          get section :title
-                          , .unwrap-or |
-                        projects $
-                          get section :projects
-                          , .unwrap-or $ []
+                        section-title $ decode-map-as
+                            get section :title
+                            , .unwrap-or |
+                          , 'String
+                        projects $ decode-map-as
+                            get section :projects
+                            , .unwrap-or $ []
+                          :: 'List $ :: 'Map 'Tag 'String
                       [] idx $ div
                         {} $ :style $ {} (:padding 16)
                         <> section-title $ {}
@@ -121,11 +121,16 @@
                     :style $ {} $ :max-width 800
                     :class-name |about
                     :innerHTML $ render-markdown $ option:unwrap-or (get projects-dict page) "|No README. Probably a forked project."
-                    :on-click $ fn (e d!) (open-link-from-event! e)
-                when dev? $ comp-reel (>> states :reel) reel $ {}
+                    :on-click $ fn (e d!)
+                      hint-fn $ {}
+                        :args $ [] (:: 'Map 'Tag 'Dynamic) 'Fn
+                        :return 'Unit
+                        :features $ #{} :js-ffi
+                      open-link-from-event! e
+                when dev? $ comp-typed-reel (>> states :reel) reel $ {}
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'Map 'Tag 'Dynamic
+            :args $ [] $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
         'inline $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro inline (path)
             read-file $ str |data/ path
@@ -142,16 +147,15 @@
                   , js-ffi.browser/EventHost
                 target $ unsafe-coerce (.-target event) app.comp.container/LinkTargetHost
                 host-window $ unsafe-coerce js/window app.comp.container/BrowserWindowHost
-              do
-                when
-                  = |A $ .-tag-name target
-                  .prevent-default! event
-                  .open! host-window $ .-href target
-                , &unit
+              when
+                = |A $ .-tag-name target
+                .prevent-default! event
+                .open! host-window $ .-href target
+              , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
           :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] $ :: 'Map 'Tag (:: 'JsNullish 'Dynamic)
+            :args $ [] $ :: 'Map 'Tag 'Dynamic
             :features $ #{} :js-ffi
         'projects-dict $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def projects-dict
@@ -238,9 +242,11 @@
           :schema $ :: 'Map 'String 'String
         'projects-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def projects-list
-            parse-cirru-edn $ inline |projects.cirru
+            decode-map-as
+              parse-cirru-edn $ inline |projects.cirru
+              :: 'List $ :: 'Map 'Tag 'Dynamic
           :examples $ []
-          :schema $ :: 'List 'Dynamic
+          :schema $ :: 'List $ :: 'Map 'Tag 'Dynamic
         'render-markdown $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-markdown (text)
             let
@@ -248,10 +254,18 @@
                 renderer $ unsafe-coerce
                   new Remarkable $ js-object (:breaks true)
                     :highlight $ fn (code lang)
-                      if (= lang |cirru) (cirru-color/generate code)
+                      hint-fn $ {}
+                        :args $ [] 'String 'String
+                        :return 'String
+                        :features $ #{} :js-ffi
+                      if (= lang |cirru)
+                        decode-map-as (cirru-color/generate code) 'String
                         .-value $ .highlight-auto highlight code
                   , app.comp.container/MarkdownHost
-              do (.use! renderer linkify) (.render renderer text)
+              let
+                  plugin linkify
+                if (fn? plugin) (.use! renderer plugin) (raise "|Expected Remarkable linkify plugin function")
+              .render renderer text
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
           :schema $ :: 'Fn $ {} (:return 'String)
@@ -260,18 +274,18 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require
-            [] respo-ui.core :refer $ [] hsl
-            [] respo-ui.core :as ui
-            [] respo.core :refer $ [] defcomp >> list-> <> div button textarea span input a
-            [] respo.comp.space :refer $ [] =<
-            [] reel.comp.reel :refer $ [] comp-reel
-            [] respo-md.comp.md :refer $ [] comp-md
-            [] app.config :refer $ [] dev?
-            [] |remarkable :refer $ [] Remarkable
-            [] |remarkable/linkify :refer $ [] linkify
-            [] |cirru-color :as cirru-color
-            [] |highlight.js :default hljs
-            [] applied-science.js-interop :as j
+            respo-ui.core :refer $ hsl
+            respo-ui.core :as ui
+            respo.core :refer $ defcomp >> list-> <> div button textarea span input a
+            respo.comp.space :refer $ =<
+            reel.comp.reel :refer $ comp-typed-reel
+            respo-md.comp.md :refer $ comp-md
+            app.config :refer $ dev?
+            |remarkable :refer $ Remarkable
+            |remarkable/linkify :refer $ linkify
+            |cirru-color :as cirru-color
+            |highlight.js :default hljs
+            applied-science.js-interop :as j
     'app.config $ %{} 'FileEntry
       :defs $ {}
         'cdn? $ %{} 'CodeEntry (:doc |)
@@ -389,10 +403,9 @@
             let
                 content $ .-content $ .-data response
                 buffer $ unsafe-coerce (js/Buffer.from content |base64) app.dl/BufferHost
-              do
-                fs/writeFileSync (str |data/files/ project-name |.md) (.to-string buffer |utf8)
-                println |Wrote-to project-name
-                , &unit
+              fs/writeFileSync (str |data/files/ project-name |.md) (.to-string buffer |utf8)
+              println |Wrote-to project-name
+              , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
           :schema $ :: 'Fn $ {} (:return 'Unit)
@@ -407,8 +420,7 @@
             :expansion $ :: 'Expr 'String
             :required $ [] $ :: 'Expr 'String
         'log-download-error $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn log-download-error (link error)
-            do (js/console.error |Failed-at-fetching: link error) &unit
+          :code $ quote $ defn log-download-error (link error) (js/console.error "|Failed to download README:" link) &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
           :schema $ :: 'Fn $ {} (:return 'Unit)
@@ -421,18 +433,17 @@
               :return 'Unit
               :async true
               :features $ #{} :js-ffi
-            do
-              let
-                  projects $ parse-cirru-edn $ inline |projects.cirru
-                  flat-projects $ extract-projects projects
-                  repos $ map flat-projects project-repo
-                  project-names $ -> repos
-                    filter $ fn (link)
-                      not $ or (includes? link |/ace) (includes? link |/pygments-main)
-                    map $ fn (link) (&str:replace link |https://github.com/ |)
-                println "|There are " (count repos) |projects
-                js-await $ download-projects (drop project-names 0) 1
-              , &unit
+            let
+                projects $ parse-cirru-edn $ inline |projects.cirru
+                flat-projects $ extract-projects projects
+                repos $ map flat-projects project-repo
+                project-names $ -> repos
+                  filter $ fn (link)
+                    not $ or (includes? link |/ace) (includes? link |/pygments-main)
+                  map $ fn (link) (&str:replace link |https://github.com/ |)
+              println "|There are " (count repos) |projects
+              js-await $ download-projects (drop project-names 0) 1
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -467,10 +478,9 @@
     'app.main $ %{} 'FileEntry
       :defs $ {}
         '*reel $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defatom *reel
-            -> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store)
+          :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
-          :schema $ :: 'Ref 'Dynamic
+          :schema $ :: 'Ref $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
         'HighlightHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightHost
             .register-language! $ :: 'Fn $ {}
@@ -483,10 +493,17 @@
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             when config/dev? $ println |Dispatch: op
-            reset! *reel $ reel-updater updater @*reel op
+            match (typed/decode-control op)
+              (:some control)
+                reset! *reel $ typed/apply-control updater @*reel control
+              (:none)
+                reset! *reel $ typed/record-op updater @*reel (schema/require-op op) (generate-id!)
+                  :timestamp $ js-ffi.shared/date-now-snapshot
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'app.schema/Op
+            :args $ [] 'Enum
+            :features $ #{} :js-ffi
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -498,7 +515,7 @@
             register-language! |elixir lang-elixir
             register-language! |haskell lang-haskell
             render-app!
-            add-watch *reel :changes $ fn (r p) (render-app!)
+            add-watch! *reel :changes $ fn (r p) (render-app!)
             ; js/window.addEventListener |beforeunload persist-storage!
             ; flipped js/setInterval 60 persist-storage!
             ; let
@@ -512,16 +529,18 @@
             :features $ #{} :js-ffi
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
-            option:unwrap $ js-ffi.browser/query-selector |.app
+            option:unwrap $ query-selector |.app
           :examples $ []
-          :schema $ :: 'js-ffi.browser/DomElementHost
+          :schema $ :: 'respo.dom/DomElement
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
-            js-ffi.browser/storage-set! (&map:get config/site :storage-key)
-              format-cirru-edn $ &map:get @*reel :store
+            js-ffi.browser/storage-set!
+              option:unwrap $ get config/site :storage-key
+              format-cirru-edn $ :store @*reel
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
+            :features $ #{} :js-ffi
         'register-language! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn register-language! (name language)
             .register-language! (unsafe-coerce hljs app.main/HighlightHost) name language
@@ -533,18 +552,21 @@
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
             if (nil? build-errors)
-              do (remove-watch *reel :changes) (clear-cache!)
-                add-watch *reel :changes $ fn (reel prev) (render-app!)
-                reset! *reel $ refresh-reel @*reel schema/store updater
+              do (remove-watch! *reel :changes) (clear-cache!)
+                add-watch! *reel :changes $ fn (reel prev) (render-app!)
+                reset! *reel $ typed/refresh updater @*reel schema/store
                 hud! |ok~ |Ok
               hud! |error build-errors
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
             :features $ #{} :js-ffi
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render! mount-target (comp-container @*reel) dispatch!
+            render! mount-target (comp-container @*reel)
+              fn (op)
+                if (enum? op) (dispatch! op) (raise "|Expected Enum render operation")
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -557,12 +579,10 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
-            respo.core :refer $ [] render! clear-cache!
-            app.comp.container :refer $ [] comp-container
-            app.updater :refer $ [] updater
+            respo.core :refer $ render! clear-cache!
+            app.comp.container :refer $ comp-container
+            app.updater :refer $ updater
             app.schema :as schema
-            reel.core :refer $ [] reel-updater refresh-reel
-            reel.schema :as reel-schema
             app.config :as config
             |highlight.js :default hljs
             |highlight.js/lib/languages/clojure :default lang-clojure
@@ -572,6 +592,8 @@
             |highlight.js/lib/languages/haskell :default lang-haskell
             |./calcit.build-errors :default build-errors
             |bottom-tip :default hud!
+            reel.typed :as typed
+            respo.ffi.browser :refer $ query-selector
     'app.schema $ %{} 'FileEntry
       :defs $ {}
         'Op $ %{} 'CodeEntry (:doc |)
@@ -587,11 +609,39 @@
             :content 'String
           :examples $ []
           :schema $ :: 'StructDef
+        'decode-store $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn decode-store (data)
+            if (struct? data)
+              if (&struct:matches? data Store)
+                Option :some $ assert-type data 'app.schema/Store
+                Option :none
+              match (try-decode-map-as data Store)
+                (:ok stored) (Option :some stored)
+                (:err _) (Option :none)
+          :examples $ []
+          :schema $ :: 'Fn $ {}
+            :args $ [] 'Dynamic
+            :return $ :: 'Option 'app.schema/Store
+        'require-op $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn require-op (op)
+            match op
+              (:states cursor state)
+                Op :states
+                  decode-map-as cursor $ :: 'List 'Dynamic
+                  , state
+              (:content text)
+                Op :content $ decode-map-as text 'String
+              (:hydrate-storage data)
+                match (decode-store data)
+                  (:some stored) (Op :hydrate-storage stored)
+                  (:none) (raise "|Expected valid Store")
+              _ $ raise "|Unknown application operation"
+          :examples $ []
+          :schema $ :: 'Fn $ {} (:return 'app.schema/Op)
+            :args $ [] 'Enum
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
-            %{} Store
-              :states $ {}
-              :content |
+            Store :states ({}) :content |
           :examples $ []
           :schema $ :: 'app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
@@ -602,7 +652,9 @@
           :code $ quote $ defn updater (store op op-id op-time)
             match op
               (:states cursor s)
-                assert-type (update-states store cursor s) 'app.schema/Store
+                assoc store :states $ decode-map-as
+                  update-state-tree (:states store) cursor s
+                  :: 'Map 'Dynamic 'Dynamic
               (:content data) (assoc store :content data)
               (:hydrate-storage data) data
               _ $ do (println "|Unknown op:" op) store
@@ -623,5 +675,5 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.updater
           :require
-            [] respo.cursor :refer $ [] update-states
-            app.schema :refer $ [] Op Store
+            respo.cursor :refer $ update-state-tree
+            app.schema :refer $ Op Store
