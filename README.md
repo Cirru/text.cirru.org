@@ -94,14 +94,15 @@ Find more by exploring [cirru-parser][parser].
 
 ### Workflow
 
-使用者注意：配对正式 Calcit / procs 0.30.0、Node 24、Yarn 4.18.0，页面内容、
-默认文档、项目顺序及生产路径不变。依赖统一为正式 Reel 0.6.38、Markdown
-0.4.55、UI 0.7.40、Respo 0.16.120、JS-FFI 0.2.3，移除无源码引用的 Lilac/Memof。
+使用者注意：配对 Calcit / procs 0.30.1-alpha.4、Node 24、Yarn 4.18.0；
+0.30.1 尚未正式发布，这里明确使用已发布的预发行版，不声称稳定版。
+页面内容、默认文档、项目顺序及生产路径不变。依赖统一为正式 Reel 0.6.39、
+Markdown 0.4.56、UI 0.7.41、Respo 0.16.122、JS-FFI 0.2.3。
 状态使用 typed Reel，操作先检查 payload；状态树用 Map 解码而非伪 Store 断言。
 
 唯一源码/清单为 `calcit.cirru` / `deps.cirru`。安装使用 `caps --strict --ci`、
 `yarn install --immutable`、`caps verify --toolchain`。`yarn dev` 或 `yarn build`
-先编译；开发另运行 `calcit -w calcit.cirru`，无需 process manager。
+先编译；开发另运行 `calcit calcit.cirru js -w`，无需 process manager。
 下载器仍单独运行 `c-dl` / `w-dl`；不提交生成 JS 或临时 `.calcit/` 文件。
 
 CI checks all browser application namespaces and `app.dl` under its Node entry,
@@ -122,7 +123,18 @@ destination are unchanged; PR upload success is not production deployment.
 携带认证头。缺少 token 的本地下载不算成功验收；页面回归使用已有真实文档缓存。
 正式 0.27.0 基线和候选均通过原测试；候选完整 strict/preflight、两入口源码检查、
 JS/Vite、首页/Cirru 高亮及 TypeScript 文档切换通过。异构 EDN 与真实 JS trait
-边界仍存在，不宣称零 Dynamic/unsafe、全部外链/调试器或 0.30.1 runtime 已验收。
+边界仍存在，不宣称零 Dynamic/unsafe、全部外链或调试器已验收。
+
+本轮 0.30.0 → 0.30.1-alpha.4 在匹配的旧、新工具链下均通过原有测试、
+浏览器 30 个与下载器 14 个公开定义检查；新版完整 strict、两入口 JS 生成、
+immutable 安装、带 CDN base 的构建及真实页面切换通过。原测试仅把两处旧
+Struct 构造改为命名构造，断言不变，没有新增测试/校验脚本。
+本地下载器没有使用凭据重新下载，页面使用已有真实 README 缓存；
+独立 CI 才负责安装依赖、下载和 COS 内置公开 URL 校验。
+
+Dependabot 的 nanoid 安全更新曾被旧 resolution 固定在 5.1.6 阻止；
+保留原有 bottom-tip 专用 resolution 的范围，仅更新为 5.1.16，
+不把 PostCSS 所用的 nanoid 3 强行升级到另一个 major。
 
 Workflow https://github.com/mvc-works/calcit-workflow
 

@@ -663,13 +663,9 @@
             :args $ [] 'app.schema/Store 'app.schema/Op 'String 'Number
           :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
             :code $ quote $ let
-                initial $ %{} Store
-                  :states $ {}
-                  :content |
+                initial $ Store :states ({}) :content |
                 content-store $ updater initial (Op :content |hello) |content-op 1
-                hydrated $ %{} Store
-                  :states $ {}
-                  :content |restored
+                hydrated $ Store :states ({}) :content |restored
               assert= (assoc initial :content |hello) content-store
               assert= hydrated $ updater content-store (Op :hydrate-storage hydrated) |hydrate-op 2
       :ns $ %{} 'NsEntry (:doc |)
