@@ -10,7 +10,7 @@
   "scripts": {
     "w-dl": "calcit calcit.cirru --entry downloader --emit-path dl-out/ js -w",
     "c-dl": "calcit calcit.cirru --entry downloader --emit-path dl-out/ js",
-    "compile": "calcit calcit.cirru js",
+    "compile": "mkdir -p data/files/Cirru && cp README.md data/files/Cirru/text.cirru.org.md && calcit calcit.cirru js",
     "build": "yarn compile && vite build",
     "dev": "yarn compile && vite"
   },

@@ -43,7 +43,7 @@ Cirru adopted Lisp's notions to keep minimalistic:
 These snippets are identical although folding in various ways:
 
 ```cirru
-set a (add (number 1) (numer 2))
+set a (add (number 1) (number 2))
 ```
 
 ```cirru
@@ -104,6 +104,9 @@ Markdown 0.4.59、UI 0.8.0、Respo 0.16.124、JS-FFI 0.2.5。
 `yarn install --immutable`、`caps verify --toolchain`。`yarn dev` 或 `yarn build`
 先编译；开发另运行 `calcit calcit.cirru js -w`，无需 process manager。
 下载器仍单独运行 `c-dl` / `w-dl`；不提交生成 JS 或临时 `.calcit/` 文件。
+`yarn compile`（含 build/dev 的首次编译）使用当前检出的 README 覆盖本项目的文档缓存，
+所以 PR 首页会展示本分支的说明，而不是远端 main 的旧内容；其他项目文档仍由原下载器取得。
+不新增持续同步进程或检查脚本，重新编译即可更新本项目说明。
 
 CI checks all browser application namespaces and `app.dl` under its Node entry,
 plus both entries through `calcit fix --workflow strict --verify`, the existing
