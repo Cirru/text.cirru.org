@@ -64,7 +64,8 @@ jobs:
         calcit edit format
         git diff --exit-code -- calcit.cirru
         calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
-        calcit fix --workflow strict --verify
+        calcit fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
+        calcit --entry downloader fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
         calcit calcit.cirru test --require-match
 
     - name: Select CDN asset path
