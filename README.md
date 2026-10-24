@@ -111,7 +111,12 @@ Axios 可调用对象与 Node base64 Buffer 仍保留两处明确的宿主信任
 `js-cast` 或伪 JsObject 代替它们。持久化目前未启用，本轮不新增恢复/保存。
 不增加永久验证脚本、测试框架、预算或 compiler fix/proof 规则。源码只由官方 Linux
 0.30.1 CI 的结构化事务生成，本地不运行 Caps、编译器检查/构建/codegen/Snapshot 写入。
-正式 CI、下载器和实际浏览器仍需分别验收，不能只凭版本号或旧绿色检查宣称完成。
+正式 0.30.1 隔离 CI 已分别检查浏览器 30 个、下载器 14 个公开定义，两个入口完整
+strict 通过，原有附着测试在改写前后各 1 项通过（未改断言）。原下载器从 81 个项目
+中过滤原有两项后，实际取得 79 份公开文档；未更改 URL、认证方式或输出目录。
+相同 CI 静态产物已在隔离浏览器验收首页/Cirru 高亮、普通标题/段落点击、TypeScript
+文档切换/高亮、直接外链新页和刷新回默认首页，控制台无 warning/error。
+这不覆盖所有项目文档、外链、下载失败分支或 HMR；源码保留 HUD 不等于已实测 HMR。
 
 唯一源码/清单为 `calcit.cirru` / `deps.cirru`。安装使用 `caps --strict --ci`、
 `yarn install --immutable`、`caps verify --toolchain`。`yarn dev` 或 `yarn build`
@@ -136,18 +141,9 @@ the existing `public-base-url`, without another validation script.
 Original upload permissions, downloader/data format, and server `dist/*` and
 destination are unchanged; PR upload success is not production deployment.
 下载失败只记录公开 URL，不打印完整 Axios error/config/request，以免日志
-携带认证头。缺少 token 的本地下载不算成功验收；页面回归使用已有真实文档缓存。
-此前正式 0.27.0 基线和 alpha 候选均通过原测试；当时完整 strict/preflight、两入口源码检查、
-JS/Vite、首页/Cirru 高亮及 TypeScript 文档切换通过。异构 EDN 与真实 JS trait
-边界仍存在，不宣称零 Dynamic/unsafe、全部外链或调试器已验收。
-
-此前 0.30.0 → 0.30.1-alpha.4 在匹配的旧、新工具链下均通过原有测试、
-浏览器 30 个与下载器 14 个公开定义检查；新版完整 strict、两入口 JS 生成、
-immutable 安装、带 CDN base 的构建及真实页面切换通过。原测试仅把两处旧
-Struct 构造改为命名构造，断言不变，没有新增测试/校验脚本。
-本地下载器没有使用凭据重新下载，页面使用已有真实 README 缓存；
-独立 CI 才负责安装依赖、下载和 COS 内置公开 URL 校验。
-这段历史结果不替代本轮正式 0.30.1 的 CI / 页面验收；本轮保留原附着测试和源码，
+携带认证头。本轮页面回归使用官方 CI 实际取得的文档产物，不使用本地凭据重新下载。
+PR 工作流另外负责同一正式依赖图的下载、两入口检查、原测试与 COS 内置校验；
+PR 上传不等于生产部署。异构 EDN 与真实 JS trait 边界仍存在，不宣称零 Dynamic/unsafe。
 浏览器、Node 下载器分别检查，不使用跨目标的 all-defs 冒充两入口覆盖。
 
 Dependabot 的 nanoid 安全更新曾被旧 resolution 固定在 5.1.6 阻止；
