@@ -14,14 +14,11 @@
   :files $ {}
     'app.comp.container $ %{} 'FileEntry
       :defs $ {}
-        'BrowserWindowHost $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ deftrait BrowserWindowHost
-            .open! $ :: 'Fn $ {}
-              :args $ [] 'app.comp.container/BrowserWindowHost 'String
-              :return $ :: 'JsNullish 'JsObject
+        'ElementTagHost $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ deftrait ElementTagHost (:tag-name 'String)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
-            :names $ {} $ :open! |open
+            :names $ {} $ :tag-name |tagName
           :schema $ :: 'Trait
         'HighlightJsHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightJsHost
@@ -69,10 +66,10 @@
                     , .unwrap-or $ {} $ :page |Cirru/text.cirru.org
                   :: 'Map 'Tag 'Dynamic
                 page $ let
-                    candidate $ option:unwrap-or (get state :page) |Cirru/text.cirru.org
+                    candidate $ .unwrap-or (get state :page) |Cirru/text.cirru.org
                   if (string? candidate) candidate |Cirru/text.cirru.org
               div
-                {} $ :style $ merge ui/global ui/fullscreen ui/row
+                {} $ :style $ .merge ui/global ui/fullscreen ui/row
                 list->
                   {} $ :style $ {} (:overflow :auto) (:padding-bottom 200)
                   -> projects-list $ map-indexed $ fn (idx section)
@@ -109,8 +106,8 @@
                                   :class-name $ str |entry-link $ if (= project-name page) "| is-selected" |
                                 <> project-title
                 div
-                  {} $ :style $ merge ui/expand
-                    {} (:padding "|16px 48px") (:overflow :auto) (:padding-bottom 200)
+                  {} $ :style $ .merge ui/expand
+                    {} (:padding "|16px 48px") (:overflow |auto) (:padding-bottom |200px)
                   div
                     {} $ :style ui/row-parted
                     span $ {}
@@ -120,7 +117,7 @@
                   div $ {}
                     :style $ {} $ :max-width 800
                     :class-name |about
-                    :innerHTML $ render-markdown $ option:unwrap-or (get projects-dict page) "|No README. Probably a forked project."
+                    :innerHTML $ render-markdown $ .unwrap-or (get projects-dict page) "|No README. Probably a forked project."
                     :on-click $ fn (e d!)
                       hint-fn $ {}
                         :args $ [] (:: 'Map 'Tag 'Dynamic) 'Fn
@@ -142,15 +139,17 @@
         'open-link-from-event! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn open-link-from-event! (data)
             let
-                event $ unsafe-coerce
-                  option:unwrap $ get data :event
-                  , js-ffi.browser/EventHost
-                target $ unsafe-coerce (.-target event) app.comp.container/LinkTargetHost
-                host-window $ unsafe-coerce js/window app.comp.container/BrowserWindowHost
-              when
-                = |A $ .-tag-name target
-                .prevent-default! event
-                .open! host-window $ .-href target
+                event $ js-ffi.browser/event-host $ .unwrap (get data :event)
+              match (js-ffi.browser/event-target-element event)
+                (:some element)
+                  let
+                      target $ js-cast element 'app.comp.container/ElementTagHost
+                    when
+                      = |A $ .-tag-name target
+                      .prevent-default! event
+                      js-ffi.browser/window-open $ .-href $ js-cast target 'app.comp.container/LinkTargetHost
+                    , &unit
+                (:none) &unit
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
@@ -250,8 +249,8 @@
         'render-markdown $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-markdown (text)
             let
-                highlight $ unsafe-coerce hljs app.comp.container/HighlightJsHost
-                renderer $ unsafe-coerce
+                highlight $ js-cast hljs 'app.comp.container/HighlightJsHost
+                renderer $ js-cast
                   new Remarkable $ js-object (:breaks true)
                     :highlight $ fn (code lang)
                       hint-fn $ {}
@@ -261,7 +260,7 @@
                       if (= lang |cirru)
                         decode-map-as (cirru-color/generate code) 'String
                         .-value $ .highlight-auto highlight code
-                  , app.comp.container/MarkdownHost
+                  , 'app.comp.container/MarkdownHost
               let
                   plugin linkify
                 if (fn? plugin) (.use! renderer plugin) (raise "|Expected Remarkable linkify plugin function")
@@ -290,7 +289,7 @@
       :defs $ {}
         'cdn? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn cdn? ()
-            = |true $ option:unwrap-or (get-env |cdn) |false
+            = |true $ .unwrap-or (get-env |cdn) |false
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Bool)
             :args $ []
@@ -391,7 +390,7 @@
           :code $ quote $ defn group-projects (group)
             if (map? group)
               let
-                  projects $ option:unwrap-or (get group :projects) ([])
+                  projects $ .unwrap-or (get group :projects) ([])
                 if (list? projects) projects $ []
               []
           :examples $ []
@@ -441,7 +440,7 @@
                   filter $ fn (link)
                     not $ or (includes? link |/ace) (includes? link |/pygments-main)
                   map $ fn (link) (&str:replace link |https://github.com/ |)
-              println "|There are " (count repos) |projects
+              println "|There are " (.len repos) |projects
               js-await $ download-projects (drop project-names 0) 1
             , &unit
           :examples $ []
@@ -452,7 +451,7 @@
           :code $ quote $ defn p-download-doc (project-name link)
             let
                 client $ unsafe-coerce axios app.dl/AxiosHost
-                token $ option:unwrap-or (get-env |GITHUB_TOKEN) |
+                token $ .unwrap-or (get-env |GITHUB_TOKEN) |
                 request $ .get client link $ js-object
                   :headers $ js-object $ |Authorization (str "|Bearer " token)
                 handled $ .then request $ fn (response) (handle-download-response project-name response)
@@ -466,7 +465,7 @@
           :code $ quote $ defn project-repo (data)
             if (map? data)
               let
-                  repo $ option:unwrap-or (get data :repo) |
+                  repo $ .unwrap-or (get data :repo) |
                 if (string? repo) repo |
               , |
           :examples $ []
@@ -529,13 +528,13 @@
             :features $ #{} :js-ffi
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
-            option:unwrap $ query-selector |.app
+            .unwrap $ query-selector |.app
           :examples $ []
           :schema $ :: 'respo.dom/DomElement
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             js-ffi.browser/storage-set!
-              option:unwrap $ get config/site :storage-key
+              .unwrap $ get config/site :storage-key
               format-cirru-edn $ :store @*reel
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
@@ -543,7 +542,7 @@
             :features $ #{} :js-ffi
         'register-language! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn register-language! (name language)
-            .register-language! (unsafe-coerce hljs app.main/HighlightHost) name language
+            .register-language! (js-cast hljs 'app.main/HighlightHost) name language
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
           :schema $ :: 'Fn $ {} (:return 'Unit)
