@@ -96,9 +96,22 @@ Find more by exploring [cirru-parser][parser].
 
 使用者注意：配对正式 Calcit / procs 0.30.1、Node 24、Yarn 4.18.0，
 升级后需重新安装模块。
-页面内容、默认文档、项目顺序及生产路径不变。依赖统一为精确正式 Reel 0.6.41、
-Markdown 0.4.59、UI 0.8.0、Respo 0.16.124、JS-FFI 0.2.5。
+页面内容、默认文档、项目顺序及生产路径不变。依赖统一为精确正式 Reel 0.6.42、
+Markdown 0.4.60、UI 0.8.1、Respo 0.16.126、JS-FFI 0.2.6，Vite 8.3.3。
 状态使用 typed Reel，操作先检查 payload；状态树用 Map 解码而非伪 Store 断言。
+
+本轮迁移实际旧 Option / Map 调用和下载器 List count；两处内联 CSS 值改为等价 String，
+匹配 UI 样式的 String Map 合同，不放宽泛型或预算。原断言、项目顺序、Markdown 协议、
+默认文档及下载器 URL/目录保持。真实 `hud!` 热更新成功/错误路径不变，不改成 raise。
+
+宿主强转逐项审阅：事件/目标元素使用已发布边界，先区分 HTML A 再要求 href 能力，
+普通标题/段落不再被假定都有 href；窗口打开复用现有 js-ffi API。Highlight/Remarkable
+对象使用实际成员存在/方法可调用检查，不能据此声称方法签名或所有 getter 已被证明。
+Axios 可调用对象与 Node base64 Buffer 仍保留两处明确的宿主信任边界，不以失败的
+`js-cast` 或伪 JsObject 代替它们。持久化目前未启用，本轮不新增恢复/保存。
+不增加永久验证脚本、测试框架、预算或 compiler fix/proof 规则。源码只由官方 Linux
+0.30.1 CI 的结构化事务生成，本地不运行 Caps、编译器检查/构建/codegen/Snapshot 写入。
+正式 CI、下载器和实际浏览器仍需分别验收，不能只凭版本号或旧绿色检查宣称完成。
 
 唯一源码/清单为 `calcit.cirru` / `deps.cirru`。安装使用 `caps --strict --ci`、
 `yarn install --immutable`、`caps verify --toolchain`。`yarn dev` 或 `yarn build`
