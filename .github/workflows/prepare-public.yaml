@@ -1,0 +1,75 @@
+name: Temporary official Cirru Text source migration
+on:
+  push:
+    branches: [prepare/text-cirru-public031]
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare yarn@4.18.0 --activate
+      - uses: calcit-lang/setup-calcit@ca701be5a471759e442aa053cd100720bbe1f09f
+        with:
+          tools: calcit,caps
+          caps-version: "0.1.1"
+          deps-file: deps.cirru
+      - name: Install coherent released graph
+        run: |
+          set -euo pipefail
+          caps --strict --ci
+          yarn install --immutable
+          caps verify --toolchain
+          git diff --quiet -- deps.cirru package.json yarn.lock .yarnrc.yml
+      - name: Generate original downloader and public documentation cache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          calcit --entry downloader --check-only --ns app.dl --summary-only
+          calcit --entry downloader --emit-path dl-out/ js
+          mkdir -p data/files/Cirru data/files/calcit-lang
+          node dl.mjs
+      - name: Original attached assertions before source edits
+        run: |
+          set -euo pipefail
+          mkdir -p acceptance
+          calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
+          calcit test --list --format json > acceptance/test-list-before.json
+          calcit test --require-match
+          yarn build
+      - name: Official guarded atomic source transaction
+        run: node apply-reviewed.mjs
+      - name: Complete target-aware original gates
+        run: |
+          set -euo pipefail
+          calcit edit format
+          calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
+          calcit --entry downloader --check-only --ns app.dl --summary-only
+          calcit fix --workflow strict --verify --format json | tee acceptance/strict-browser.json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
+          calcit --entry downloader fix --workflow strict --verify --format json | tee acceptance/strict-node.json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
+          calcit test --list --format json > acceptance/test-list-after.json
+          calcit test --require-match
+          git diff --quiet -- config/calcit-quality.cirru
+          calcit --entry downloader --emit-path dl-out/ js
+          yarn build
+          cp calcit.cirru acceptance/snapshot.cirru
+          cp -R dist acceptance/dist
+      - name: Save official evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: text-cirru-source-evidence
+          path: acceptance/
+          if-no-files-found: error
+          retention-days: 7
