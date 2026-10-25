@@ -17,6 +17,7 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
@@ -48,6 +49,7 @@ jobs:
         caps --strict --ci
         yarn install --immutable
         caps verify --toolchain
+        git diff --quiet -- deps.cirru package.json yarn.lock .yarnrc.yml
         calcit --entry downloader --check-only --ns app.dl --summary-only
         calcit calcit.cirru --entry downloader --emit-path dl-out/ js
 
@@ -62,7 +64,7 @@ jobs:
       run: |
         set -euo pipefail
         calcit edit format
-        git diff --exit-code -- calcit.cirru
+        git diff --quiet -- calcit.cirru
         calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
         calcit fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
         calcit --entry downloader fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
@@ -110,6 +112,7 @@ jobs:
         fi
 
     - name: Upload and verify static assets on COS
+      timeout-minutes: 10
       if: steps.cos-credentials.outputs.available == 'true'
       uses: worktools/cos-upload-action@06d6027dcca6413c5936e04a9b6e9f0d5ef71ba0 # v1.2.0
       with:
