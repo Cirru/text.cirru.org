@@ -6,7 +6,7 @@
     :default $ {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {} $ :js-ffi :error
       :modules $ [] |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
-      :type-slots $ {}
+      :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
     :downloader $ {} (:description "|Generate project download metadata") (:init-fn 'app.dl/main!) (:mode :js) (:reload-fn 'app.dl/main!) (:target :node)
       :feature-policy $ {} $ :js-ffi :error
       :modules $ [] |js-ffi/
@@ -101,7 +101,13 @@
                               [] project-name $ div
                                 {}
                                   :on-click $ fn (e d!)
-                                    d! cursor $ {} $ :page project-name
+                                    hint-fn $ {}
+                                      :args $ [] (:: 'Map 'Tag 'Dynamic)
+                                        :: 'Fn $ {}
+                                          :args $ [] 'Enum
+                                          :return 'Unit
+                                      :return 'Unit
+                                    d! $ :: :states cursor $ {} (:page project-name)
                                   :style $ {} $ :cursor :pointer
                                   :class-name $ str |entry-link $ if (= project-name page) "| is-selected" |
                                 <> project-title
@@ -595,6 +601,10 @@
             respo.ffi.browser :refer $ query-selector
     'app.schema $ %{} 'FileEntry
       :defs $ {}
+        'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
+          :code $ quote $ def DispatchOp (:: :unhandled)
+          :examples $ []
+          :schema $ :: 'Enum
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
             :states (:: 'List 'Dynamic) 'Dynamic
