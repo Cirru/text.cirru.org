@@ -94,8 +94,14 @@ Find more by exploring [cirru-parser][parser].
 
 ### Workflow
 
-使用者注意：配对正式 Calcit / procs 0.30.1、Node 24、Yarn 4.18.0，
-升级后需重新安装模块。
+使用者注意：本轮配对正式 Calcit / procs **0.31.0**、Node 24、Yarn 4.18.0，升级后需重新安装完整依赖图并重新编译。
+模块使用已发布 Reel 0.7.0-alpha.4、Markdown 0.5.0-alpha.4、UI 0.9.0-alpha.4、Respo 0.17.0-alpha.4、JS-FFI 0.2.7；其中 UI 库仍在 alpha 线，不能与旧 0.30.x 图混装。
+文档导航改为显式 `:states` 操作，替换旧 `dispatch!(cursor, state)` 调用，并给回调标明 Map 事件与 Enum dispatch 合同，保持页面选择行为。
+默认浏览器入口绑定原 Enum 事件合同，下载器入口保持独立。单次 strict workflow 会分别验证两个入口；删除重复的 `--entry downloader fix --workflow strict` 调用，两入口源码检查和原测试保留。原业务类型、下载 URL/目录、真实 HUD、COS/CDN 与服务器路径均保留，不新增验证脚本或放宽类型门禁。
+按当前本地工具链授权使用官方 0.31.0 检查；本地页面先复用现有 79 份公开文档缓存，不使用本地凭据重跑下载器，原 CI 独立重新下载并检查两个入口。
+
+### 历史：0.30.1 迁移
+
 页面内容、默认文档、项目顺序及生产路径不变。依赖统一为精确正式 Reel 0.6.42、
 Markdown 0.4.60、UI 0.8.1、Respo 0.16.126、JS-FFI 0.2.6，Vite 8.3.3。
 状态使用 typed Reel，操作先检查 payload；状态树用 Map 解码而非伪 Store 断言。
@@ -109,8 +115,8 @@ Markdown 0.4.60、UI 0.8.1、Respo 0.16.126、JS-FFI 0.2.6，Vite 8.3.3。
 对象使用实际成员存在/方法可调用检查，不能据此声称方法签名或所有 getter 已被证明。
 Axios 可调用对象与 Node base64 Buffer 仍保留两处明确的宿主信任边界，不以失败的
 `js-cast` 或伪 JsObject 代替它们。持久化目前未启用，本轮不新增恢复/保存。
-不增加永久验证脚本、测试框架、预算或 compiler fix/proof 规则。源码只由官方 Linux
-0.30.1 CI 的结构化事务生成，本地不运行 Caps、编译器检查/构建/codegen/Snapshot 写入。
+当时不增加永久验证脚本、测试框架、预算或 compiler fix/proof 规则，源码由官方 Linux
+0.30.1 CI 的结构化事务生成；以下验收属于该轮历史记录，不代替当前 0.31.0 检查。
 正式 0.30.1 隔离 CI 已分别检查浏览器 30 个、下载器 14 个公开定义，两个入口完整
 strict 通过，原有附着测试在改写前后各 1 项通过（未改断言）。原下载器从 81 个项目
 中过滤原有两项后，实际取得 79 份公开文档；未更改 URL、认证方式或输出目录。
@@ -127,7 +133,7 @@ strict 通过，原有附着测试在改写前后各 1 项通过（未改断言�
 不新增持续同步进程或检查脚本，重新编译即可更新本项目说明。
 
 CI checks all browser application namespaces and `app.dl` under its Node entry,
-plus both entries through `calcit fix --workflow strict --verify`, the existing
+plus both entries through one `calcit fix --workflow strict --verify` invocation, the existing
 site tests and actual documentation download/build. Old check-public/quality
 commands are replaced; the original numeric baseline remains historical and
 unchanged, without increasing any budget.
