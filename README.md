@@ -92,6 +92,22 @@ Find more by exploring [cirru-parser][parser].
 
 [parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
 
+### Calcit 0.32.0 迁移候选：使用者影响
+
+CLI/procs 配对正式 0.32.0，需同步依赖、重新编译并刷新。UI 模块暂为本地候选，
+已发布标签整图尚待验证。文档导航、高亮、默认文档与下载 URL/目录保持不变。
+
+官方转换 15 处类型写法，45 个定义 schema 保持，两个入口原门禁及原测试保留。
+Actions 使用已核对原 SHA 的精确正式 tag，npm 依赖年龄为一小时；
+COS 内置 verify 和前端部署路径不变。本地沿用此前的 79 份公开文档缓存，
+不使用本地凭据重新运行下载器，不宣称本轮已验证远端下载。
+
+本地浏览器 31 个定义、下载器 14 个定义、双入口 strict（diagnostics 为空）、
+原一项测试、两入口编译、前端构建和 immutable 安装通过。实际页面验证首页、
+TypeScript 文档切换/高亮和刷新回首页，warn/error 为空；独立评审无待处理问题。
+保留原大 bundle 提示，不调整阈值。正式依赖整图、联网下载和 PR/Linux CI 待验收。
+下方 0.31 说明为历史记录。
+
 ### Workflow
 
 使用者注意：本轮配对正式 Calcit / procs **0.31.0**、Node 24、Yarn 4.18.0，升级后需重新安装完整依赖图并重新编译。
