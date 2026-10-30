@@ -92,53 +92,35 @@ Find more by exploring [cirru-parser][parser].
 
 [parser]: https://github.com/Cirru/cirru-parser/tree/master/cirru
 
-### Calcit 0.32.0 迁移候选：使用者影响
+### 使用者影响
 
-CLI/procs 配对正式 0.32.0，需同步依赖、重新编译并刷新。UI 模块暂为本地候选，
-已发布标签整图尚待验证。文档导航、高亮、默认文档与下载 URL/目录保持不变。
+CLI / `@calcit/procs` 配对正式 **0.32.1**，升级后同步整张依赖图、重新编译并刷新。
+使用已发布UI **0.9.0**、Respo **0.17.1**、JS-FFI **0.2.9**，以及Reel
+**0.7.0-alpha.5**、Markdown **0.5.0-alpha.5**。仍含精确alpha，不宣称整图全部稳定，
+不使用本地候选、未发布tag或hash。
 
-官方转换 15 处类型写法，45 个定义 schema 保持，两个入口原门禁及原测试保留。
-Actions 使用已核对原 SHA 的精确正式 tag，npm 依赖年龄为一小时；
-COS 内置 verify 和前端部署路径不变。本地沿用此前的 79 份公开文档缓存，
-不使用本地凭据重新运行下载器，不宣称本轮已验证远端下载。
+官方工具转换15处类型表达式，45个定义schema保持。文档导航、高亮、默认文档、
+项目顺序、下载URL/目录、真实HUD和前端部署路径不变。导航继续派发单个states事件，
+事件回调保留Map/Enum合同；不新增持久化、强转、类型预算或检查脚本。
 
-本地浏览器 31 个定义、下载器 14 个定义、双入口 strict（diagnostics 为空）、
-原一项测试、两入口编译、前端构建和 immutable 安装通过。实际页面验证首页、
-TypeScript 文档切换/高亮和刷新回首页，warn/error 为空；独立评审无待处理问题。
-保留原大 bundle 提示，不调整阈值。正式依赖整图、联网下载和 PR/Linux CI 待验收。
-下方 0.31 说明为历史记录。
+真实Caps strict/toolchain、浏览器31定义、下载器14定义、一次strict覆盖双入口、
+原一项附带测试、两入口编译、前端构建和immutable安装通过。本地复用既有79份
+公开文档缓存，不读取本地凭据运行下载器；原CI仍重新下载公开文档并检查两个入口。
+此前0.32.0候选已验收首页、TypeScript文档切换/高亮和刷新，本次未重跑浏览器。
+本PR不合并、发版或部署生产，npm等待为一小时，无单包例外。
+
+### 宿主与数据边界
+
+typed Reel/受检payload、Map状态解码保持。点击先识别HTML A再检查href能力，不把
+普通标题/段落当链接。Highlight/Remarkable只检查实际成员和可调用方法，不证明
+完整方法签名或所有getter。Axios可调用对象、Node base64 Buffer的两处真实信任
+边界保留，不用失败的js-cast或伪JsObject冒充验证。
+
+默认文档与下载器协议不变；失败仅记录公开URL，不打印完整Axios error/config/request，
+避免日志携带认证头。原持久化未启用，本次不新增恢复/保存；HUD保留不代表HMR已验收。
+不宣称所有文档、外链、下载失败分支或跨平台行为已完整验证。
 
 ### Workflow
-
-使用者注意：本轮配对正式 Calcit / procs **0.31.0**、Node 24、Yarn 4.18.0，升级后需重新安装完整依赖图并重新编译。
-模块使用已发布 Reel 0.7.0-alpha.4、Markdown 0.5.0-alpha.4、UI 0.9.0-alpha.4、Respo 0.17.0-alpha.4、JS-FFI 0.2.7；其中 UI 库仍在 alpha 线，不能与旧 0.30.x 图混装。
-文档导航改为显式 `:states` 操作，替换旧 `dispatch!(cursor, state)` 调用，并给回调标明 Map 事件与 Enum dispatch 合同，保持页面选择行为。
-默认浏览器入口绑定原 Enum 事件合同，下载器入口保持独立。单次 strict workflow 会分别验证两个入口；删除重复的 `--entry downloader fix --workflow strict` 调用，两入口源码检查和原测试保留。原业务类型、下载 URL/目录、真实 HUD、COS/CDN 与服务器路径均保留，不新增验证脚本或放宽类型门禁。
-按当前本地工具链授权使用官方 0.31.0 检查；本地页面先复用现有 79 份公开文档缓存，不使用本地凭据重跑下载器，原 CI 独立重新下载并检查两个入口。
-
-### 历史：0.30.1 迁移
-
-页面内容、默认文档、项目顺序及生产路径不变。依赖统一为精确正式 Reel 0.6.42、
-Markdown 0.4.60、UI 0.8.1、Respo 0.16.126、JS-FFI 0.2.6，Vite 8.3.3。
-状态使用 typed Reel，操作先检查 payload；状态树用 Map 解码而非伪 Store 断言。
-
-本轮迁移实际旧 Option / Map 调用和下载器 List count；两处内联 CSS 值改为等价 String，
-匹配 UI 样式的 String Map 合同，不放宽泛型或预算。原断言、项目顺序、Markdown 协议、
-默认文档及下载器 URL/目录保持。真实 `hud!` 热更新成功/错误路径不变，不改成 raise。
-
-宿主强转逐项审阅：事件/目标元素使用已发布边界，先区分 HTML A 再要求 href 能力，
-普通标题/段落不再被假定都有 href；窗口打开复用现有 js-ffi API。Highlight/Remarkable
-对象使用实际成员存在/方法可调用检查，不能据此声称方法签名或所有 getter 已被证明。
-Axios 可调用对象与 Node base64 Buffer 仍保留两处明确的宿主信任边界，不以失败的
-`js-cast` 或伪 JsObject 代替它们。持久化目前未启用，本轮不新增恢复/保存。
-当时不增加永久验证脚本、测试框架、预算或 compiler fix/proof 规则，源码由官方 Linux
-0.30.1 CI 的结构化事务生成；以下验收属于该轮历史记录，不代替当前 0.31.0 检查。
-正式 0.30.1 隔离 CI 已分别检查浏览器 30 个、下载器 14 个公开定义，两个入口完整
-strict 通过，原有附着测试在改写前后各 1 项通过（未改断言）。原下载器从 81 个项目
-中过滤原有两项后，实际取得 79 份公开文档；未更改 URL、认证方式或输出目录。
-相同 CI 静态产物已在隔离浏览器验收首页/Cirru 高亮、普通标题/段落点击、TypeScript
-文档切换/高亮、直接外链新页和刷新回默认首页，控制台无 warning/error。
-这不覆盖所有项目文档、外链、下载失败分支或 HMR；源码保留 HUD 不等于已实测 HMR。
 
 唯一源码/清单为 `calcit.cirru` / `deps.cirru`。安装使用 `caps --strict --ci`、
 `yarn install --immutable`、`caps verify --toolchain`。`yarn dev` 或 `yarn build`
@@ -157,13 +139,11 @@ Repeated diagnostic reports are removed, without adding a verifier script or
 test suite. Vite and COS action v1.2.0 use the same frontend prefix:
 `Cirru/text.cirru.org/` in production and `pr/<number>/<run-id>/<attempt>/` for
 previews. Runs are grouped per PR and separately for production, without
-cancelling active uploads; `queue: max` also retains pending runs. The action is
-pinned to the reviewed release commit and handles public verification through
+cancelling active uploads; `queue: max` also retains pending runs. The action uses the exact formal tag matching the reviewed release, with mutable-tag risk accepted,
+and handles public verification through
 the existing `public-base-url`, without another validation script.
 Original upload permissions, downloader/data format, and server `dist/*` and
 destination are unchanged; PR upload success is not production deployment.
-下载失败只记录公开 URL，不打印完整 Axios error/config/request，以免日志
-携带认证头。本轮页面回归使用官方 CI 实际取得的文档产物，不使用本地凭据重新下载。
 PR 工作流另外负责同一正式依赖图的下载、两入口检查、原测试与 COS 内置校验；
 PR 上传不等于生产部署。异构 EDN 与真实 JS trait 边界仍存在，不宣称零 Dynamic/unsafe。
 浏览器、Node 下载器分别检查，不使用跨目标的 all-defs 冒充两入口覆盖。
