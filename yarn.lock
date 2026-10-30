@@ -12,15 +12,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@calcit/procs@npm:0.31.0":
-  version: 0.31.0
-  resolution: "@calcit/procs@npm:0.31.0"
+"@calcit/procs@npm:0.32.1":
+  version: 0.32.1
+  resolution: "@calcit/procs@npm:0.32.1"
   dependencies:
     "@calcit/finger-vec": "npm:0.1.1"
     "@calcit/ternary-tree": "npm:0.0.26"
     "@cirru/parser.ts": "npm:0.0.10"
     "@cirru/writer.ts": "npm:^0.1.9"
-  checksum: 10c0/daa73d722acd302be00f5f83eb91f742025a5323fac01b84222bed0fffef688761c1285637f9d672b74c2b1bb4513b170d4b5dfcc51bd65f1396390bd526ac77
+  checksum: 10c0/54c505396a4653e643d24eaa71bf9a029b48034cabcd68ce47b2b40b565cf04a4693ac47c7feb34b8e84936621a397802743bffd3134ddeb37b08d23ef113923
   languageName: node
   linkType: hard
 
@@ -1310,7 +1310,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "text-cirru-org@workspace:."
   dependencies:
-    "@calcit/procs": "npm:0.31.0"
+    "@calcit/procs": "npm:0.32.1"
     axios: "npm:^1.20.0"
     bottom-tip: "npm:^0.1.5"
     cirru-color: "npm:^0.2.4"

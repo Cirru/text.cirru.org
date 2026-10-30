@@ -19,39 +19,33 @@
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :tag-name |tagName
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'HighlightJsHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightJsHost
-            .highlight-auto $ :: 'Fn $ {}
-              :args $ [] 'app.comp.container/HighlightJsHost 'String
-              :return 'app.comp.container/HighlightResultHost
+            .highlight-auto $ quote $ Fn app.comp.container/HighlightJsHost String (-> app.comp.container/HighlightResultHost)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :highlight-auto |highlightAuto
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'HighlightResultHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightResultHost (:value 'String)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'LinkTargetHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait LinkTargetHost (:tag-name 'String) (:href 'String)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :tag-name |tagName
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'MarkdownHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait MarkdownHost
-            .render $ :: 'Fn $ {}
-              :args $ [] 'app.comp.container/MarkdownHost 'String
-              :return 'String
-            .use! $ :: 'Fn $ {}
-              :args $ [] 'app.comp.container/MarkdownHost 'Fn
-              :return 'app.comp.container/MarkdownHost
+            .render $ quote $ Fn app.comp.container/MarkdownHost String (-> String)
+            .use! $ quote $ Fn app.comp.container/MarkdownHost Fn (-> app.comp.container/MarkdownHost)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :use! |use
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
@@ -101,12 +95,9 @@
                               [] project-name $ div
                                 {}
                                   :on-click $ fn (e d!)
-                                    hint-fn $ {}
-                                      :args $ [] (:: 'Map 'Tag 'Dynamic)
-                                        :: 'Fn $ {}
-                                          :args $ [] 'Enum
-                                          :return 'Unit
-                                      :return 'Unit
+                                    hint-fn $ Fn (Map Tag Dynamic)
+                                      Fn Enum $ -> Unit
+                                      -> Unit
                                     d! $ :: :states cursor $ {} (:page project-name)
                                   :style $ {} $ :cursor :pointer
                                   :class-name $ str |entry-link $ if (= project-name page) "| is-selected" |
@@ -125,23 +116,18 @@
                     :class-name |about
                     :innerHTML $ render-markdown $ .unwrap-or (get projects-dict page) "|No README. Probably a forked project."
                     :on-click $ fn (e d!)
-                      hint-fn $ {}
-                        :args $ [] (:: 'Map 'Tag 'Dynamic) 'Fn
-                        :return 'Unit
-                        :features $ #{} :js-ffi
+                      hint-fn $ Fn (Map Tag Dynamic) Fn (-> Unit) (:features :js-ffi)
                       open-link-from-event! e
                 when dev? $ comp-typed-reel (>> states :reel) reel $ {}
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
+          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store) (-> respo.schema/Component)
         'inline $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro inline (path)
             read-file $ str |data/ path
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{} :fs-read
-            :expansion $ :: 'Expr 'String
-            :required $ [] $ :: 'Expr 'String
+          :schema $ quote $ Macro (Expr String)
+            -> $ Expr String
+            :capabilities :fs-read
         'open-link-from-event! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn open-link-from-event! (data)
             let
@@ -159,9 +145,7 @@
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] $ :: 'Map 'Tag 'Dynamic
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (Map Tag Dynamic) (-> Unit) (:features :js-ffi)
         'projects-dict $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def projects-dict
             {}
@@ -244,14 +228,14 @@
               |Cirru/CirruSepal.jl $ inline |files/Cirru/CirruSepal.jl.md
               |Cirru/jiuzhang-lang $ inline |files/Cirru/jiuzhang-lang.md
           :examples $ []
-          :schema $ :: 'Map 'String 'String
+          :schema $ quote $ Map String String
         'projects-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def projects-list
             decode-map-as
               parse-cirru-edn $ inline |projects.cirru
               :: 'List $ :: 'Map 'Tag 'Dynamic
           :examples $ []
-          :schema $ :: 'List $ :: 'Map 'Tag 'Dynamic
+          :schema $ quote $ List (Map Tag Dynamic)
         'render-markdown $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-markdown (text)
             let
@@ -259,10 +243,7 @@
                 renderer $ js-cast
                   new Remarkable $ js-object (:breaks true)
                     :highlight $ fn (code lang)
-                      hint-fn $ {}
-                        :args $ [] 'String 'String
-                        :return 'String
-                        :features $ #{} :js-ffi
+                      hint-fn $ Fn String String (-> String) (:features :js-ffi)
                       if (= lang |cirru)
                         decode-map-as (cirru-color/generate code) 'String
                         .-value $ .highlight-auto highlight code
@@ -273,9 +254,7 @@
               .render renderer text
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'String
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String (-> String) (:features :js-ffi)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require
@@ -297,15 +276,14 @@
           :code $ quote $ defn cdn? ()
             = |true $ .unwrap-or (get-env |cdn) |false
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Bool)
-            :args $ []
+          :schema $ quote $ Fn (-> Bool)
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
             = |dev $
               get-env |mode
               , .unwrap-or |release
           :examples $ []
-          :schema $ :: 'Bool
+          :schema $ quote Bool
         'site $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def site
             {} (:dev-ui |http://localhost:8100/main-fonts.css) (:release-ui |http://cdn.tiye.me/favored-fonts/main-fonts.css) (:cdn-url |http://cdn.tiye.me/text.cirru.org/)
@@ -313,7 +291,7 @@
               :icon |http://cdn.tiye.me/logo/cirru.png
               :storage-key |text.cirru.org
           :examples $ []
-          :schema $ :: 'Map 'Tag 'String
+          :schema $ quote $ Map Tag String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.config
     'app.dl $ %{} 'FileEntry
@@ -322,53 +300,39 @@
           :code $ quote $ deftrait AxiosDataHost (:content 'String)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'AxiosHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait AxiosHost
-            .get $ :: 'Fn $ {}
-              :args $ [] 'app.dl/AxiosHost 'String 'JsObject
-              :return 'app.dl/NodePromiseHost
+            .get $ quote $ Fn app.dl/AxiosHost String JsObject (-> app.dl/NodePromiseHost)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'AxiosResponseHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait AxiosResponseHost (:data 'app.dl/AxiosDataHost)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'BufferHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait BufferHost
-            .to-string $ :: 'Fn $ {}
-              :args $ [] 'app.dl/BufferHost 'String
-              :return 'String
+            .to-string $ quote $ Fn app.dl/BufferHost String (-> String)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
             :names $ {} $ :to-string |toString
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'NodePromiseHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait NodePromiseHost
-            .then $ :: 'Fn $ {}
-              :args $ [] 'app.dl/NodePromiseHost $ :: 'Fn
-                {}
-                  :args $ [] 'app.dl/AxiosResponseHost
-                  :return 'Unit
-              :return 'app.dl/NodePromiseHost
-            .catch $ :: 'Fn $ {}
-              :args $ [] 'app.dl/NodePromiseHost $ :: 'Fn
-                {}
-                  :args $ [] 'JsObject
-                  :return 'Unit
-              :return 'app.dl/NodePromiseHost
+            .then $ quote $ Fn app.dl/NodePromiseHost
+              Fn app.dl/AxiosResponseHost $ -> Unit
+              -> app.dl/NodePromiseHost
+            .catch $ quote $ Fn app.dl/NodePromiseHost
+              Fn JsObject $ -> Unit
+              -> app.dl/NodePromiseHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'download-projects $ %{} 'CodeEntry (:doc |)
           :code $ quote $ fn (xs c)
-            hint-fn $ {}
-              :args $ [] (:: 'List 'String) 'Number
-              :return 'Bool
-              :async true
-              :features $ #{} :js-ffi
+            hint-fn $ Fn (List String) Number (-> Bool) (:features :js-ffi) (:async)
             let
                 project-name $
                   first xs
@@ -382,16 +346,13 @@
                 recur (rest xs) (inc c)
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ :: 'Fn $ {} (:return 'Bool)
-            :args $ [] (:: 'List 'String) 'Number
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (List String) Number (-> Bool) (:features :js-ffi)
         'extract-projects $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn extract-projects (data)
             if (list? data) (mapcat data group-projects) ([])
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Dynamic
-            :return $ :: 'List 'Dynamic
+          :schema $ quote $ Fn Dynamic
+            -> $ List Dynamic
         'group-projects $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn group-projects (group)
             if (map? group)
@@ -400,9 +361,8 @@
                 if (list? projects) projects $ []
               []
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Dynamic
-            :return $ :: 'List 'Dynamic
+          :schema $ quote $ Fn Dynamic
+            -> $ List Dynamic
         'handle-download-response $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn handle-download-response (project-name response)
             let
@@ -413,31 +373,22 @@
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'app.dl/AxiosResponseHost
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String app.dl/AxiosResponseHost (-> Unit) (:features :js-ffi)
         'inline $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro inline (path)
             read-file $ str |data/ path
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{} :fs-read
-            :expansion $ :: 'Expr 'String
-            :required $ [] $ :: 'Expr 'String
+          :schema $ quote $ Macro (Expr String)
+            -> $ Expr String
+            :capabilities :fs-read
         'log-download-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn log-download-error (link error) (js/console.error "|Failed to download README:" link) &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'JsObject
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String JsObject (-> Unit) (:features :js-ffi)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
-            hint-fn $ {}
-              :args $ []
-              :return 'Unit
-              :async true
-              :features $ #{} :js-ffi
+            hint-fn $ Fn (-> Unit) (:features :js-ffi) (:async)
             let
                 projects $ parse-cirru-edn $ inline |projects.cirru
                 flat-projects $ extract-projects projects
@@ -450,9 +401,7 @@
               js-await $ download-projects (drop project-names 0) 1
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'p-download-doc $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn p-download-doc (project-name link)
             let
@@ -464,9 +413,7 @@
               .catch handled $ fn (error) (log-download-error link error)
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ :: 'Fn $ {} (:return 'app.dl/NodePromiseHost)
-            :args $ [] 'String 'String
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String String (-> app.dl/NodePromiseHost) (:features :js-ffi)
         'project-repo $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn project-repo (data)
             if (map? data)
@@ -475,8 +422,7 @@
                 if (string? repo) repo |
               , |
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'Dynamic
+          :schema $ quote $ Fn Dynamic (-> String)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.dl
           :require (|axios :default axios) (|fs :as fs)
@@ -485,16 +431,14 @@
         '*reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
-          :schema $ :: 'Ref $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
+          :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
         'HighlightHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightHost
-            .register-language! $ :: 'Fn $ {}
-              :args $ [] 'app.main/HighlightHost 'String 'JsObject
-              :return 'Unit
+            .register-language! $ quote $ Fn app.main/HighlightHost String JsObject (-> Unit)
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :register-language! |registerLanguage
-          :schema $ :: 'Trait
+          :schema $ quote Trait
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             when config/dev? $ println |Dispatch: op
@@ -506,9 +450,7 @@
                   :timestamp $ js-ffi.shared/date-now-snapshot
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Enum
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn Enum (-> Unit) (:features :js-ffi)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -529,31 +471,25 @@
                 dispatch! :hydrate-storage $ format-cirru-edn raw
             println "|App started."
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
             .unwrap $ query-selector |.app
           :examples $ []
-          :schema $ :: 'respo.dom/DomElement
+          :schema $ quote respo.dom/DomElement
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             js-ffi.browser/storage-set!
               .unwrap $ get config/site :storage-key
               format-cirru-edn $ :store @*reel
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'register-language! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn register-language! (name language)
             .register-language! (js-cast hljs 'app.main/HighlightHost) name language
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'JsObject
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String JsObject (-> Unit) (:features :js-ffi)
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
             if (nil? build-errors)
@@ -564,23 +500,19 @@
               hud! |error build-errors
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render! mount-target (comp-container @*reel)
               fn (op)
                 if (enum? op) (dispatch! op) (raise "|Expected Enum render operation")
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'snippets $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn snippets ()
             println $ config/cdn?
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
@@ -604,20 +536,22 @@
         'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
-          :schema $ :: 'Enum
+          :schema $ quote Enum
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states (:: 'List 'Dynamic) 'Dynamic
+            :states
+              quote $ List Dynamic
+              , 'Dynamic
             :content 'String
             :hydrate-storage 'app.schema/Store
           :examples $ []
-          :schema $ :: 'EnumDef
+          :schema $ quote EnumDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ :: 'Map 'Dynamic 'Dynamic
+            :states $ quote $ Map Dynamic Dynamic
             :content 'String
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (data)
             if (struct? data)
@@ -628,9 +562,8 @@
                 (:ok stored) (Option :some stored)
                 (:err _) (Option :none)
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Dynamic
-            :return $ :: 'Option 'app.schema/Store
+          :schema $ quote $ Fn Dynamic
+            -> $ Option app.schema/Store
         'require-op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn require-op (op)
             match op
@@ -646,13 +579,12 @@
                   (:none) (raise "|Expected valid Store")
               _ $ raise "|Unknown application operation"
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Op)
-            :args $ [] 'Enum
+          :schema $ quote $ Fn Enum (-> app.schema/Op)
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states ({}) :content |
           :examples $ []
-          :schema $ :: 'app.schema/Store
+          :schema $ quote app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -668,8 +600,7 @@
               (:hydrate-storage data) data
               _ $ do (println "|Unknown op:" op) store
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Store)
-            :args $ [] 'app.schema/Store 'app.schema/Op 'String 'Number
+          :schema $ quote $ Fn app.schema/Store app.schema/Op String Number (-> app.schema/Store)
           :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
             :code $ quote $ let
                 initial $ Store :states ({}) :content |
