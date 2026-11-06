@@ -22,7 +22,7 @@
           :schema $ quote Trait
         'HighlightJsHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightJsHost
-            .highlight-auto $ quote $ Fn app.comp.container/HighlightJsHost String (-> app.comp.container/HighlightResultHost)
+            .highlight-auto $ Fn app.comp.container/HighlightJsHost String $ -> app.comp.container/HighlightResultHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :highlight-auto |highlightAuto
@@ -40,12 +40,26 @@
           :schema $ quote Trait
         'MarkdownHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait MarkdownHost
-            .render $ quote $ Fn app.comp.container/MarkdownHost String (-> String)
-            .use! $ quote $ Fn app.comp.container/MarkdownHost Fn (-> app.comp.container/MarkdownHost)
+            .render $ Fn app.comp.container/MarkdownHost String $ -> String
+            .use! $ Fn app.comp.container/MarkdownHost Fn $ -> app.comp.container/MarkdownHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :use! |use
           :schema $ quote Trait
+        'ProjectEntry $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct ProjectEntry
+            :name $ Option String
+            :title String
+            :repo String
+            :readme $ Option String
+            :type $ Option String
+          :examples $ []
+          :schema $ quote StructDef
+        'ProjectSection $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct ProjectSection (:title String)
+            :projects $ List app.comp.container/ProjectEntry
+          :examples $ []
+          :schema $ quote StructDef
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
@@ -54,13 +68,14 @@
                 cursor $ decode-map-as
                     get states :cursor
                     , .unwrap-or $ []
-                  :: 'List 'Dynamic
-                state $ decode-map-as
-                    get states :data
-                    , .unwrap-or $ {} $ :page |Cirru/text.cirru.org
-                  :: 'Map 'Tag 'Dynamic
+                  List respo.schema/CoordKey
+                state $
+                  get states :data
+                  , .unwrap-or $ {} (:page |Cirru/text.cirru.org)
                 page $ let
-                    candidate $ .unwrap-or (get state :page) |Cirru/text.cirru.org
+                    candidate $ if (map? state)
+                      .unwrap-or (get state :page) |Cirru/text.cirru.org
+                      , |Cirru/text.cirru.org
                   if (string? candidate) candidate |Cirru/text.cirru.org
               div
                 {} $ :style $ .merge ui/global ui/fullscreen ui/row
@@ -68,14 +83,8 @@
                   {} $ :style $ {} (:overflow :auto) (:padding-bottom 200)
                   -> projects-list $ map-indexed $ fn (idx section)
                     let
-                        section-title $ decode-map-as
-                            get section :title
-                            , .unwrap-or |
-                          , 'String
-                        projects $ decode-map-as
-                            get section :projects
-                            , .unwrap-or $ []
-                          :: 'List $ :: 'Map 'Tag 'String
+                        section-title $ :title section
+                        projects $ :projects section
                       [] idx $ div
                         {} $ :style $ {} (:padding 16)
                         <> section-title $ {}
@@ -86,22 +95,20 @@
                           {} $ :style $ {} (:padding-left 16)
                           map projects $ fn (project)
                             let
-                                project-name $
-                                  get project :name
-                                  , .unwrap-or |forked-repo
-                                project-title $
-                                  get project :title
-                                  , .unwrap-or |
-                              [] project-name $ div
-                                {}
-                                  :on-click $ fn (e d!)
-                                    hint-fn $ Fn (Map Tag Dynamic)
-                                      Fn Enum $ -> Unit
-                                      -> Unit
-                                    d! $ :: :states cursor $ {} (:page project-name)
-                                  :style $ {} $ :cursor :pointer
-                                  :class-name $ str |entry-link $ if (= project-name page) "| is-selected" |
-                                <> project-title
+                                project-name $ .unwrap-or (:name project) |forked-repo
+                                project-title $ :title project
+                              []
+                                .unwrap-or (:name project) (:repo project)
+                                div
+                                  {}
+                                    :on-click $ fn (e d!)
+                                      hint-fn $ Fn respo.schema/RespoEvent
+                                        Fn AnyEnum $ -> Unit
+                                        -> Unit
+                                      d! $ app.schema/Op :states cursor $ {} (:page project-name)
+                                    :style $ {} $ :cursor :pointer
+                                    :class-name $ str |entry-link $ if (= project-name page) "| is-selected" |
+                                  <> project-title
                 div
                   {} $ :style $ .merge ui/expand
                     {} (:padding "|16px 48px") (:overflow |auto) (:padding-bottom |200px)
@@ -116,9 +123,14 @@
                     :class-name |about
                     :innerHTML $ render-markdown $ .unwrap-or (get projects-dict page) "|No README. Probably a forked project."
                     :on-click $ fn (e d!)
-                      hint-fn $ Fn (Map Tag Dynamic) Fn (-> Unit) (:features :js-ffi)
+                      hint-fn $ Fn respo.schema/RespoEvent
+                        Fn AnyEnum $ -> Unit
+                        -> Unit
+                        :features :js-ffi
                       open-link-from-event! e
-                when dev? $ comp-typed-reel (>> states :reel) reel $ {}
+                if dev?
+                  Option :some $ comp-typed-reel (>> states :reel) reel $ {}
+                  Option :none
           :examples $ []
           :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store) (-> respo.schema/Component)
         'inline $ %{} 'CodeEntry (:doc |)
@@ -131,7 +143,7 @@
         'open-link-from-event! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn open-link-from-event! (data)
             let
-                event $ js-ffi.browser/event-host $ .unwrap (get data :event)
+                event $ js-ffi.browser/event-host $ :event data
               match (js-ffi.browser/event-target-element event)
                 (:some element)
                   let
@@ -145,7 +157,7 @@
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
-          :schema $ quote $ Fn (Map Tag Dynamic) (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn respo.schema/RespoEvent (-> Unit) (:features :js-ffi)
         'projects-dict $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def projects-dict
             {}
@@ -233,9 +245,9 @@
           :code $ quote $ def projects-list
             decode-map-as
               parse-cirru-edn $ inline |projects.cirru
-              :: 'List $ :: 'Map 'Tag 'Dynamic
+              List app.comp.container/ProjectSection
           :examples $ []
-          :schema $ quote $ List (Map Tag Dynamic)
+          :schema $ quote $ List app.comp.container/ProjectSection
         'render-markdown $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-markdown (text)
             let
@@ -303,7 +315,7 @@
           :schema $ quote Trait
         'AxiosHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait AxiosHost
-            .get $ quote $ Fn app.dl/AxiosHost String JsObject (-> app.dl/NodePromiseHost)
+            .get $ Fn app.dl/AxiosHost String JsObject $ -> app.dl/NodePromiseHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
           :schema $ quote Trait
@@ -314,17 +326,17 @@
           :schema $ quote Trait
         'BufferHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait BufferHost
-            .to-string $ quote $ Fn app.dl/BufferHost String (-> String)
+            .to-string $ Fn app.dl/BufferHost String $ -> String
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :node)
             :names $ {} $ :to-string |toString
           :schema $ quote Trait
         'NodePromiseHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait NodePromiseHost
-            .then $ quote $ Fn app.dl/NodePromiseHost
+            .then $ Fn app.dl/NodePromiseHost
               Fn app.dl/AxiosResponseHost $ -> Unit
               -> app.dl/NodePromiseHost
-            .catch $ quote $ Fn app.dl/NodePromiseHost
+            .catch $ Fn app.dl/NodePromiseHost
               Fn JsObject $ -> Unit
               -> app.dl/NodePromiseHost
           :examples $ []
@@ -434,7 +446,7 @@
           :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
         'HighlightHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightHost
-            .register-language! $ quote $ Fn app.main/HighlightHost String JsObject (-> Unit)
+            .register-language! $ Fn app.main/HighlightHost String JsObject $ -> Unit
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :register-language! |registerLanguage
@@ -450,7 +462,7 @@
                   :timestamp $ js-ffi.shared/date-now-snapshot
             , &unit
           :examples $ []
-          :schema $ quote $ Fn Enum (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn AnyEnum (-> Unit) (:features :js-ffi)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -536,20 +548,18 @@
         'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
-          :schema $ quote Enum
+          :schema $ quote AnyEnum
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states
-              quote $ List Dynamic
-              , 'Dynamic
-            :content 'String
-            :hydrate-storage 'app.schema/Store
+            :states (List respo.schema/CoordKey) Dynamic
+            :content String
+            :hydrate-storage app.schema/Store
           :examples $ []
           :schema $ quote EnumDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ quote $ Map Dynamic Dynamic
-            :content 'String
+            :states $ Map Dynamic Dynamic
+            :content String
           :examples $ []
           :schema $ quote StructDef
         'decode-store $ %{} 'CodeEntry (:doc |)
@@ -569,7 +579,7 @@
             match op
               (:states cursor state)
                 Op :states
-                  decode-map-as cursor $ :: 'List 'Dynamic
+                  decode-map-as cursor $ List respo.schema/CoordKey
                   , state
               (:content text)
                 Op :content $ decode-map-as text 'String
@@ -579,7 +589,7 @@
                   (:none) (raise "|Expected valid Store")
               _ $ raise "|Unknown application operation"
           :examples $ []
-          :schema $ quote $ Fn Enum (-> app.schema/Op)
+          :schema $ quote $ Fn AnyEnum (-> app.schema/Op)
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states ({}) :content |
@@ -595,7 +605,7 @@
               (:states cursor s)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor s
-                  :: 'Map 'Dynamic 'Dynamic
+                  Map Dynamic Dynamic
               (:content data) (assoc store :content data)
               (:hydrate-storage data) data
               _ $ do (println "|Unknown op:" op) store
