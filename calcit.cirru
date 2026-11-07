@@ -6,7 +6,7 @@
     :default $ {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {} $ :js-ffi :error
       :modules $ [] |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
-      :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
+      :type-slots $ {} $ :dispatch-op 'app.schema/DispatchOp
     :downloader $ {} (:description "|Generate project download metadata") (:init-fn 'app.dl/main!) (:mode :js) (:reload-fn 'app.dl/main!) (:target :node)
       :feature-policy $ {} $ :js-ffi :error
       :modules $ [] |js-ffi/
@@ -41,7 +41,9 @@
         'MarkdownHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait MarkdownHost
             .render $ Fn app.comp.container/MarkdownHost String $ -> String
-            .use! $ Fn app.comp.container/MarkdownHost Fn $ -> app.comp.container/MarkdownHost
+            .use! $ Fn app.comp.container/MarkdownHost
+              Fn app.comp.container/MarkdownHost JsObject $ -> Unit
+              , JsObject $ -> app.comp.container/MarkdownHost
           :examples $ []
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :use! |use
@@ -103,7 +105,7 @@
                                   {}
                                     :on-click $ fn (e d!)
                                       hint-fn $ Fn respo.schema/RespoEvent
-                                        Fn AnyEnum $ -> Unit
+                                        Fn app.schema/Op $ -> Unit
                                         -> Unit
                                       d! $ app.schema/Op :states cursor $ {} (:page project-name)
                                     :style $ {} $ :cursor :pointer
@@ -124,7 +126,7 @@
                     :innerHTML $ render-markdown $ .unwrap-or (get projects-dict page) "|No README. Probably a forked project."
                     :on-click $ fn (e d!)
                       hint-fn $ Fn respo.schema/RespoEvent
-                        Fn AnyEnum $ -> Unit
+                        Fn app.schema/Op $ -> Unit
                         -> Unit
                         :features :js-ffi
                       open-link-from-event! e
@@ -262,7 +264,14 @@
                   , 'app.comp.container/MarkdownHost
               let
                   plugin linkify
-                if (fn? plugin) (.use! renderer plugin) (raise "|Expected Remarkable linkify plugin function")
+                if (fn? plugin)
+                  .use! renderer
+                    fn (md _options)
+                      hint-fn $ Fn app.comp.container/MarkdownHost JsObject (-> Unit) (:features :js-ffi)
+                      plugin md
+                      , &unit
+                    js-object
+                  raise "|Expected Remarkable linkify plugin function"
               .render renderer text
           :examples $ []
           :ffi $ {} (:backend :js) (:target :browser)
@@ -364,17 +373,17 @@
             if (list? data) (mapcat data group-projects) ([])
           :examples $ []
           :schema $ quote $ Fn Dynamic
-            -> $ List Dynamic
+            -> $ List String
         'group-projects $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn group-projects (group)
             if (map? group)
               let
                   projects $ .unwrap-or (get group :projects) ([])
-                if (list? projects) projects $ []
+                if (list? projects) (map projects project-repo) ([])
               []
           :examples $ []
           :schema $ quote $ Fn Dynamic
-            -> $ List Dynamic
+            -> $ List String
         'handle-download-response $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn handle-download-response (project-name response)
             let
@@ -403,8 +412,7 @@
             hint-fn $ Fn (-> Unit) (:features :js-ffi) (:async)
             let
                 projects $ parse-cirru-edn $ inline |projects.cirru
-                flat-projects $ extract-projects projects
-                repos $ map flat-projects project-repo
+                repos $ extract-projects projects
                 project-names $ -> repos
                   filter $ fn (link)
                     not $ or (includes? link |/ace) (includes? link |/pygments-main)

@@ -94,7 +94,7 @@ Find more by exploring [cirru-parser][parser].
 
 ### 使用者影响
 
-升级到 Calcit **0.35.1** 后，请重新安装依赖、编译并刷新页面。项目顺序、默认文档、
+升级到 Calcit **0.37.0** 后，请重新安装依赖、编译并刷新页面。项目顺序、默认文档、
 语法高亮和错误 HUD 沿用原有行为。无名称的条目仍显示原兜底文档，列表使用各自的
 仓库 URL 区分条目。
 
@@ -102,8 +102,8 @@ Find more by exploring [cirru-parser][parser].
 `Option` 表示。导航使用类型化的 Respo 事件和 `CoordKey` 路径。
 原目录文件、下载器协议和前端部署路径保持原样。
 
-正式依赖为 `@calcit/procs` **0.35.1**、Respo **0.19.4**、Reel **0.9.2**、Markdown **0.8.1**、
-UI **0.15.1**、JS-FFI **0.2.13**，传递依赖 Router **0.12.1**。
+正式依赖为 `@calcit/procs` **0.37.0**、Respo **0.19.5**、Reel **0.10.0**、Markdown **0.8.2**、
+UI **0.15.2**、JS-FFI **0.2.13**，传递依赖 Router **0.12.2**。
 
 ### 宿主与数据边界
 
@@ -112,7 +112,7 @@ typed Reel/受检payload、Map状态解码保持。点击先识别HTML A再检�
 完整方法签名或所有getter。Axios可调用对象、Node base64 Buffer的两处真实信任
 边界保留，不用失败的js-cast或伪JsObject冒充验证。
 
-默认文档与下载器协议不变；失败仅记录公开URL，不打印完整Axios error/config/request，
+下载器在目录解码时即提取仓库 URL，后续处理使用 `List String`。Remarkable 插件入口声明渲染器和选项两个参数，继续使用原 linkify。默认文档与下载器协议不变；失败仅记录公开URL，不打印完整Axios error/config/request，
 避免日志携带认证头。原持久化未启用，本次不新增恢复/保存；HUD保留不代表HMR已验收。
 不宣称所有文档、外链、下载失败分支或跨平台行为已完整验证。
 
