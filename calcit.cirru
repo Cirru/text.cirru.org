@@ -12,6 +12,38 @@
       :modules $ [] |js-ffi/
       :type-slots $ {}
   :files $ {}
+    'app.catalog $ %{} 'FileEntry
+      :defs $ {}
+        'ProjectEntry $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct ProjectEntry
+            :name $ Option String
+            :title String
+            :repo String
+            :readme $ Option String
+            :type $ Option String
+          :examples $ []
+          :schema $ quote StructDef
+        'ProjectSection $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct ProjectSection (:title String)
+            :projects $ List app.catalog/ProjectEntry
+          :examples $ []
+          :schema $ quote StructDef
+        'inline $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defmacro inline (path)
+            read-file $ str |data/ path
+          :examples $ []
+          :schema $ quote $ Macro (Expr String)
+            -> $ Expr String
+            :capabilities :fs-read
+        'projects-list $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ def projects-list
+            decode-map-as
+              parse-cirru-edn $ inline |projects.cirru
+              List app.catalog/ProjectSection
+          :examples $ []
+          :schema $ quote $ List app.catalog/ProjectSection
+      :ns $ %{} 'NsEntry (:doc |)
+        :code $ quote $ ns app.catalog
     'app.comp.container $ %{} 'FileEntry
       :defs $ {}
         'ElementTagHost $ %{} 'CodeEntry (:doc |)
@@ -48,20 +80,6 @@
           :ffi $ {} (:backend :js) (:kind :external-object) (:target :browser)
             :names $ {} $ :use! |use
           :schema $ quote Trait
-        'ProjectEntry $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct ProjectEntry
-            :name $ Option String
-            :title String
-            :repo String
-            :readme $ Option String
-            :type $ Option String
-          :examples $ []
-          :schema $ quote StructDef
-        'ProjectSection $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct ProjectSection (:title String)
-            :projects $ List app.comp.container/ProjectEntry
-          :examples $ []
-          :schema $ quote StructDef
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel on-control!)
             let
@@ -83,7 +101,7 @@
                 {} $ :style $ .merge ui/global ui/fullscreen ui/row
                 list->
                   {} $ :style $ {} (:overflow :auto) (:padding-bottom 200)
-                  -> projects-list $ map-indexed $ fn (idx section)
+                  -> app.catalog/projects-list $ map-indexed $ fn (idx section)
                     let
                         section-title $ :title section
                         projects $ :projects section
@@ -245,13 +263,6 @@
               |Cirru/jiuzhang-lang $ inline |files/Cirru/jiuzhang-lang.md
           :examples $ []
           :schema $ quote $ Map String String
-        'projects-list $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ def projects-list
-            decode-map-as
-              parse-cirru-edn $ inline |projects.cirru
-              List app.comp.container/ProjectSection
-          :examples $ []
-          :schema $ quote $ List app.comp.container/ProjectSection
         'render-markdown $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-markdown (text)
             let
@@ -370,22 +381,6 @@
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
           :schema $ quote $ Fn (List String) Number (-> Bool) (:features :js-ffi)
-        'extract-projects $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn extract-projects (data)
-            if (list? data) (mapcat data group-projects) ([])
-          :examples $ []
-          :schema $ quote $ Fn Dynamic
-            -> $ List String
-        'group-projects $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn group-projects (group)
-            if (map? group)
-              let
-                  projects $ .unwrap-or (get group :projects) ([])
-                if (list? projects) (map projects project-repo) ([])
-              []
-          :examples $ []
-          :schema $ quote $ Fn Dynamic
-            -> $ List String
         'handle-download-response $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn handle-download-response (project-name response)
             let
@@ -397,13 +392,6 @@
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
           :schema $ quote $ Fn String app.dl/AxiosResponseHost (-> Unit) (:features :js-ffi)
-        'inline $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defmacro inline (path)
-            read-file $ str |data/ path
-          :examples $ []
-          :schema $ quote $ Macro (Expr String)
-            -> $ Expr String
-            :capabilities :fs-read
         'log-download-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn log-download-error (link error) (js/console.error "|Failed to download README:" link) &unit
           :examples $ []
@@ -413,8 +401,9 @@
           :code $ quote $ defn main! ()
             hint-fn $ Fn (-> Unit) (:features :js-ffi) (:async)
             let
-                projects $ parse-cirru-edn $ inline |projects.cirru
-                repos $ extract-projects projects
+                repos $ mapcat app.catalog/projects-list $ fn (section)
+                  map (:projects section)
+                    fn (project) (:repo project)
                 project-names $ -> repos
                   filter $ fn (link)
                     not $ or (includes? link |/ace) (includes? link |/pygments-main)
@@ -436,15 +425,6 @@
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
           :schema $ quote $ Fn String String (-> app.dl/NodePromiseHost) (:features :js-ffi)
-        'project-repo $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn project-repo (data)
-            if (map? data)
-              let
-                  repo $ .unwrap-or (get data :repo) |
-                if (string? repo) repo |
-              , |
-          :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.dl
           :require (|axios :default axios) (|fs :as fs)
