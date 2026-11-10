@@ -50,7 +50,7 @@ jobs:
         yarn install --immutable
         caps verify --toolchain
         git diff --quiet -- deps.cirru package.json yarn.lock .yarnrc.yml
-        calcit --entry downloader --check-only --ns app.dl --summary-only
+        calcit --entry downloader --check-only --ns app.catalog --ns app.dl --summary-only
         calcit calcit.cirru --entry downloader --emit-path dl-out/ js
 
     - name: Download project documentation
@@ -65,7 +65,7 @@ jobs:
         set -euo pipefail
         calcit edit format
         git diff --quiet -- calcit.cirru
-        calcit --check-only --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
+        calcit --check-only --ns app.catalog --ns app.comp.container --ns app.config --ns app.main --ns app.schema --ns app.updater --summary-only
         calcit fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
         calcit calcit.cirru test --require-match
 
