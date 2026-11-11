@@ -280,7 +280,7 @@
                 if (fn? plugin)
                   .use! renderer
                     fn (md _options)
-                      hint-fn $ Fn app.comp.container/MarkdownHost JsObject (-> Unit) (:features :js-ffi)
+                      hint-fn $ Fn MarkdownHost JsObject (-> Unit) (:features :js-ffi)
                       plugin md
                       , &unit
                     js-object
