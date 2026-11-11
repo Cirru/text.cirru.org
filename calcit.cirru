@@ -41,7 +41,7 @@
               parse-cirru-edn $ inline |projects.cirru
               List app.catalog/ProjectSection
           :examples $ []
-          :schema $ quote $ List app.catalog/ProjectSection
+          :schema $ quote $ List ProjectSection
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.catalog
     'app.comp.container $ %{} 'FileEntry
@@ -149,8 +149,8 @@
                         :features :js-ffi
                       open-link-from-event! e
                 if dev?
-                  Option :some $ comp-typed-reel (>> states :reel) reel ({}) on-control!
-                  Option :none
+                  Some $ comp-typed-reel (>> states :reel) reel ({}) on-control!
+                  , None
           :examples $ []
           :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store)
             Fn reel.typed/Control $ -> Unit
@@ -391,7 +391,7 @@
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ quote $ Fn String app.dl/AxiosResponseHost (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn String AxiosResponseHost (-> Unit) (:features :js-ffi)
         'log-download-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn log-download-error (link error) (js/console.error "|Failed to download README:" link) &unit
           :examples $ []
@@ -424,7 +424,7 @@
               .catch handled $ fn (error) (log-download-error link error)
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ quote $ Fn String String (-> app.dl/NodePromiseHost) (:features :js-ffi)
+          :schema $ quote $ Fn String String (-> NodePromiseHost) (:features :js-ffi)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.dl
           :require (|axios :default axios) (|fs :as fs)
@@ -433,7 +433,7 @@
         '*reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
-          :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
+          :schema $ quote $ Ref (typed/State schema/Op schema/Store)
         'HighlightHost $ %{} 'CodeEntry (:doc |)
           :code $ quote $ deftrait HighlightHost
             .register-language! $ Fn app.main/HighlightHost String JsObject $ -> Unit
@@ -448,7 +448,7 @@
               :timestamp $ js-ffi.shared/date-now-snapshot
             , &unit
           :examples $ []
-          :schema $ quote $ Fn app.schema/Op (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn schema/Op (-> Unit) (:features :js-ffi)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -480,7 +480,7 @@
             reset! *reel $ typed/apply-control updater @*reel control
             , &unit
           :examples $ []
-          :schema $ quote $ Fn reel.typed/Control (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn typed/Control (-> Unit) (:features :js-ffi)
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             js-ffi.browser/storage-set!
@@ -539,7 +539,7 @@
       :defs $ {}
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states (List respo.schema/CoordKey) Dynamic
+            :states (List respo.schema/CoordKey) (Map Tag String)
             :content String
             :hydrate-storage app.schema/Store
           :examples $ []
@@ -554,19 +554,22 @@
           :code $ quote $ defn decode-store (data)
             if (struct? data)
               if (&struct:matches? data Store)
-                Option :some $ assert-type data 'app.schema/Store
-                Option :none
+                struct-match data
+                  Store stored $ Some stored
+                  _ other None
+                , None
               match (try-decode-map-as data Store)
-                (:ok stored) (Option :some stored)
-                (:err _) (Option :none)
+                (:ok stored) (Some stored)
+                (:err _) None
           :examples $ []
-          :schema $ quote $ Fn Dynamic
-            -> $ Option app.schema/Store
+          :schema $ quote $ Fn Input
+            -> $ Option Store
+            :generics Input
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states ({}) :content |
           :examples $ []
-          :schema $ quote app.schema/Store
+          :schema $ quote Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -582,7 +585,7 @@
               (:hydrate-storage data) data
               _ $ do (println "|Unknown op:" op) store
           :examples $ []
-          :schema $ quote $ Fn app.schema/Store app.schema/Op String Number (-> app.schema/Store)
+          :schema $ quote $ Fn Store Op String Number (-> Store)
           :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
             :code $ quote $ let
                 initial $ Store :states ({}) :content |
