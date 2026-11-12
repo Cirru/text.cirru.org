@@ -310,7 +310,7 @@
           :code $ quote $ defn cdn? ()
             = |true $ .unwrap-or (get-env |cdn) |false
           :examples $ []
-          :schema $ quote $ Fn (-> Bool)
+          :schema $ quote $ Fn (-> Bool) (:features :io)
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
             = |dev $
@@ -380,7 +380,7 @@
                 recur (rest xs) (inc c)
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ quote $ Fn (List String) Number (-> Bool) (:features :js-ffi)
+          :schema $ quote $ Fn (List String) Number (-> Bool) (:features :io :js-ffi)
         'handle-download-response $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn handle-download-response (project-name response)
             let
@@ -391,7 +391,7 @@
               , &unit
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ quote $ Fn String AxiosResponseHost (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn String AxiosResponseHost (-> Unit) (:features :io :js-ffi)
         'log-download-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn log-download-error (link error) (js/console.error "|Failed to download README:" link) &unit
           :examples $ []
@@ -412,7 +412,7 @@
               js-await $ download-projects (drop project-names 0) 1
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn (-> Unit) (:features :io :js-ffi)
         'p-download-doc $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn p-download-doc (project-name link)
             let
@@ -424,7 +424,7 @@
               .catch handled $ fn (error) (log-download-error link error)
           :examples $ []
           :ffi $ {} (:backend :js) (:target :node)
-          :schema $ quote $ Fn String String (-> NodePromiseHost) (:features :js-ffi)
+          :schema $ quote $ Fn String String (-> NodePromiseHost) (:features :io :js-ffi)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.dl
           :require (|axios :default axios) (|fs :as fs)
@@ -448,7 +448,7 @@
               :timestamp $ js-ffi.shared/date-now-snapshot
             , &unit
           :examples $ []
-          :schema $ quote $ Fn schema/Op (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn schema/Op (-> Unit) (:features :io :js-ffi :state)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             println "|Running mode:" $ if config/dev?
@@ -469,7 +469,7 @@
                 dispatch! :hydrate-storage $ format-cirru-edn raw
             println "|App started."
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn (-> Unit) (:features :io :js-ffi :state)
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def mount-target
             .unwrap $ query-selector |.app
@@ -480,14 +480,14 @@
             reset! *reel $ typed/apply-control updater @*reel control
             , &unit
           :examples $ []
-          :schema $ quote $ Fn typed/Control (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn typed/Control (-> Unit) (:features :io :js-ffi :state)
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             js-ffi.browser/storage-set!
               .unwrap $ get config/site :storage-key
               format-cirru-edn $ :store @*reel
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi :state)
         'register-language! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn register-language! (name language)
             .register-language! (js-cast hljs 'app.main/HighlightHost) name language
@@ -504,19 +504,19 @@
               hud! |error build-errors
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn (-> Unit) (:features :io :js-ffi :state)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render-with! mount-target
               fn () $ comp-container @*reel on-control!
               , dispatch!
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io :state)
         'snippets $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn snippets ()
             println $ config/cdn?
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
@@ -585,7 +585,7 @@
               (:hydrate-storage data) data
               _ $ do (println "|Unknown op:" op) store
           :examples $ []
-          :schema $ quote $ Fn Store Op String Number (-> Store)
+          :schema $ quote $ Fn Store Op String Number (-> Store) (:features :io)
           :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
             :code $ quote $ let
                 initial $ Store :states ({}) :content |
