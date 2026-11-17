@@ -153,8 +153,9 @@
                   , None
           :examples $ []
           :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store)
-            Fn reel.typed/Control $ -> Unit
+            Fn reel.typed/Control (-> Unit) (:features :io :state)
             -> respo.schema/Component
+            :features :state
         'inline $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro inline (path)
             read-file $ str |data/ path
@@ -583,9 +584,8 @@
                   Map Dynamic Dynamic
               (:content data) (assoc store :content data)
               (:hydrate-storage data) data
-              _ $ do (println "|Unknown op:" op) store
           :examples $ []
-          :schema $ quote $ Fn Store Op String Number (-> Store) (:features :io)
+          :schema $ quote $ Fn Store Op String Number (-> Store)
           :tests $ [] $ %{} 'TestEntry (:name |nominal-store-operations)
             :code $ quote $ let
                 initial $ Store :states ({}) :content |
