@@ -102,8 +102,8 @@ Find more by exploring [cirru-parser][parser].
 `Option` 表示。导航使用类型化的 Respo 事件和 `CoordKey` 路径。
 网页和下载器共用同一份类型化目录。Reel 面板通过具名 Control 回调，应用分发只接受具名 Op。原目录文件、下载器协议和前端部署路径保持原样。
 
-正式依赖为 `@calcit/procs` **0.44.0**、Respo **0.19.12**、Reel **0.11.4**、Markdown **0.9.4**、
-UI **0.15.6**、JS-FFI **0.2.18**，传递依赖 Router **0.12.10**。
+正式依赖为 `@calcit/procs` **0.44.0**、Respo **0.19.13**、Reel **0.11.5**、Markdown **0.9.5**、
+UI **0.15.7**、JS-FFI **0.2.19**，传递依赖 Router **0.12.11**。
 
 ### 宿主与数据边界
 
