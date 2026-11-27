@@ -94,7 +94,7 @@ Find more by exploring [cirru-parser][parser].
 
 ### 使用者影响
 
-升级到 Calcit **0.45.1** 后，请重新安装依赖、编译并刷新页面。项目顺序、默认文档、
+升级到 Calcit **0.46.0** 后，请重新安装依赖、编译并刷新页面。项目顺序、默认文档、
 语法高亮和错误 HUD 沿用原有行为。无名称的条目仍显示原兜底文档，列表使用各自的
 仓库 URL 区分条目。
 
@@ -102,8 +102,8 @@ Find more by exploring [cirru-parser][parser].
 `Option` 表示。导航使用类型化的 Respo 事件和 `CoordKey` 路径。
 网页和下载器共用同一份类型化目录。Reel 面板通过具名 Control 回调，应用分发只接受具名 Op。原目录文件、下载器协议和前端部署路径保持原样。
 
-正式依赖为 `@calcit/procs` **0.45.1**、Respo **0.19.18**、Reel **0.11.9**、Markdown **0.9.9**、
-UI **0.16.5**、JS-FFI **0.2.24**，传递依赖 Router **0.12.17**。
+正式依赖为 `@calcit/procs` **0.46.0**、Respo **0.20.0**、Reel **0.11.10**、Markdown **0.9.10**、
+UI **0.16.6**、JS-FFI **0.2.26**，传递依赖 Router **0.12.18**。
 
 ### 宿主与数据边界
 
@@ -132,7 +132,7 @@ site tests and actual documentation download/build. Old check-public/quality
 commands are replaced; the original numeric baseline remains historical and
 unchanged, without increasing any budget.
 Repeated diagnostic reports are removed, without adding a verifier script or
-test suite. Vite and COS action v1.2.0 use the same frontend prefix:
+test suite. Vite and COS action v1.3.0 use the same frontend prefix:
 `Cirru/text.cirru.org/` in production and `pr/<number>/<run-id>/<attempt>/` for
 previews. Runs are grouped per PR and separately for production, without
 cancelling active uploads; `queue: max` also retains pending runs. The action uses the exact formal tag matching the reviewed release, with mutable-tag risk accepted,
